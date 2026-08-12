@@ -8,4 +8,20 @@ import CompaniesSection from "@/components/CompaniesSection";
 import PaymentOptions from "@/components/PaymentOptions";
 import NextCohort from "@/components/NextCohort";
 import Footer from "@/components/Footer";
-export default function CoursesPage() { return <main><Header/><Hero/><ProgramOverview/><SoftwareEngineeringSection/><CareerPaths/><LearningPath/><CompaniesSection/><PaymentOptions/><NextCohort/><Footer/></main>; }
+
+export default function CoursesPage() {
+  return (
+    <main>
+      <Header />
+      <Hero />
+      <ProgramOverview />
+      <SoftwareEngineeringSection />
+      <CareerPaths />
+      <LearningPath />
+      <CompaniesSection />
+      <PaymentOptions />
+      <NextCohort />
+      <Footer />
+    </main>
+  );
+}
