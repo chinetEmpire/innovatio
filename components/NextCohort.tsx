@@ -4,7 +4,6 @@ import { CheckCircle2 } from "lucide-react";
 
 import flowerImage from "@/app/images/flower.png";
 import { cohortSteps } from "@/data/cohortSteps";
-import { footerInfo } from "@/data/site";
 import Reveal from "./Reveal";
 
 export default function NextCohort() {
@@ -44,7 +43,7 @@ export default function NextCohort() {
           ))}
           <Reveal delay={360}>
             <Link
-              href={`mailto:${footerInfo.email}`}
+              href="/apply"
               className="mt-2 inline-flex items-center rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white shadow-[0_10px_22px_rgba(84,41,208,0.3)] transition-transform hover:scale-[1.03] active:scale-95"
             >
               Apply now

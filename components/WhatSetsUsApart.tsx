@@ -22,7 +22,7 @@ export default function WhatSetsUsApart() {
                 industry-standard tools that strengthen your understanding.
               </p>
               <Link
-                href="/#cohort"
+                href="/apply"
                 className="mt-7 inline-flex items-center gap-1.5 rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white shadow-[0_10px_22px_rgba(84,41,208,0.3)] transition-transform hover:scale-[1.03] active:scale-95"
               >
                 Enroll now <ArrowUpRight size={16} />
