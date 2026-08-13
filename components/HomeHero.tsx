@@ -9,12 +9,7 @@ export default function HomeHero() {
     <section className="overflow-hidden bg-white">
       <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
         <div className="flex flex-col justify-center px-5 py-14 sm:px-8 lg:px-[8%] lg:py-20">
-          <span
-            className="animate-fade-up w-fit rounded-full border border-brand/20 bg-brand/5 px-3.5 py-1.5 text-xs font-semibold text-brand"
-            style={{ "--reveal-delay": "0ms" } as React.CSSProperties}
-          >
-            Next cohort starts September 21, 2026
-          </span>
+          
           <h1
             className="animate-fade-up mt-6 max-w-xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl"
             style={{ "--reveal-delay": "100ms" } as React.CSSProperties}

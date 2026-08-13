@@ -83,7 +83,7 @@ export default async function ApplicantDetailPage({
         <h2 className="text-lg font-bold">Assessment history</h2>
         <div className="mt-4 space-y-3">
           {attemptsList.map((attempt, index) => (
-            <div key={attempt.id} className="flex items-center justify-between gap-4 rounded-xl border border-[#f0ecf6] bg-[#faf7ff] px-5 py-4">
+            <div key={attempt.id} className="flex flex-col gap-3 rounded-xl border border-[#f0ecf6] bg-[#faf7ff] px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-sm font-bold text-ink">Attempt {attemptsList.length - index}</p>
                 <p className="mt-1 text-xs text-[#8a8493]">
@@ -92,7 +92,7 @@ export default async function ApplicantDetailPage({
                     : `Started ${formatDateTime(attempt.started_at)} · in progress`}
                 </p>
               </div>
-              <div className="text-right">
+              <div className="sm:text-right">
                 {attempt.status === "submitted" ? (
                   <>
                     <span className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-bold ${attempt.passed ? "bg-green-50 text-green-700" : "bg-red-50 text-red-600"}`}>
@@ -114,7 +114,7 @@ export default async function ApplicantDetailPage({
         <div className="rounded-2xl border border-[#e9e2f5] bg-white p-6">
           <h2 className="text-lg font-bold">Enrollment</h2>
           {(enrollments ?? []).map((enrollment) => (
-            <div key={enrollment.id} className="mt-4 flex items-center justify-between gap-4 rounded-xl border border-[#f0ecf6] bg-[#faf7ff] px-5 py-4">
+            <div key={enrollment.id} className="mt-4 flex flex-col gap-3 rounded-xl border border-[#f0ecf6] bg-[#faf7ff] px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-sm font-bold text-ink">
                   {enrollment.payment_status === "paid" ? "Payment received" : "Payment pending"}
@@ -124,7 +124,7 @@ export default async function ApplicantDetailPage({
               {enrollment.payment_status === "pending" && (
                 <form action={markEnrollmentPaidAction}>
                   <input type="hidden" name="id" value={enrollment.id} />
-                  <button type="submit" className="rounded-full bg-green-600 px-5 py-2 text-sm font-semibold text-white transition-transform hover:scale-[1.02] active:scale-95">
+                  <button type="submit" className="w-full rounded-full bg-green-600 px-5 py-2 text-sm font-semibold text-white transition-transform hover:scale-[1.02] active:scale-95 sm:w-auto">
                     Mark as paid
                   </button>
                 </form>

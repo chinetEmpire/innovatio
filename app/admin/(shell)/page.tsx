@@ -91,8 +91,8 @@ export default async function AdminDashboard() {
 
       <div>
         <h2 className="text-xl font-bold tracking-tight">Performance by course</h2>
-        <div className="mt-4 overflow-hidden rounded-2xl border border-[#e9e2f5] bg-white">
-          <table className="w-full text-left text-sm">
+        <div className="mt-4 overflow-x-auto rounded-2xl border border-[#e9e2f5] bg-white">
+          <table className="w-full min-w-[520px] text-left text-sm">
             <thead className="border-b border-[#f0ecf6] bg-[#faf7ff] text-xs uppercase tracking-wide text-[#8a8493]">
               <tr>
                 <th className="px-5 py-3 font-semibold">Course</th>
@@ -130,8 +130,8 @@ export default async function AdminDashboard() {
             View all applicants
           </Link>
         </div>
-        <div className="mt-4 overflow-hidden rounded-2xl border border-[#e9e2f5] bg-white">
-          <table className="w-full text-left text-sm">
+        <div className="mt-4 overflow-x-auto rounded-2xl border border-[#e9e2f5] bg-white">
+          <table className="w-full min-w-[680px] text-left text-sm">
             <thead className="border-b border-[#f0ecf6] bg-[#faf7ff] text-xs uppercase tracking-wide text-[#8a8493]">
               <tr>
                 <th className="px-5 py-3 font-semibold">Applicant</th>

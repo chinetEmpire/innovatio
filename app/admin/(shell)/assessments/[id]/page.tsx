@@ -120,7 +120,7 @@ export default async function AssessmentDetailPage({
                   </div>
                 ))}
               </div>
-              <div className="mt-4 flex items-center justify-between">
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
                 <p className="text-xs text-[#8a8493]">Mark the radio button next to the correct choice.</p>
                 <button type="submit" className="rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white transition-transform hover:scale-[1.02] active:scale-95">
                   Save changes

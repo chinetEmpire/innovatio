@@ -40,7 +40,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             </form>
           </div>
         </div>
-        <nav className="mx-auto flex max-w-6xl items-center gap-4 px-5 pb-3 text-sm font-medium md:hidden">
+        <nav className="mx-auto flex max-w-6xl flex-wrap items-center gap-4 px-5 pb-3 text-sm font-medium md:hidden">
           {navLinks.map((link) => (
             <Link key={link.href} href={link.href} className="text-ink/70 transition-colors hover:text-brand">
               {link.label}
