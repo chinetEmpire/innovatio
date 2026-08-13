@@ -4,8 +4,9 @@
 Assessment & course eligibility system for Innovatio Academy, built on Next.js 15 + Supabase.
 
 - Repo: `https://github.com/chinetEmpire/innovatio` (branch `main`)
-- Stack: Next.js 15.1.11, `@supabase/ssr ^0.12.4`, `@supabase/supabase-js ^2.112.3`, `tsx` (dev), Tailwind, lucide-react
+- Stack: **Next.js 16.3.0** (Turbopack, upgraded from 15.1.11), `@supabase/ssr ^0.12.4`, `@supabase/supabase-js ^2.112.3`, `tsx` (dev), Tailwind, lucide-react, `sharp`
 - Supabase project ref: `kpyhtjuyawudkhlnnrrl` (URL `https://kpyhtjuyawudkhlnnrrl.supabase.co`)
+- Live deployment: `https://innovatio-silk.vercel.app` (Vercel, auto-deploys from `main` pushes)
 
 ---
 
@@ -49,8 +50,14 @@ Assessment & course eligibility system for Innovatio Academy, built on Next.js 1
 - Dashboard: stat cards (total applicants, assessments submitted, pass rate, eligible for payment), performance-by-course table, recent assessments table.
 - **Responsive on mobile**: tables scroll horizontally; detail rows stack; mobile nav wraps.
 
-### 3. Homepage CTA Routing
-- All "Enroll now" / "Apply now" buttons (Header ×2, HomeHero, WhatSetsUsApart, NextCohort) now route to `/apply`.
+### 3. Enroll Landing Page + CTA Routing
+- `app/enroll/page.tsx` + `components/EnrollNowPage.tsx` — public "Ready to Get Started?" landing page: explains the assessment (10–30 min, MCQ, no payment yet, unlimited attempts within 1hr interval), links to `/apply` to start.
+- All "Enroll now" / "Apply now" CTAs (Header ×2, HomeHero, WhatSetsUsApart, NextCohort) route to `/enroll` → which leads into `/apply` → assessment → register → `/payment`.
+
+### 3b. Framework / UI Fixes
+- **Next.js 16.3.0 upgrade** (build verified green): `next` ^16.3.0, `postcss` ^8.5.26, added `sharp`, expanded `tsconfig.json` (`jsx: react-jsx`, `.next/dev/types`). Note: Next 16 deprecates the `middleware.ts` convention → `proxy` (admin guard still works; migration is a future cleanup via `npx @next/codemod@canary middleware-to-proxy`).
+- **Official logo fix**: `/enroll` and `/payment` headers now render the real `logo.png` image (was a ◢ text glyph) and link home, matching the main site header.
+- **Footer links are clickable** (`components/Footer.tsx` + `data/site.ts`): FAQs → `/#faq`, Contact us → `mailto:info@innovatio.com`, socials → external placeholder URLs (open in new tab, `noopener noreferrer`). Social handles are placeholders — update in `data/site.ts`.
 
 ### 4. Payment (Paystack) — wired into the apply flow
 - Config source of truth: `data/paymentOptions.ts` — `paymentPlans` (keys `upfront`/`instalments` + `amountKobo`) and `coursePrices` (slug → ₦). Both courses ₦350,000; upfront plan ₦350k, instalments first payment ₦212,500.
@@ -87,12 +94,20 @@ Assessment & course eligibility system for Innovatio Academy, built on Next.js 1
 - `aea2fdf` Route Enroll/Apply CTAs to the apply flow
 - `e402a17` Make admin console responsive on mobile
 - `a725400` Redesign admin login page
+- `e841e16` Wire Paystack payments into the apply flow
+- `2a65f42` Swap site font to Lato and tighten hero headline weight
+- `b591165` Add admin Payments tab with paid/pending/failed monitoring
+- `01a0232` Add enroll landing page and route CTAs to /enroll; upgrade to Next.js 16
+- `aa723c4` Update enroll page assessment expectations
+- `3be103f` Use official Innovatio logo on enroll and payment page headers
+- `439a2f5` Make footer links clickable
 
 ---
 
 ## Current State / Blockers
-- **Live DB still needs two SQL steps in the Supabase editor** (see below): the admins RLS policy AND the new enrollment payment columns.
-- Everything else builds (`npm run build` passes) and is pushed.
+- **Live Supabase DB still needs the SQL steps below** (admins RLS policy + enrollment payment columns + `failed` status constraint). Until run: `/admin` login fails (RLS denies the `admins` lookup) and Paystack payments can't record plan/amount/`failed` status.
+- Everything else builds (`npm run build` passes) and is pushed/deployed.
+- `PAYSTACK_SECRET_KEY` not yet added to `.env.local` (user action).
 
 ### Run in Supabase SQL editor (in order):
 ```sql
@@ -129,13 +144,14 @@ alter table public.enrollments
 ---
 
 ## Next Phase (Roadmap)
-1. **Apply the SQL steps above to the live DB** (RLS policy + enrollment columns) and verify admin login end-to-end (blocker).
-2. **Add PAYSTACK_SECRET_KEY to `.env.local`** and test a real Paystack checkout end-to-end (test card `4084 0840 8408 4081`); verify enrollment flips to `paid` in admin.
-3. **Configure the Paystack webhook URL** (`/api/paystack/webhook`) once deployed.
-4. **Switch to live Paystack keys** and set a max-amount sanity check per plan when ready to take real payments.
-5. **Email notifications** — notify applicant of pass/fail and payment confirmation, notify admin of new applications.
-6. **Applicant filtering/search** — filter by course, status, age bracket; pagination on the applicants table.
-7. **Assessment analytics** — per-question difficulty/answer breakdown on the dashboard.
-8. **Public site polish** — real cohort dates, testimonials/counts wired to real data, course detail pages.
-9. **Deployment** — Vercel deploy, env vars in production, custom domain.
-10. **Tests** — add unit/integration tests for API routes, admin actions, and Paystack webhook signature handling.
+1. **Apply the SQL steps above to the live Supabase DB** and verify admin login + payments end-to-end (blocker — highest priority).
+2. **Add `PAYSTACK_SECRET_KEY` to `.env.local`** (and Vercel env for prod) and test a real Paystack checkout (test card `4084 0840 8408 4081`); confirm enrollment flips to `paid` and shows in `/admin/payments`.
+3. **Configure the Paystack webhook URL** → `https://innovatio-silk.vercel.app/api/paystack/webhook` (required for reliable paid/failed capture in production).
+4. **Migrate `middleware.ts` → `proxy`** (Next 16 deprecation) to clear the build warning.
+5. **Real social media URLs** in `data/site.ts` footer.
+6. **Switch to live Paystack keys** and add a max-amount sanity check per plan when ready to take real payments.
+7. **Email notifications** — notify applicant of pass/fail and payment confirmation, notify admin of new applications.
+8. **Applicant filtering/search** — filter by course, status, age bracket; pagination on the applicants table.
+9. **Assessment analytics** — per-question difficulty/answer breakdown on the dashboard.
+10. **Public site polish** — real cohort dates, testimonials/counts wired to real data, course detail pages.
+11. **Tests** — unit/integration tests for API routes, admin actions, and Paystack webhook signature handling.

@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import useImage from "@/app/images/use.png";
+import useImage from "@/app/images/innovate.png";
 import Reveal from "./Reveal";
 
 export default function About() {
