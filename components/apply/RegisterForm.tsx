@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { CheckCircle2, Loader2, Lock } from "lucide-react";
 
@@ -14,6 +15,7 @@ type RegisterResponse =
     };
 
 export default function RegisterForm({ courseSlug, courseTitle }: { courseSlug: string; courseTitle: string }) {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<{ type: "error" | "success"; text: string } | null>(null);
   const [result, setResult] = useState<Extract<RegisterResponse, { ok: boolean }> | null>(null);
@@ -65,11 +67,19 @@ export default function RegisterForm({ courseSlug, courseTitle }: { courseSlug: 
           <div>
             <p className="text-sm font-semibold text-ink">Payment via Paystack</p>
             <p className="mt-1 text-sm text-[#5f5b65]">
-              Online payment is being connected. Our admissions team will contact you within 24 hours to complete your
-              tuition payment securely.
+              Secure your spot by completing your tuition payment. You&apos;ll be redirected to Paystack to pay securely
+              online.
             </p>
           </div>
         </div>
+
+        <button
+          type="button"
+          onClick={() => router.push(`/payment?enrollment=${result.enrollmentId}`)}
+          className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-3.5 text-base font-semibold text-white shadow-[0_10px_22px_rgba(84,41,208,0.3)] transition-transform hover:scale-[1.02] active:scale-95"
+        >
+          Proceed to payment
+        </button>
       </div>
     );
   }

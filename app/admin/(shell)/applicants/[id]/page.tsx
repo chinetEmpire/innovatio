@@ -29,7 +29,11 @@ export default async function ApplicantDetailPage({
   const [{ data: applicant }, { data: attempts }, { data: enrollments }] = await Promise.all([
     sb.from("applicants").select("*, courses(slug, title)").eq("id", id).maybeSingle(),
     sb.from("attempts").select("id, score, passed, status, started_at, submitted_at").eq("applicant_id", id).order("started_at", { ascending: false }),
-    sb.from("enrollments").select("id, payment_status, created_at").eq("applicant_id", id).order("created_at", { ascending: false }),
+    sb
+      .from("enrollments")
+      .select("id, payment_status, plan_key, amount_kobo, payment_reference, paid_at, created_at")
+      .eq("applicant_id", id)
+      .order("created_at", { ascending: false }),
   ]);
 
   if (!applicant) {
@@ -119,7 +123,22 @@ export default async function ApplicantDetailPage({
                 <p className="text-sm font-bold text-ink">
                   {enrollment.payment_status === "paid" ? "Payment received" : "Payment pending"}
                 </p>
-                <p className="mt-1 text-xs text-[#8a8493]">Started {formatDateTime(enrollment.created_at)}</p>
+                <p className="mt-1 text-xs text-[#8a8493]">
+                  Started {formatDateTime(enrollment.created_at)}
+                  {enrollment.paid_at && enrollment.payment_status === "paid" && ` · Paid ${formatDateTime(enrollment.paid_at)}`}
+                </p>
+                {(enrollment.plan_key || enrollment.amount_kobo != null) && (
+                  <p className="mt-1 text-xs text-[#8a8493]">
+                    {enrollment.plan_key === "upfront"
+                      ? "Pay upfront"
+                      : enrollment.plan_key === "instalments"
+                        ? "2 instalments"
+                        : "Plan"} · ₦{((enrollment.amount_kobo ?? 0) / 100).toLocaleString("en-NG")} due now
+                  </p>
+                )}
+                {enrollment.payment_reference && (
+                  <p className="mt-1 break-all text-xs text-[#8a8493]">Ref: {enrollment.payment_reference}</p>
+                )}
               </div>
               {enrollment.payment_status === "pending" && (
                 <form action={markEnrollmentPaidAction}>

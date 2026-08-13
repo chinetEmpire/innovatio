@@ -86,9 +86,22 @@ create table if not exists public.enrollments (
   course_id uuid not null references public.courses(id),
   attempt_id uuid references public.attempts(id) on delete set null,
   payment_status text not null default 'pending' check (payment_status in ('pending', 'paid')),
+  plan_key text,
+  amount_kobo int,
+  currency text not null default 'NGN',
+  payment_reference text,
+  paid_at timestamptz,
   created_at timestamptz not null default now(),
   unique (applicant_id, course_id)
 );
+
+-- Payment columns for the Paystack integration (idempotent for existing DBs).
+alter table public.enrollments
+  add column if not exists plan_key text,
+  add column if not exists amount_kobo int,
+  add column if not exists currency text not null default 'NGN',
+  add column if not exists payment_reference text,
+  add column if not exists paid_at timestamptz;
 
 alter table public.courses enable row level security;
 alter table public.admins enable row level security;
