@@ -1,39 +1,56 @@
 import Image from "next/image";
+import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
 
 import flowerImage from "@/app/images/flower.png";
-import nextImage from "@/app/images/next.jpg";
 import { cohortSteps } from "@/data/cohortSteps";
+import { footerInfo } from "@/data/site";
+import Reveal from "./Reveal";
 
 export default function NextCohort() {
   return (
-    <section id="cohort" className="mx-auto grid max-w-[800px] gap-10 px-5 py-12 md:grid-cols-2">
-      <div>
-        <h2 className="text-[18px] font-bold">Join Our Next Cohort</h2>
-        <p className="mt-4 text-[9px] leading-[1.35] text-[#4d4752]">Next Cohort Starts 21st of September, 2026.<br />Registration starts on 7th of August, 2026 and closes on 7th of September, 2026. Apply now!</p>
-        <div className="mt-6 flex justify-center md:justify-start">
-          <Image src={flowerImage} alt="Innovatio Academy student" className="h-auto w-full max-w-[260px]" />
-        </div>
-      </div>
-      <div className="border-l border-[#ddd] pl-6">
-        {cohortSteps.map(({ title, description }, index) => (
-          <div className="relative mb-6 border-b border-[#eee] pb-5 last:border-0" key={title}>
-            <CheckCircle2
-              className={`absolute -left-[34px] top-0 rounded-full bg-white ${index === 0 ? "fill-yellow-400 text-yellow-400" : "text-[#d9d9d9]"}`}
-              size={16}
-            />
-            <h3 className="text-[11px] font-bold">{title}</h3>
-            {index === 0 && (
-              <Image
-                className="mt-3 h-[191px] w-full rounded-[10px] object-cover"
-                src={nextImage}
-                alt="Online learning"
-              />
-            )}
-            <p className="mt-2 text-[8px] leading-[1.35] text-[#65606a]">{description}</p>
+    <section id="cohort" className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
+      <div className="grid items-center gap-12 lg:grid-cols-2">
+        <Reveal>
+          <div>
+            <span className="inline-block rounded-full border border-brand/20 bg-brand/5 px-3.5 py-1.5 text-xs font-semibold text-brand">
+              Limited seats
+            </span>
+            <h2 className="mt-5 text-3xl font-bold tracking-tight sm:text-4xl">Join our next cohort</h2>
+            <p className="mt-4 max-w-md text-base leading-relaxed text-[#5f5b65]">
+              The next cohort starts <b className="text-ink">September 21, 2026</b>. Registration opens August 7, 2026
+              and closes September 7, 2026. Apply now to secure your seat.
+            </p>
+            <Image src={flowerImage} alt="Innovatio Academy student" className="mt-8 hidden h-auto w-64 lg:block" />
           </div>
-        ))}
-        <a href="#home" className="inline-block rounded-full bg-brand px-4 py-2 text-[8px] text-white">Enroll now</a>
+        </Reveal>
+
+        <div>
+          {cohortSteps.map(({ title, description }, index) => (
+            <Reveal key={title} delay={index * 120}>
+              <div className="flex gap-4 pb-8 last:pb-0">
+                <div className="flex flex-col items-center">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand text-white shadow-[0_6px_16px_rgba(84,41,208,0.35)]">
+                    <CheckCircle2 size={18} />
+                  </span>
+                  {index < cohortSteps.length - 1 && <span className="mt-2 w-px flex-1 bg-[#e4dcf4]" />}
+                </div>
+                <div className="pt-1">
+                  <h3 className="text-lg font-semibold">{title}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-[#5f5b65]">{description}</p>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+          <Reveal delay={360}>
+            <Link
+              href={`mailto:${footerInfo.email}`}
+              className="mt-2 inline-flex items-center rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white shadow-[0_10px_22px_rgba(84,41,208,0.3)] transition-transform hover:scale-[1.03] active:scale-95"
+            >
+              Apply now
+            </Link>
+          </Reveal>
+        </div>
       </div>
     </section>
   );

@@ -10,27 +10,12 @@ export type NavLink = { label: string; href: string; active?: boolean };
 
 export type BrandLogo = { src: StaticImageData | string; alt: string; className?: string };
 
-export const homeNavLinks: NavLink[] = [
-  { label: "Home", href: "#about" },
-  { label: "Courses", href: "/courses" },
-  { label: "Contact us", href: "#cohort" },
-  { label: "FAQs", href: "#faq" },
-];
-
-export const headerNavLinks: NavLink[] = [
+export const navLinks: NavLink[] = [
   { label: "Home", href: "/" },
-  { label: "Courses", href: "#courses", active: true },
-  { label: "Contact us", href: "#cohort" },
-  { label: "FAQs", href: "#learn" },
+  { label: "Courses", href: "/courses" },
+  { label: "FAQs", href: "/#faq" },
+  { label: "Contact", href: "/#cohort" },
 ];
-
-export const headerMobileNavLinks: NavLink[] = [
-  { label: "Courses", href: "#courses" },
-  { label: "FAQs", href: "#learn" },
-  { label: "Contact us", href: "#cohort" },
-];
-
-export const headerCta: NavLink = { label: "Enroll now", href: "#cohort" };
 
 export const homeEmployerLogos: BrandLogo[] = [
   { src: microsoft, alt: "Microsoft" },
@@ -46,14 +31,14 @@ export const companyLogos: BrandLogo[] = [
   { src: dropbox, alt: "Dropbox" },
   { src: seplat, alt: "Seplat" },
   { src: ibm, alt: "IBM" },
-  { src: paystack, alt: "Paystack", className: "max-h-12 max-w-[140px]" },
+  { src: paystack, alt: "Paystack", className: "max-h-9 max-w-[130px]" },
   { src: amazon, alt: "Amazon" },
 ];
 
 export const footerInfo = {
   email: "info@innovatio.com",
   columns: [
-    { heading: "Courses", links: ["FAQs", "Contact us"] },
+    { heading: "Courses", links: ["Software Engineering", "Cybersecurity", "FAQs"] },
     { heading: "Follow us", links: ["Facebook", "Instagram", "LinkedIn", "TikTok"] },
   ],
   copyright: "Copyright © 2026 Innovatio Academy",

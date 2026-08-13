@@ -1,34 +1,46 @@
-import { Fragment } from "react";
-import { Sparkles } from "lucide-react";
 import { footerInfo } from "@/data/site";
 
 export default function Footer() {
   return (
-    <>
-      <footer className="overflow-hidden bg-brand text-white">
-        <div className="relative mx-auto max-w-[800px] px-5 pb-4 pt-10">
-          <Sparkles className="absolute right-8 top-8 text-yellow-300" size={48} strokeWidth={1.3} />
-          <p>Discover the potency of<br />Innovatio Academy at</p>
-          <a className="mt-4 block break-words text-[20px] font-bold sm:text-[28px]" href={`mailto:${footerInfo.email}`}>
-            {footerInfo.email}
-          </a>
-          <div className="mt-8 flex flex-col gap-7 text-[8px] sm:flex-row sm:justify-between">
+    <footer className="bg-ink text-white">
+      <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8">
+        <div className="flex flex-col gap-10 md:flex-row md:items-start md:justify-between">
+          <div className="max-w-xs">
+            <p className="text-lg font-semibold">Innovatio Academy</p>
+            <p className="mt-3 text-sm leading-relaxed text-white/65">
+              Practical, project-based tech training that gets you hired.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-10">
             {footerInfo.columns.map(({ heading, links }) => (
-              <p key={heading}>
-                <b>{heading}</b>
-                {links.map((link) => (
-                  <Fragment key={link}>
-                    <br />
-                    {link}
-                  </Fragment>
-                ))}
-              </p>
+              <div key={heading}>
+                <p className="text-sm font-semibold">{heading}</p>
+                <ul className="mt-3 space-y-2.5 text-sm text-white/65">
+                  {links.map((link) => (
+                    <li key={link}>
+                      <a href="#" className="transition-colors hover:text-white">
+                        {link}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
-          <p className="mt-7 -mb-7 text-[clamp(92px,22vw,180px)] font-bold leading-none tracking-tighter">Innovatio</p>
+          <div className="max-w-xs">
+            <p className="text-sm font-semibold">Get in touch</p>
+            <a
+              href={`mailto:${footerInfo.email}`}
+              className="mt-3 block text-base font-bold text-white transition-colors hover:text-[#c9b6ff]"
+            >
+              {footerInfo.email}
+            </a>
+          </div>
         </div>
-      </footer>
-      <div className="py-2 text-center text-[7px]">{footerInfo.copyright}</div>
-    </>
+        <div className="mt-12 border-t border-white/15 pt-6 text-center text-sm text-white/55">
+          {footerInfo.copyright}
+        </div>
+      </div>
+    </footer>
   );
 }

@@ -1,3 +1,4 @@
+import Header from "@/components/Header";
 import HomeHero from "@/components/HomeHero";
 import About from "@/components/About";
 import LearningTracks from "@/components/LearningTracks";
@@ -10,6 +11,7 @@ import Footer from "@/components/Footer";
 export default function Page() {
   return (
     <main>
+      <Header />
       <HomeHero />
       <About />
       <LearningTracks />
