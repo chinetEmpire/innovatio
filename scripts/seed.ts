@@ -34,7 +34,15 @@ if (!url || !serviceKey || !adminEmail || !adminPassword) {
   process.exit(1);
 }
 
-const sb = createClient(url, serviceKey, { auth: { persistSession: false } });
+const cfg = {
+  url,
+  serviceKey,
+  adminEmail,
+  adminPassword,
+  adminName: adminName ?? "Admin",
+};
+
+const sb = createClient(cfg.url, cfg.serviceKey, { auth: { persistSession: false } });
 
 type ChoiceSeed = { text: string; correct?: boolean };
 type QuestionSeed = { text: string; points?: number; choices: ChoiceSeed[] };
@@ -266,24 +274,24 @@ async function main() {
   }
 
   const { data: existingUsers } = await sb.auth.admin.listUsers();
-  const userExists = existingUsers.users.some((u) => u.email === adminEmail.toLowerCase());
+  const userExists = existingUsers.users.some((u) => u.email === cfg.adminEmail.toLowerCase());
   if (!userExists) {
     const { error } = await sb.auth.admin.createUser({
-      email: adminEmail,
-      password: adminPassword,
+      email: cfg.adminEmail,
+      password: cfg.adminPassword,
       email_confirm: true,
     });
     if (error) throw new Error(`Could not create admin user: ${error.message}`);
-    console.log(`Created admin user: ${adminEmail}`);
+    console.log(`Created admin user: ${cfg.adminEmail}`);
   } else {
-    console.log(`Admin user already exists: ${adminEmail}`);
+    console.log(`Admin user already exists: ${cfg.adminEmail}`);
   }
 
   const { error: upsertError } = await sb
     .from("admins")
-    .upsert({ email: adminEmail.toLowerCase(), name: adminName }, { onConflict: "email" });
+    .upsert({ email: cfg.adminEmail.toLowerCase(), name: cfg.adminName }, { onConflict: "email" });
   if (upsertError) throw new Error(`Could not add admin row: ${upsertError.message}`);
-  console.log(`Admin ready: ${adminEmail}`);
+  console.log(`Admin ready: ${cfg.adminEmail}`);
 
   console.log("\nSeed complete.");
 }

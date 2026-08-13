@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-import { markEnrollmentPaidAction } from "../../actions";
+import { markEnrollmentPaidAction } from "../../../actions";
 import { requireAdmin } from "@/lib/admin";
 import { serviceClient } from "@/lib/supabase/admin";
 import { formatDate, formatDateTime } from "@/lib/format";

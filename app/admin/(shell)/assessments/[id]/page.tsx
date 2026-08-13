@@ -6,7 +6,7 @@ import {
   addQuestionAction,
   deleteQuestionAction,
   updateQuestionAction,
-} from "../../actions";
+} from "../../../actions";
 import { requireAdmin } from "@/lib/admin";
 import { serviceClient } from "@/lib/supabase/admin";
 
