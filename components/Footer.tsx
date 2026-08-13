@@ -17,9 +17,16 @@ export default function Footer() {
               <p key={heading}>
                 <b>{heading}</b>
                 {links.map((link) => (
-                  <Fragment key={link}>
+                  <Fragment key={link.label}>
                     <br />
-                    {link}
+                    <a
+                      href={link.href}
+                      target={link.external ? "_blank" : undefined}
+                      rel={link.external ? "noopener noreferrer" : undefined}
+                      className="transition-opacity hover:opacity-80 hover:underline"
+                    >
+                      {link.label}
+                    </a>
                   </Fragment>
                 ))}
               </p>

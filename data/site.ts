@@ -35,11 +35,33 @@ export const companyLogos: BrandLogo[] = [
   { src: amazon, alt: "Amazon" },
 ];
 
-export const footerInfo = {
+export type FooterLink = { label: string; href: string; external?: boolean };
+
+type FooterColumn = { heading: string; links: FooterLink[] };
+
+export const footerInfo: {
+  email: string;
+  columns: FooterColumn[];
+  copyright: string;
+} = {
   email: "info@innovatio.com",
   columns: [
-    { heading: "Courses", links: ["FAQs", "Contact us"] },
-    { heading: "Follow us", links: ["Facebook", "Instagram", "LinkedIn", "TikTok"] },
+    {
+      heading: "Courses",
+      links: [
+        { label: "FAQs", href: "/#faq" },
+        { label: "Contact us", href: "mailto:info@innovatio.com" },
+      ],
+    },
+    {
+      heading: "Follow us",
+      links: [
+        { label: "Facebook", href: "https://www.facebook.com/", external: true },
+        { label: "Instagram", href: "https://www.instagram.com/", external: true },
+        { label: "LinkedIn", href: "https://www.linkedin.com/", external: true },
+        { label: "TikTok", href: "https://www.tiktok.com/", external: true },
+      ],
+    },
   ],
   copyright: "Copyright © 2026 Innovatio Academy",
 };
