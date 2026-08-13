@@ -8,15 +8,9 @@ export default function EnrollNowPage() {
     <main className="min-h-screen bg-[#f5f5f5]">
       <div className="mx-auto max-w-[1200px] px-5 pt-6 sm:px-8">
         <header className="flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-[6px] bg-[#4d2bd9] shadow-[0_8px_18px_rgba(77,43,217,0.35)]">
-              <span className="text-lg font-black text-white">◢</span>
-            </div>
-            <div className="leading-[0.9]">
-              <div className="text-[11px] font-black uppercase tracking-[0.12em] text-[#161616]">Innovatio</div>
-              <div className="text-[9px] font-black uppercase tracking-[0.12em] text-[#161616]/75">Academy</div>
-            </div>
-          </div>
+          <Link href="/" aria-label="Innovatio Academy home" className="transition-opacity hover:opacity-80">
+            <Image src={logo} alt="Innovatio Academy" className="h-auto w-[140px]" />
+          </Link>
 
           <nav className="hidden items-center gap-8 text-[13px] font-medium text-[#171717] md:flex">
             <Link href="/" className="transition-opacity hover:opacity-80">Home</Link>

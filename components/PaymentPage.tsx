@@ -1,8 +1,11 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { ArrowRight, Loader2, Lock, Sparkles } from "lucide-react";
 
+import logo from "@/app/images/logo.png";
 import { formatNaira, formatNairaKobo, paymentPlans, type PaymentPlanKey } from "@/data/paymentOptions";
 
 export type PaymentCourse = {
@@ -54,15 +57,9 @@ export default function PaymentPage({
     <main className="min-h-screen bg-[#f2f2f2]">
       <div className="mx-auto max-w-[960px] px-5 pt-8 sm:px-8">
         <header className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-[6px] bg-[#4c2ada] text-[15px] font-black text-white shadow-[0_8px_18px_rgba(82,42,214,0.35)]">
-              <span className="inline-block -rotate-45 text-base">◢</span>
-            </div>
-            <div className="leading-[0.9]">
-              <div className="text-[11px] font-black uppercase tracking-[0.14em] text-[#151515]">Innovatio</div>
-              <div className="text-[9px] font-black uppercase tracking-[0.12em] text-[#151515]/75">Academy</div>
-            </div>
-          </div>
+          <Link href="/" aria-label="Innovatio Academy home" className="transition-opacity hover:opacity-80">
+            <Image src={logo} alt="Innovatio Academy" className="h-auto w-[140px]" />
+          </Link>
 
           <nav className="hidden items-center gap-8 text-[12px] font-medium text-[#202020] md:flex">
             <a href="/" className="transition-opacity hover:opacity-80">Home</a>
