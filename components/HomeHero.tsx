@@ -11,7 +11,7 @@ export default function HomeHero() {
         <div className="flex flex-col justify-center px-5 py-14 sm:px-8 lg:px-[8%] lg:py-20">
           
           <h1
-            className="animate-fade-up mt-6 max-w-xl text-4xl font-bold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl"
+            className="animate-fade-up mt-6 max-w-xl text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl"
             style={{ "--reveal-delay": "100ms" } as React.CSSProperties}
           >
             Train here. Get hired anywhere.
