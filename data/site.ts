@@ -38,7 +38,7 @@ export const companyLogos: BrandLogo[] = [
 export const footerInfo = {
   email: "info@innovatio.com",
   columns: [
-    { heading: "Courses", links: ["Software Engineering", "Cybersecurity", "FAQs"] },
+    { heading: "Courses", links: ["FAQs", "Contact us"] },
     { heading: "Follow us", links: ["Facebook", "Instagram", "LinkedIn", "TikTok"] },
   ],
   copyright: "Copyright © 2026 Innovatio Academy",
