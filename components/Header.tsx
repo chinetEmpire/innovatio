@@ -36,7 +36,7 @@ export default function Header() {
             );
           })}
           <Link
-            href="/apply"
+            href="/enroll"
             className="rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white shadow-[0_8px_18px_rgba(84,41,208,0.3)] transition-transform hover:scale-[1.04] active:scale-95"
           >
             Enroll now
@@ -69,7 +69,7 @@ export default function Header() {
               );
             })}
             <Link
-              href="/apply"
+              href="/enroll"
               className="mt-3 rounded-full bg-brand px-5 py-3 text-center text-base font-semibold text-white"
             >
               Enroll now

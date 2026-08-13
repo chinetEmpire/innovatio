@@ -28,7 +28,7 @@ export default function HomeHero() {
             style={{ "--reveal-delay": "300ms" } as React.CSSProperties}
           >
             <Link
-              href="/apply"
+              href="/enroll"
               className="rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white shadow-[0_10px_22px_rgba(84,41,208,0.3)] transition-transform hover:scale-[1.03] active:scale-95"
             >
               Enroll now
