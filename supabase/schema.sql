@@ -98,3 +98,12 @@ alter table public.choices enable row level security;
 alter table public.applicants enable row level security;
 alter table public.attempts enable row level security;
 alter table public.enrollments enable row level security;
+
+-- Admins can read their own row (matched by JWT email). Required so the
+-- /admin console can verify the signed-in user against the admins table.
+-- Applicant-facing data access goes through the service role, which bypasses RLS.
+drop policy if exists "Admins can view their own row" on public.admins;
+create policy "Admins can view their own row"
+  on public.admins
+  for select
+  using (auth.jwt() ->> 'email' = email);

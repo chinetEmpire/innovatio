@@ -274,22 +274,27 @@ async function main() {
   }
 
   const { data: existingUsers } = await sb.auth.admin.listUsers();
-  const userExists = existingUsers.users.some((u) => u.email === cfg.adminEmail.toLowerCase());
-  if (!userExists) {
-    const { error } = await sb.auth.admin.createUser({
+  let adminUserId: string | undefined = existingUsers.users.find(
+    (u) => u.email === cfg.adminEmail.toLowerCase()
+  )?.id;
+  if (!adminUserId) {
+    const { data: created, error } = await sb.auth.admin.createUser({
       email: cfg.adminEmail,
       password: cfg.adminPassword,
       email_confirm: true,
     });
     if (error) throw new Error(`Could not create admin user: ${error.message}`);
+    adminUserId = created?.user?.id;
     console.log(`Created admin user: ${cfg.adminEmail}`);
   } else {
     console.log(`Admin user already exists: ${cfg.adminEmail}`);
   }
 
+  if (!adminUserId) throw new Error("Could not resolve admin user id.");
+
   const { error: upsertError } = await sb
     .from("admins")
-    .upsert({ email: cfg.adminEmail.toLowerCase(), name: cfg.adminName }, { onConflict: "email" });
+    .upsert({ id: adminUserId, email: cfg.adminEmail.toLowerCase(), name: cfg.adminName }, { onConflict: "email" });
   if (upsertError) throw new Error(`Could not add admin row: ${upsertError.message}`);
   console.log(`Admin ready: ${cfg.adminEmail}`);
 
