@@ -51,5 +51,10 @@ export async function GET(req: Request) {
     return NextResponse.json({ ok: true, status: "success", enrollmentId });
   }
 
+  if (txnStatus === "failed" || txnStatus === "abandoned") {
+    await sb.from("enrollments").update({ payment_status: "failed" }).eq("id", enrollment.id);
+    return NextResponse.json({ ok: true, status: "failed", enrollmentId });
+  }
+
   return NextResponse.json({ ok: true, status: txnStatus, enrollmentId });
 }

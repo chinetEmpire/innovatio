@@ -187,10 +187,21 @@ export async function deleteQuestionAction(formData: FormData) {
 }
 
 export async function markEnrollmentPaidAction(formData: FormData) {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const id = parseId(formData.get("id"));
 
-  await serviceClient().from("enrollments").update({ payment_status: "paid" }).eq("id", id);
+  const { data: enrollment } = await serviceClient()
+    .from("enrollments")
+    .select("id, payment_status")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (enrollment && enrollment.payment_status !== "paid") {
+    await serviceClient()
+      .from("enrollments")
+      .update({ payment_status: "paid", paid_at: new Date().toISOString(), paid_by: admin.email })
+      .eq("id", id);
+  }
 
   revalidatePath("/admin/applicants");
 }

@@ -57,17 +57,18 @@ Assessment & course eligibility system for Innovatio Academy, built on Next.js 1
 - `lib/paystack.ts` — Paystack client: `initializeTransaction`, `verifyTransaction`, `verifyWebhookSignature` (SHA512 HMAC). Reads `PAYSTACK_SECRET_KEY`; never exposed client-side.
 - API routes:
   - `POST /api/paystack/initialize` — takes `{ enrollmentId, planKey }`, validates enrollment is `pending`, stores `plan_key`/`amount_kobo`/`payment_reference`, returns Paystack `authorization_url`.
-  - `POST /api/paystack/webhook` — HMAC-verified; on `charge.success` marks the matching enrollment `paid` + `paid_at` (idempotent).
-  - `GET /api/paystack/verify` — fallback verify by reference (used by the verify page).
+  - `POST /api/paystack/webhook` — HMAC-verified; `charge.success` → `paid` + `paid_at`; `charge.failed` → `failed` (idempotent).
+  - `GET /api/paystack/verify` — fallback verify by reference (used by the verify page); persists `paid` or `failed`/`abandoned`.
 - `app/payment/page.tsx` — async server page keyed by `?enrollment=<id>`: no/invalid id → redirect `/apply`; already paid → success panel; else renders client `PaymentPage`.
 - `components/PaymentPage.tsx` — stateful client UI: course **locked to the enrolled course**, plan cards drive the "Due now" summary, "Proceed to payment" → initialize → redirect to Paystack.
 - `app/payment/verify/page.tsx` — success / "not confirmed" / processing panels after return from Paystack; server-side verifies and updates the row.
 - `components/apply/RegisterForm.tsx` — success screen now has a **"Proceed to payment"** button → `/payment?enrollment=<id>`.
-- Admin applicant detail — shows plan, amount due now, Paystack reference, paid-at; manual "Mark as paid" kept as fallback.
+- Admin **Payments tab** (`/admin/payments`) — stat cards + allowlist-filter tabs (`?status=all|paid|pending|failed`, server-side query) + mobile-scrollable table: student → applicant detail, course, plan, amount due, status badge (green/amber/red), Paystack reference, dates.
+- Admin applicant detail — shows plan, amount due now, Paystack reference, paid-at, and who marked it paid (`paid_by`); red **Failed** badge; manual "Mark as paid" shown for pending AND failed (one-way → paid, audited with `paid_at` + `paid_by`).
 - Homepage `/courses` section: `PaymentOptions` + `data/paymentOptions.ts` (static branding cards).
 
 ### 5. Database & Seeding
-- `supabase/schema.sql` — source of truth: tables + RLS + enrollment payment columns (`plan_key`, `amount_kobo`, `currency`, `payment_reference`, `paid_at`).
+- `supabase/schema.sql` — source of truth: tables + RLS + enrollment payment columns (`plan_key`, `amount_kobo`, `currency`, `payment_reference`, `paid_at`, `paid_by`) + `payment_status` check allows `('pending','paid','failed')`.
 - RLS: enabled on all tables; only policy is `"Admins can view their own row"` (self-select by JWT email). Applicant/assessment data goes through service role, so no policies needed for it.
 - `scripts/seed.ts` (`npm run seed`) — idempotent: creates courses (`software-engineering`, `cybersecurity`), 2 assessments × 5 MCQs, admin auth user + `admins` row (id aligned to auth user id).
 
@@ -108,13 +109,22 @@ alter table public.enrollments
   add column if not exists amount_kobo int,
   add column if not exists currency text not null default 'NGN',
   add column if not exists payment_reference text,
-  add column if not exists paid_at timestamptz;
+  add column if not exists paid_at timestamptz,
+  add column if not exists paid_by text;
+
+-- 3) Allow 'failed' payment status (idempotent)
+alter table public.enrollments
+  drop constraint if exists enrollments_payment_status_check;
+alter table public.enrollments
+  add constraint enrollments_payment_status_check
+    check (payment_status in ('pending', 'paid', 'failed'));
 ```
 
 ### Then to finish wiring payments:
 1. Add `PAYSTACK_SECRET_KEY` (test key for now) to `.env.local`, restart `npm run dev`.
-2. Test end-to-end with Paystack test card `4084 0840 8408 4081`, CVV `408`, any future expiry.
-3. **Webhooks need a public URL** (only matters in production / external testing): set the webhook endpoint to `https://<your-domain>/api/paystack/webhook` in the Paystack dashboard (or use `ngrok` against `http://localhost:3000/api/paystack/webhook` while testing locally). In local dev the verify-on-return page covers the flow without a webhook.
+2. Test end-to-end with Paystack test card `4084 0840 8408 4081`, CVV `408`, any future expiry. Use a failing card / expired date to confirm the **Failed** state appears in `/admin/payments`.
+3. **Production webhook**: in the Paystack dashboard, set the webhook URL to `https://innovatio-silk.vercel.app/api/paystack/webhook` (site is already deployed to Vercel). For local testing use `ngrok` against `http://localhost:3000/api/paystack/webhook` — in local dev the verify-on-return page covers the flow without a webhook.
+4. Deploy is already live at `https://innovatio-silk.vercel.app`; `main` pushes auto-deploy via Vercel.
 
 ---
 

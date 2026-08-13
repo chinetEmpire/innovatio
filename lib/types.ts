@@ -76,7 +76,7 @@ export type Enrollment = {
   applicant_id: string;
   course_id: string;
   attempt_id: string | null;
-  payment_status: "pending" | "paid";
+  payment_status: "pending" | "paid" | "failed";
   created_at: string;
 };
 

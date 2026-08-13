@@ -31,7 +31,7 @@ export default async function ApplicantDetailPage({
     sb.from("attempts").select("id, score, passed, status, started_at, submitted_at").eq("applicant_id", id).order("started_at", { ascending: false }),
     sb
       .from("enrollments")
-      .select("id, payment_status, plan_key, amount_kobo, payment_reference, paid_at, created_at")
+      .select("id, payment_status, plan_key, amount_kobo, payment_reference, paid_at, paid_by, created_at")
       .eq("applicant_id", id)
       .order("created_at", { ascending: false }),
   ]);
@@ -121,11 +121,16 @@ export default async function ApplicantDetailPage({
             <div key={enrollment.id} className="mt-4 flex flex-col gap-3 rounded-xl border border-[#f0ecf6] bg-[#faf7ff] px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-sm font-bold text-ink">
-                  {enrollment.payment_status === "paid" ? "Payment received" : "Payment pending"}
+                  {enrollment.payment_status === "paid"
+                    ? "Payment received"
+                    : enrollment.payment_status === "failed"
+                      ? "Payment failed"
+                      : "Payment pending"}
                 </p>
                 <p className="mt-1 text-xs text-[#8a8493]">
                   Started {formatDateTime(enrollment.created_at)}
                   {enrollment.paid_at && enrollment.payment_status === "paid" && ` · Paid ${formatDateTime(enrollment.paid_at)}`}
+                  {enrollment.payment_status === "paid" && enrollment.paid_by && ` by ${enrollment.paid_by}`}
                 </p>
                 {(enrollment.plan_key || enrollment.amount_kobo != null) && (
                   <p className="mt-1 text-xs text-[#8a8493]">
@@ -140,7 +145,7 @@ export default async function ApplicantDetailPage({
                   <p className="mt-1 break-all text-xs text-[#8a8493]">Ref: {enrollment.payment_reference}</p>
                 )}
               </div>
-              {enrollment.payment_status === "pending" && (
+              {enrollment.payment_status !== "paid" && (
                 <form action={markEnrollmentPaidAction}>
                   <input type="hidden" name="id" value={enrollment.id} />
                   <button type="submit" className="w-full rounded-full bg-green-600 px-5 py-2 text-sm font-semibold text-white transition-transform hover:scale-[1.02] active:scale-95 sm:w-auto">

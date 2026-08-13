@@ -45,6 +45,7 @@ export default async function PaymentVerifyPage({
           .eq("id", enrollment.id);
         status = "success";
       } else if (txn.status === "failed" || txn.status === "abandoned") {
+        await sb.from("enrollments").update({ payment_status: "failed" }).eq("id", enrollment.id);
         status = "failed";
       }
     } catch {

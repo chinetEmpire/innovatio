@@ -20,19 +20,22 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
   }
 
-  if (event.event === "charge.success" && event.data?.reference) {
+  const reference = event.data?.reference;
+
+  if (reference && (event.event === "charge.success" || event.event === "charge.failed")) {
     const sb = serviceClient();
     const { data: enrollment } = await sb
       .from("enrollments")
       .select("id, payment_status")
-      .eq("payment_reference", event.data.reference)
+      .eq("payment_reference", reference)
       .maybeSingle();
 
     if (enrollment && enrollment.payment_status !== "paid") {
-      await sb
-        .from("enrollments")
-        .update({ payment_status: "paid", paid_at: new Date().toISOString() })
-        .eq("id", enrollment.id);
+      const update =
+        event.event === "charge.success"
+          ? { payment_status: "paid", paid_at: new Date().toISOString() }
+          : { payment_status: "failed" };
+      await sb.from("enrollments").update(update).eq("id", enrollment.id);
     }
   }
 
