@@ -45,11 +45,11 @@ export default function EnrollNowPage() {
           <div className="mt-8 max-w-[620px] mx-auto">
             <h2 className="text-[18px] font-black tracking-[-0.04em] text-[#171717]">What to expect</h2>
             <ul className="mt-4 space-y-3 text-[15px] leading-relaxed text-[#3f3f3f]">
-              <li className="flex items-center gap-3"><span className="inline-block h-2 w-2 rounded-full bg-[#3d3d3d]" />Takes about 10–15 minutes</li>
+              <li className="flex items-center gap-3"><span className="inline-block h-2 w-2 rounded-full bg-[#3d3d3d]" />Takes about 10–30 minutes</li>
               <li className="flex items-center gap-3"><span className="inline-block h-2 w-2 rounded-full bg-[#3d3d3d]" />Multiple-choice questions</li>
               <li className="flex items-center gap-3"><span className="inline-block h-2 w-2 rounded-full bg-[#3d3d3d]" />No payment required yet</li>
               <li className="flex items-center gap-3"><span className="inline-block h-2 w-2 rounded-full bg-[#3d3d3d]" />You&apos;ll receive your result immediately</li>
-              <li className="flex items-center gap-3"><span className="inline-block h-2 w-2 rounded-full bg-[#3d3d3d]" />Up to 3 assessment attempts</li>
+              <li className="flex items-center gap-3"><span className="inline-block h-2 w-2 rounded-full bg-[#3d3d3d]" />Unlimited attempts, within 1hr interval</li>
             </ul>
 
             <div className="mt-8 flex justify-center">
