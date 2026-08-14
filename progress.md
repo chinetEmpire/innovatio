@@ -101,6 +101,10 @@ Assessment & course eligibility system for Innovatio Academy, built on Next.js 1
 - `aa723c4` Update enroll page assessment expectations
 - `3be103f` Use official Innovatio logo on enroll and payment page headers
 - `439a2f5` Make footer links clickable
+- `f8086bd` Use innovate image on About section and save progress notes
+
+### 8. Site imagery
+- Homepage About section image swapped from `use.png` → `innovate.png` (old file deleted; `components/About.tsx` import updated).
 
 ---
 
