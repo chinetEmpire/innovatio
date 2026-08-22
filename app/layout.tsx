@@ -1,20 +1,19 @@
 import type { Metadata } from "next";
-import { Lato } from "next/font/google";
 
 import "./globals.css";
-
-const lato = Lato({
-  weight: ["100", "300", "400", "700", "900"],
-  subsets: ["latin"],
-  variable: "--font-lato",
-});
 
 export const metadata: Metadata = { title: "Innovatio Academy", description: "Full-stack Software Engineering" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={lato.className}>{children}</body>
+      <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="" />
+      <link
+        href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap"
+        rel="stylesheet"
+        precedence="default"
+      />
+      <body>{children}</body>
     </html>
   );
 }

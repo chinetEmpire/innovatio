@@ -11,13 +11,13 @@ export default function HomeHero() {
         <div className="flex flex-col justify-center px-5 py-14 sm:px-8 lg:px-[8%] lg:py-20">
           
           <h1
-            className="animate-fade-up mt-6 max-w-xl text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl"
+            className="animate-fade-up mt-6 max-w-xl text-[38px] font-black leading-[1.05] tracking-tight lg:text-[62px]"
             style={{ "--reveal-delay": "100ms" } as React.CSSProperties}
           >
             Train here. Get hired anywhere.
           </h1>
           <p
-            className="animate-fade-up mt-5 max-w-md text-base text-[#5f5b65]"
+            className="animate-fade-up mt-5 max-w-md text-[20px] text-[#5f5b65]"
             style={{ "--reveal-delay": "200ms" } as React.CSSProperties}
           >
             Whether you&apos;re starting from scratch or switching careers, we&apos;ll help you build the confidence and
@@ -29,13 +29,13 @@ export default function HomeHero() {
           >
             <Link
               href="/enroll"
-              className="rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white shadow-[0_10px_22px_rgba(84,41,208,0.3)] transition-transform hover:scale-[1.03] active:scale-95"
+              className="flex h-[58px] w-[165px] items-center justify-center rounded-full bg-brand text-[20px] font-semibold text-white shadow-[0_10px_22px_rgba(84,41,208,0.3)] transition-transform hover:scale-[1.03] active:scale-95 lg:h-[68px] lg:w-[184px] lg:text-[24px]"
             >
               Enroll now
             </Link>
             <Link
               href="/courses"
-              className="rounded-full border border-[#e2d9f2] px-6 py-3 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand"
+              className="flex h-[58px] items-center justify-center rounded-full border border-[#e2d9f2] text-[20px] font-semibold text-ink transition-colors hover:border-brand hover:text-brand lg:h-[68px]  lg:text-[24px]"
             >
               View courses
             </Link>
@@ -73,16 +73,16 @@ export default function HomeHero() {
         </div>
       </div>
 
-      <div className="border-t border-[#f0ebf7] bg-[#faf7ff] px-5 py-6">
-        <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 sm:flex-row sm:justify-between">
-          <p className="text-sm font-medium text-[#8a8493]">Where our learners work:</p>
-          <div className="flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
+      <div className="border-t border-[#f0ebf7] bg-[#faf7ff] py-16 sm:py-20">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-x-6 whitespace-nowrap px-5 sm:px-8">
+          <p className="shrink-0 text-[32px] font-medium text-black">Where our learners work:</p>
+          <div className="flex min-w-0 items-center justify-end gap-x-6">
             {homeEmployerLogos.map((brand) => (
               <Image
                 key={brand.alt}
                 src={brand.src}
                 alt={brand.alt}
-                className="max-h-6 w-auto opacity-55 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0"
+                className={brand.className ?? "max-h-10 w-auto shrink-0"}
               />
             ))}
           </div>

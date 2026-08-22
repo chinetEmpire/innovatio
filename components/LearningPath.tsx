@@ -17,6 +17,7 @@ export default function LearningPath() {
         <div className="mt-8 inline-flex max-w-full flex-wrap justify-center gap-1 rounded-full bg-[#f6f3fa] p-1.5">
           {learningTabs.map((tab, index) => (
             <button
+              data-control
               key={tab}
               onClick={() => setActiveTab(index)}
               className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium transition-colors ${

@@ -7,13 +7,42 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   color: #17131f;
-  font-family: var(--font-lato), Arial, Helvetica, sans-serif;
+  font-family: "Satoshi", Arial, Helvetica, sans-serif;
   font-size: 15px;
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 ::selection { background: #e6d9ff; }
+
+/* Global paragraph type scale */
+p { font-size: 20px; }
+@media (min-width: 1024px) {
+  p { font-size: 24px; }
+}
+
+/* Hero-style pill buttons site-wide (opt out with data-control) */
+button:not([data-control]),
+a[class*="rounded-full"]:not([data-control]) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 58px;
+  min-width: 165px;
+  border-radius: 9999px;
+  padding-left: 24px;
+  padding-right: 24px;
+  font-size: 20px;
+  font-weight: 600;
+}
+@media (min-width: 1024px) {
+  button:not([data-control]),
+  a[class*="rounded-full"]:not([data-control]) {
+    height: 68px;
+    min-width: 184px;
+    font-size: 24px;
+  }
+}
 
 /* Reveal on scroll */
 .reveal {

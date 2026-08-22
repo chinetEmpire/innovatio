@@ -108,6 +108,7 @@ export default function PaymentPage({
                 const selected = p.key === planKey;
                 return (
                   <button
+                    data-control
                     key={p.key}
                     type="button"
                     onClick={() => setPlanKey(p.key)}

@@ -134,6 +134,7 @@ export default function AssessmentRunner({
             const selected = answers[question.id] === choice.id;
             return (
               <button
+                data-control
                 key={choice.id}
                 type="button"
                 onClick={() => selectChoice(choice.id)}

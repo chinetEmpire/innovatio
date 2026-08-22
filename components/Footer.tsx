@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <>
       <footer className="overflow-hidden bg-brand text-white">
-        <div className="relative mx-auto max-w-[800px] px-5 pb-4 pt-10">
+        <div className="relative px-5 pb-0 pt-10 sm:px-8 lg:px-[8%]">
           <Sparkles className="absolute right-8 top-8 text-yellow-300" size={48} strokeWidth={1.3} />
           <p>Discover the potency of<br />Innovatio Academy at</p>
           <a className="mt-4 block break-words text-[20px] font-bold sm:text-[28px]" href={`mailto:${footerInfo.email}`}>
@@ -32,7 +32,25 @@ export default function Footer() {
               </p>
             ))}
           </div>
-          <p className="mt-7 -mb-7 text-[clamp(92px,22vw,180px)] font-bold leading-none tracking-tighter">Innovatio</p>
+          <svg
+            viewBox="0 0 660 152"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+            className="mt-7 block h-auto w-full"
+          >
+            <text
+              x="0"
+              y="125"
+              fill="currentColor"
+              fontSize="152"
+              fontWeight="900"
+              letterSpacing="-4"
+              textLength="660"
+              lengthAdjust="spacingAndGlyphs"
+            >
+              Innovatio
+            </text>
+          </svg>
         </div>
       </footer>
       <div className="py-2 text-center text-[7px]">{footerInfo.copyright}</div>

@@ -74,6 +74,7 @@ export default function ApplyForm({ courses }: { courses: CourseOption[] }) {
             const selected = course.slug === courseSlug;
             return (
               <button
+                data-control
                 key={course.id}
                 type="button"
                 onClick={() => setCourseSlug(course.slug)}
