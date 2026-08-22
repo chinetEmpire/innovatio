@@ -33,11 +33,11 @@ export default function WhatSetsUsApart() {
 
         <Reveal delay={150}>
           <div className="relative mx-auto max-w-md">
-            <div className="absolute -right-5 -top-5 h-28 w-28 rounded-2xl bg-brand/10" aria-hidden />
+            <div  />
             <Image
               src={miscImage}
               alt="Learners collaborating"
-              className="relative aspect-square w-full rounded-3xl object-cover shadow-[0_24px_48px_rgba(47,31,101,0.16)]"
+              className="relative  w-full rounded-3xl object-cover]"
             />
           </div>
         </Reveal>
