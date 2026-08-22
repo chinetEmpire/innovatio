@@ -3,19 +3,24 @@
 import { useState } from "react";
 import { CheckCircle2 } from "lucide-react";
 
-import { learningContent, learningTabs } from "@/data/learningPath";
+import type { LearningContent } from "@/data/courses";
 
-export default function LearningPath() {
+type LearningPathProps = {
+  tabs: string[];
+  content: LearningContent;
+};
+
+export default function LearningPath({ tabs, content }: LearningPathProps) {
   const [activeTab, setActiveTab] = useState(0);
-  const activeLabel = learningTabs[activeTab];
-  const items = learningContent[activeLabel] ?? [];
+  const activeLabel = tabs[activeTab];
+  const items = content[activeLabel] ?? [];
 
   return (
     <section id="learn" className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
       <div className="text-center">
         <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Explore your learning path</h2>
         <div className="mt-8 inline-flex max-w-full flex-wrap justify-center gap-1 rounded-full bg-[#f6f3fa] p-1.5">
-          {learningTabs.map((tab, index) => (
+          {tabs.map((tab, index) => (
             <button
               data-control
               key={tab}

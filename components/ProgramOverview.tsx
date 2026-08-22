@@ -1,12 +1,12 @@
 import { benefits } from "@/data/benefits";
 import Reveal from "./Reveal";
 
-export default function ProgramOverview() {
+export default function ProgramOverview({ heading }: { heading: string }) {
   return (
     <section className="mx-auto max-w-6xl px-5 pb-16 pt-20 text-center sm:px-8">
       <Reveal>
         <h2 className="mx-auto max-w-2xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-          Become a Software Engineer with Innovatio Academy
+          {heading}
         </h2>
       </Reveal>
       <div className="mt-12 grid gap-10 sm:grid-cols-3">

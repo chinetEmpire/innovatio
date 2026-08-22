@@ -23,7 +23,7 @@ export const homeEmployerLogos: BrandLogo[] = [
   { src: dropbox, alt: "Dropbox" },
   { src: seplat, alt: "Seplat" },
   { src: ibm, alt: "IBM" },
-  { src: paystack, alt: "Paystack", className: "max-h-[65px]" },
+  { src: paystack, alt: "Paystack", className: "max-h-14 lg:max-h-12 xl:max-h-[56px]" },
 ];
 
 export const companyLogos: BrandLogo[] = [

@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import heroHome from "@/app/images/heroHome.png";
 import { homeEmployerLogos } from "@/data/site";
+import CoursePickerModal from "./CoursePickerModal";
 
 export default function HomeHero() {
   return (
@@ -33,12 +34,7 @@ export default function HomeHero() {
             >
               Enroll now
             </Link>
-            <Link
-              href="/courses"
-              className="flex h-[58px] items-center justify-center rounded-full border border-[#e2d9f2] text-[20px] font-semibold text-ink transition-colors hover:border-brand hover:text-brand lg:h-[68px]  lg:text-[24px]"
-            >
-              View courses
-            </Link>
+            <CoursePickerModal />
           </div>
           <div
             className="animate-fade-up mt-10 flex flex-wrap gap-x-10 gap-y-5"
@@ -74,15 +70,17 @@ export default function HomeHero() {
       </div>
 
       <div className="border-t border-[#f0ebf7] bg-[#faf7ff] py-16 sm:py-20">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-x-6 whitespace-nowrap px-5 sm:px-8">
-          <p className="shrink-0 text-[32px] font-medium text-black">Where our learners work:</p>
-          <div className="flex min-w-0 items-center justify-end gap-x-6">
+        <div className="flex flex-col gap-8 px-5 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:gap-x-6 lg:px-[8%]">
+          <p className="text-2xl font-medium text-black lg:shrink-0 lg:whitespace-nowrap lg:text-[26px] xl:text-[32px]">
+            Where our learners work:
+          </p>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-5 lg:min-w-0 lg:flex-nowrap lg:justify-end">
             {homeEmployerLogos.map((brand) => (
               <Image
                 key={brand.alt}
                 src={brand.src}
                 alt={brand.alt}
-                className={brand.className ?? "max-h-10 w-auto shrink-0"}
+                className={brand.className ?? "max-h-10 w-auto shrink-0 lg:max-h-9 xl:max-h-10"}
               />
             ))}
           </div>
