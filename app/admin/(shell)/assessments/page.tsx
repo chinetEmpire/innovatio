@@ -69,7 +69,7 @@ export default async function AssessmentsPage() {
             </label>
           </div>
           <div className="flex items-end">
-            <button type="submit" className="w-full rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.02] active:scale-95">
+            <button type="submit" data-control="true" className="w-full rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.02] active:scale-95">
               Create
             </button>
           </div>
@@ -98,7 +98,7 @@ export default async function AssessmentsPage() {
                   <form action={toggleAssessmentActiveAction}>
                     <input type="hidden" name="id" value={assessment.id} />
                     <input type="hidden" name="active" value={assessment.active ? "false" : "true"} />
-                    <button type="submit" className="rounded-full border border-[#e2d9f2] px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand">
+                    <button type="submit" data-control="true" className="rounded-full border border-[#e2d9f2] px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand">
                       {assessment.active ? "Deactivate" : "Activate"}
                     </button>
                   </form>
@@ -106,6 +106,7 @@ export default async function AssessmentsPage() {
                     action={deleteAssessmentAction}
                     confirmMessage="Delete this assessment and all its questions and attempts?"
                     fields={{ id: assessment.id }}
+                    dataControl
                     buttonClassName="rounded-full border border-red-200 px-4 py-2 text-sm font-semibold text-red-600 transition-colors hover:bg-red-50"
                   >
                     Delete
@@ -148,7 +149,7 @@ export default async function AssessmentsPage() {
                     </label>
                   </div>
                   <div className="flex items-end">
-                    <button type="submit" className="w-full rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.02] active:scale-95">
+                    <button type="submit" data-control="true" className="w-full rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.02] active:scale-95">
                       Save settings
                     </button>
                   </div>
