@@ -42,7 +42,7 @@ Assessment & course eligibility system for Innovatio Academy, built on Next.js 1
   - `app/admin/(shell)/layout.tsx`, `page.tsx` — layout/nav + dashboard.
   - `app/admin/(shell)/assessments/page.tsx` + `[id]/page.tsx` — assessments CRUD, question bank.
   - `app/admin/(shell)/applicants/page.tsx` + `[id]/page.tsx` — applicants list + detail with "Mark as paid".
-- Auth: `lib/admin.ts` (`getAdminSession`/`requireAdmin`), `middleware.ts` guards `/admin/:path*`.
+- Auth: `lib/admin.ts` (`getAdminSession`/`requireAdmin`), `proxy.ts` (Next 16's middleware replacement) refreshes Supabase sessions and guards `/admin/:path*`.
 - Server actions: `app/admin/actions.ts` (assessment/question/enrollment mutations, logout).
 - `components/admin/ConfirmSubmit.tsx` — confirm-on-delete form wrapper.
 - `components/admin/LoginForm.tsx` — sign-in form (redesigned UI).
@@ -107,6 +107,8 @@ Assessment & course eligibility system for Innovatio Academy, built on Next.js 1
 - `594bf09` Add testimonials carousel and polish learning tracks and cohort steps
 - `b80a499` Add cybersecurity course page, courses nav dropdown, and course picker modal
 - `2681971` Add admin action feedback, applicant management, and active nav state
+- `2712ed3` Add single-flow assessment builder, confirm dialogs, and compact admin buttons
+- `87eae62` Harden attempt ownership, payment verification, and security headers
 
 ### 8. Site imagery
 - Homepage About section image swapped from `use.png` → `innovate.png` (old file deleted; `components/About.tsx` import updated).
@@ -122,6 +124,19 @@ Assessment & course eligibility system for Innovatio Academy, built on Next.js 1
 - **Results privacy fix** (`app/apply/[course]/result/page.tsx`): removed the "Review your answers" block entirely — students now see only pass/fail banner, score/percentage/pass mark, and next-step actions. The page query fetches only `points` (no question text or choices are sent). During the test itself answers were already protected (`toSafeQuestions` strips `is_correct`).
 - Repo hygiene: `.opencode/` (local tooling state incl. node_modules) added to `.gitignore`.
 - Ops note: running `npm run build` while `npm run dev` is serving corrupts the shared `.next` dir and breaks the dev server — fixed by killing the dev process, deleting `.next`, and restarting `npm run dev`.
+
+### 10. Assessment builder, admin UX polish, security hardening (commits `2712ed3` + `87eae62`)
+- **Single-flow assessment creation** (`components/admin/AssessmentBuilder.tsx`): replaced "create assessment then add questions later" with one form on `/admin/assessments` — settings grid (course, title, pass mark, duration, max attempts, cooldown, shuffle) plus a dynamic question builder (add/remove questions; 2–6 choices each with radio for the correct answer; per-question points). Nothing is saved until submit: new `createAssessmentWithQuestionsAction` validates everything first (≥1 question, ≥2 non-empty choices each, exactly one correct), inserts assessment → questions → choices, and best-effort deletes the assessment if any insert fails. New assessments are created **inactive** (activate via the list page). Form resets to a fresh state after success. `/admin/assessments/[id]` unchanged for managing questions after creation.
+- **Confirm-before-action dialogs**: "Mark as paid" now always opens a styled confirmation popup before running. `ActionForm` gained optional `confirmTitle` / `confirmMessage` / `confirmLabel` props — when set it intercepts submit and shows a portal modal (backdrop click, Escape, and X all close) that reuses the existing action + toast flow. Reusable for other destructive admin actions.
+- **Compact admin buttons**: site-wide hero-pill CSS (`globals.css`) was inflating buttons without `data-control`. Added a scoped `.admin-shell button:not([data-control])` override (root class added in `(shell)/layout.tsx`) restoring default compact sizing (auto height, no min-width, 16px/10px padding, 14px font) across every admin page.
+- **Assessment runner padding** reduced for choice options, Previous/Next, and Submit; "Add question" moved next to "Create assessment" at the bottom of the builder.
+- **Security hardening** (commit `87eae62`):
+  - Attempt ownership: `/api/apply/start` grants an HttpOnly cookie (`lib/attempts.ts`) on start/resume; `/api/apply/submit` rejects attempts not granted to the browser (403), enforces the deadline server-side (`started_at + duration_minutes` + 30s grace — previously timer was client-only), and revokes the grant after submission. The assessment page also redirects non-owners instead of serving them questions.
+  - Paystack verify: `GET /api/paystack/verify` now requires the reference to match `enrollments.payment_reference` (403 otherwise) — prevents confirming/failing one person's enrollment using another's payment reference. Webhook already looked up by reference and was safe.
+  - Profile hijack fix: applicant upsert switched to `ignoreDuplicates: true` so re-submitting the apply form can no longer overwrite an existing application (name/WhatsApp/age) or consume their attempts.
+  - PII trim: `/api/apply/register` response no longer returns WhatsApp number or age bracket (`RegisterForm` updated to match).
+  - Security headers via new `next.config.ts`: HSTS (2y, includeSubDomains, preload), `X-Content-Type-Options`, `X-Frame-Options: DENY`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy`.
+  - Review notes: `.env` files untracked, `npm audit` clean, webhook signature HMAC-verified against raw body, payment amounts checked against ledger, all admin actions call `requireAdmin()`. Deferred: rate limiting/captcha on public endpoints (needs Redis/Upstash or similar).
 
 ---
 
@@ -168,7 +183,7 @@ alter table public.enrollments
 1. **Apply the SQL steps above to the live Supabase DB** and verify admin login + payments end-to-end (blocker — highest priority).
 2. **Add `PAYSTACK_SECRET_KEY` to `.env.local`** (and Vercel env for prod) and test a real Paystack checkout (test card `4084 0840 8408 4081`); confirm enrollment flips to `paid` and shows in `/admin/payments`.
 3. **Configure the Paystack webhook URL** → `https://innovatio-silk.vercel.app/api/paystack/webhook` (required for reliable paid/failed capture in production).
-4. **Migrate `middleware.ts` → `proxy`** (Next 16 deprecation) to clear the build warning.
+4. **Rate limiting / captcha** on public endpoints (`/api/apply/start`, `/register`, admin login) — needs a store (Redis/Upstash) added to the stack first.
 5. **Real social media URLs** in `data/site.ts` footer.
 6. **Switch to live Paystack keys** and add a max-amount sanity check per plan when ready to take real payments.
 7. **Email notifications** — notify applicant of pass/fail and payment confirmation, notify admin of new applications.
