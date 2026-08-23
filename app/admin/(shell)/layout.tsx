@@ -9,7 +9,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const admin = await requireAdmin();
 
   return (
-    <div className="min-h-screen bg-[#faf7ff]">
+    <div className="admin-shell min-h-screen bg-[#faf7ff]">
       <ToastProvider>
         <header className="sticky top-0 z-50 border-b border-[#ece6f6] bg-white/90 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">

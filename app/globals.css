@@ -44,6 +44,21 @@ a[class*="rounded-full"]:not([data-control]) {
   }
 }
 
+/* Admin dashboard: compact default button sizing (opt out of hero pills) */
+.admin-shell button:not([data-control]),
+.admin-shell a[class*="rounded-full"]:not([data-control]) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  min-width: 0;
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 14px;
+}
+
 /* Reveal on scroll */
 .reveal {
   opacity: 0;

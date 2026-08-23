@@ -147,7 +147,17 @@ export default async function ApplicantDetailPage({
                 )}
               </div>
               {enrollment.payment_status !== "paid" && (
-                <ActionForm action={markEnrollmentPaidAction} successMessage="Enrollment marked as paid successfully.">
+                <ActionForm
+                  action={markEnrollmentPaidAction}
+                  successMessage="Enrollment marked as paid successfully."
+                  confirmTitle="Mark as paid?"
+                  confirmLabel="Yes, mark as paid"
+                  confirmMessage={
+                    enrollment.amount_kobo != null
+                      ? `This will permanently mark this enrollment as paid for ₦${((enrollment.amount_kobo ?? 0) / 100).toLocaleString("en-NG")}. This action cannot be undone.`
+                      : "This will permanently mark this enrollment as paid. This action cannot be undone."
+                  }
+                >
                   <input type="hidden" name="id" value={enrollment.id} />
                   <button type="submit" data-control="true" className="w-full rounded-full bg-green-600 px-5 py-2 text-sm font-semibold text-white transition-transform hover:scale-[1.02] active:scale-95 sm:w-auto">
                     Mark as paid

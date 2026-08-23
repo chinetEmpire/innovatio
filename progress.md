@@ -102,9 +102,26 @@ Assessment & course eligibility system for Innovatio Academy, built on Next.js 1
 - `3be103f` Use official Innovatio logo on enroll and payment page headers
 - `439a2f5` Make footer links clickable
 - `f8086bd` Use innovate image on About section and save progress notes
+- `17a7fc4` Update components and rename middleware to proxy
+- `b852d4d` Restore normal button sizes on admin assessments page
+- `594bf09` Add testimonials carousel and polish learning tracks and cohort steps
+- `b80a499` Add cybersecurity course page, courses nav dropdown, and course picker modal
+- `2681971` Add admin action feedback, applicant management, and active nav state
 
 ### 8. Site imagery
 - Homepage About section image swapped from `use.png` → `innovate.png` (old file deleted; `components/About.tsx` import updated).
+
+### 9. Admin UX pass — action feedback, applicant management, active nav (commit `2681971`)
+- **Toast system** (`components/admin/Toasts.tsx` + `ActionForm.tsx` + `ConfirmDialog.tsx`): success/error toasts (auto-dismiss ~4.5s, manual dismiss, pending dimming) mounted in the admin shell layout. Every admin action now reports its outcome:
+  - Assessments page: create, edit settings (converted from raw server-action form), activate/deactivate (state-aware message), delete.
+  - Assessment detail: add question (form resets), update question, delete question.
+  - Applicant detail: mark-as-paid → "Enrollment marked as paid successfully."
+  - Server actions (`app/admin/actions.ts`) now check Supabase `{ error }` everywhere and throw, so failed DB writes show an error toast instead of a false success.
+- **Applicant row actions** (`components/admin/ApplicantRowActions.tsx` + new column on `/admin/applicants`): View (→ detail page), Edit (modal dialog updating name/email/WhatsApp/age bracket/course via new `updateApplicantAction`), Delete (confirm dialog warns attempts/enrollments cascade; new `deleteApplicantAction`). Courses fetched server-side for the edit dropdown. `ActionForm` gained an optional `onSuccess` callback so dialogs close themselves after a successful save.
+- **Active nav state**: `components/admin/AdminNav.tsx` (client, `usePathname`) renders desktop tabs with brand color + 2px underline sitting on the header border, and a mobile row variant with brand color + underline. `/admin` matches exactly; other sections match by prefix so sub-pages keep their tab highlighted. `aria-current="page"` set on the active link.
+- **Results privacy fix** (`app/apply/[course]/result/page.tsx`): removed the "Review your answers" block entirely — students now see only pass/fail banner, score/percentage/pass mark, and next-step actions. The page query fetches only `points` (no question text or choices are sent). During the test itself answers were already protected (`toSafeQuestions` strips `is_correct`).
+- Repo hygiene: `.opencode/` (local tooling state incl. node_modules) added to `.gitignore`.
+- Ops note: running `npm run build` while `npm run dev` is serving corrupts the shared `.next` dir and breaks the dev server — fixed by killing the dev process, deleting `.next`, and restarting `npm run dev`.
 
 ---
 

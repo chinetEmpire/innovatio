@@ -39,24 +39,87 @@ function parseBool(value: FormDataEntryValue | null): boolean {
   return value === "on" || value === "true" || value === "1";
 }
 
-export async function createAssessmentAction(formData: FormData) {
+type IncomingChoice = { text?: unknown; isCorrect?: unknown };
+type IncomingQuestion = { text?: unknown; points?: unknown; choices?: unknown };
+
+export async function createAssessmentWithQuestionsAction(formData: FormData) {
   await requireAdmin();
   const courseId = parseId(formData.get("courseId"));
   const title = String(formData.get("title") ?? "").trim();
   if (!title || !courseId) throw new Error("Title and course are required.");
 
-  const { error } = await serviceClient().from("assessments").insert({
-    course_id: courseId,
-    title,
-    description: String(formData.get("description") ?? "").trim(),
-    pass_mark: parseIntField(formData.get("passMark"), 50, 1, 100),
-    duration_minutes: parseIntField(formData.get("durationMinutes"), 30, 1, 600),
-    max_attempts: parseOptionalInt(formData.get("maxAttempts")),
-    retake_cooldown_hours: parseIntField(formData.get("retakeCooldownHours"), 24, 0, 8760),
-    shuffle_questions: parseBool(formData.get("shuffleQuestions")),
-    active: true,
-  });
-  if (error) throw new Error(error.message);
+  let rawQuestions: IncomingQuestion[] = [];
+  try {
+    const payload = formData.get("questions");
+    if (typeof payload === "string" && payload.trim()) {
+      const parsed = JSON.parse(payload);
+      if (Array.isArray(parsed)) rawQuestions = parsed;
+    }
+  } catch {
+    throw new Error("Could not read the questions you added. Please try again.");
+  }
+
+  const questions = rawQuestions.map((q) => ({
+    text: String(q?.text ?? "").trim(),
+    points: Math.min(Math.max(Math.trunc(Number(q?.points) || 1), 1), 1000),
+    choices: (Array.isArray(q?.choices) ? q.choices : []).map((c: IncomingChoice) => ({
+      text: String(c?.text ?? "").trim(),
+      isCorrect: Boolean(c?.isCorrect),
+    })),
+  }));
+
+  if (questions.length === 0) throw new Error("Add at least one question before creating the assessment.");
+  for (const [index, q] of questions.entries()) {
+    const label = `Question ${index + 1}`;
+    if (!q.text) throw new Error(`${label}: the question text is required.`);
+    const filled = q.choices.filter((c) => c.text !== "");
+    if (filled.length < 2) throw new Error(`${label}: add at least two answer choices.`);
+    const correctCount = filled.filter((c) => c.isCorrect).length;
+    if (correctCount === 0) throw new Error(`${label}: mark one choice as the correct answer.`);
+    if (correctCount > 1) throw new Error(`${label}: only one choice can be the correct answer.`);
+  }
+
+  const sb = serviceClient();
+  const { data: assessment, error: assessmentError } = await sb
+    .from("assessments")
+    .insert({
+      course_id: courseId,
+      title,
+      description: "",
+      pass_mark: parseIntField(formData.get("passMark"), 50, 1, 100),
+      duration_minutes: parseIntField(formData.get("durationMinutes"), 30, 1, 600),
+      max_attempts: parseOptionalInt(formData.get("maxAttempts")),
+      retake_cooldown_hours: parseIntField(formData.get("retakeCooldownHours"), 24, 0, 8760),
+      shuffle_questions: parseBool(formData.get("shuffleQuestions")),
+      active: false,
+    })
+    .select("id")
+    .single();
+  if (assessmentError || !assessment) throw new Error(assessmentError?.message ?? "Could not save the assessment.");
+
+  try {
+    for (const [index, q] of questions.entries()) {
+      const filledChoices = q.choices.filter((c) => c.text !== "");
+      const { data: question, error: questionError } = await sb
+        .from("questions")
+        .insert({ assessment_id: assessment.id, text: q.text, points: q.points, position: index + 1 })
+        .select("id")
+        .single();
+      if (questionError || !question) throw new Error(questionError?.message ?? "Could not save the questions.");
+
+      const choiceRows = filledChoices.map((c, choiceIndex) => ({
+        question_id: question.id,
+        text: c.text,
+        is_correct: c.isCorrect,
+        position: choiceIndex + 1,
+      }));
+      const { error: choicesError } = await sb.from("choices").insert(choiceRows);
+      if (choicesError) throw new Error(choicesError.message);
+    }
+  } catch (err) {
+    await sb.from("assessments").delete().eq("id", assessment.id);
+    throw err instanceof Error ? err : new Error("Could not save the questions.");
+  }
 
   revalidatePath("/admin/assessments");
 }

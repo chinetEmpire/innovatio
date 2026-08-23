@@ -1,9 +1,9 @@
 import Link from "next/link";
 
+import AssessmentBuilder from "@/components/admin/AssessmentBuilder";
 import ActionForm from "@/components/admin/ActionForm";
 import ConfirmSubmit from "@/components/admin/ConfirmSubmit";
 import {
-  createAssessmentAction,
   deleteAssessmentAction,
   toggleAssessmentActiveAction,
   updateAssessmentAction,
@@ -33,48 +33,10 @@ export default async function AssessmentsPage() {
 
       <div className="rounded-2xl border border-[#e9e2f5] bg-white p-6">
         <h2 className="text-lg font-bold">Create a new assessment</h2>
-        <ActionForm action={createAssessmentAction} successMessage="Assessment created successfully." resetOnSuccess className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div>
-            <label className="text-sm font-semibold text-ink" htmlFor="new-course">Course</label>
-            <select id="new-course" name="courseId" required className="mt-2 w-full rounded-xl border border-[#e2d9f2] bg-white px-3 py-2.5 text-sm outline-none focus:border-brand">
-              <option value="">Select course</option>
-              {(courses ?? []).map((course) => (
-                <option key={course.id} value={course.id}>{course.title}</option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className="text-sm font-semibold text-ink" htmlFor="new-title">Title</label>
-            <input id="new-title" name="title" required placeholder="Pre-course assessment" className="mt-2 w-full rounded-xl border border-[#e2d9f2] bg-white px-3 py-2.5 text-sm outline-none focus:border-brand" />
-          </div>
-          <div>
-            <label className="text-sm font-semibold text-ink" htmlFor="new-pass">Pass mark (%)</label>
-            <input id="new-pass" name="passMark" type="number" min={1} max={100} defaultValue={50} className="mt-2 w-full rounded-xl border border-[#e2d9f2] bg-white px-3 py-2.5 text-sm outline-none focus:border-brand" />
-          </div>
-          <div>
-            <label className="text-sm font-semibold text-ink" htmlFor="new-duration">Duration (min)</label>
-            <input id="new-duration" name="durationMinutes" type="number" min={1} defaultValue={30} className="mt-2 w-full rounded-xl border border-[#e2d9f2] bg-white px-3 py-2.5 text-sm outline-none focus:border-brand" />
-          </div>
-          <div>
-            <label className="text-sm font-semibold text-ink" htmlFor="new-max">Max attempts</label>
-            <input id="new-max" name="maxAttempts" type="number" min={1} placeholder="Unlimited" className="mt-2 w-full rounded-xl border border-[#e2d9f2] bg-white px-3 py-2.5 text-sm outline-none focus:border-brand" />
-          </div>
-          <div>
-            <label className="text-sm font-semibold text-ink" htmlFor="new-cooldown">Retake cooldown (hrs)</label>
-            <input id="new-cooldown" name="retakeCooldownHours" type="number" min={0} defaultValue={24} className="mt-2 w-full rounded-xl border border-[#e2d9f2] bg-white px-3 py-2.5 text-sm outline-none focus:border-brand" />
-          </div>
-          <div className="flex items-end pb-1">
-            <label className="flex items-center gap-2 text-sm font-medium text-ink">
-              <input type="checkbox" name="shuffleQuestions" defaultChecked className="h-4 w-4 accent-brand" />
-              Shuffle questions
-            </label>
-          </div>
-          <div className="flex items-end">
-            <button type="submit" data-control="true" className="w-full rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.02] active:scale-95">
-              Create
-            </button>
-          </div>
-        </ActionForm>
+        <p className="mt-1 text-sm text-[#5f5b65]">
+          Configure the assessment and add all its questions in one flow. Nothing is saved until you submit.
+        </p>
+        <AssessmentBuilder courses={(courses ?? []).map((course) => ({ id: course.id, title: course.title }))} />
       </div>
 
       <div className="space-y-4">

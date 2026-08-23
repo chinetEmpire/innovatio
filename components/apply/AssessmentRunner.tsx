@@ -138,7 +138,7 @@ export default function AssessmentRunner({
                 key={choice.id}
                 type="button"
                 onClick={() => selectChoice(choice.id)}
-                className={`flex w-full items-start gap-3 rounded-xl border px-4 py-3.5 text-left text-sm leading-relaxed transition-all sm:text-base ${
+                className={`flex w-full items-start gap-3 rounded-xl border px-3 py-2.5 text-left text-sm leading-relaxed transition-all sm:text-base ${
                   selected
                     ? "border-brand bg-brand/5 text-ink ring-1 ring-brand"
                     : "border-[#e9e2f5] bg-white text-[#4d4752] hover:border-brand/40"
@@ -166,7 +166,7 @@ export default function AssessmentRunner({
             type="button"
             onClick={() => setCurrent((c) => Math.max(0, c - 1))}
             disabled={current === 0}
-            className="inline-flex items-center gap-1.5 rounded-full border border-[#e2d9f2] px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand disabled:opacity-40 disabled:hover:border-[#e2d9f2] disabled:hover:text-ink"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#e2d9f2] px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand disabled:opacity-40 disabled:hover:border-[#e2d9f2] disabled:hover:text-ink"
           >
             <ChevronLeft size={16} /> Previous
           </button>
@@ -175,7 +175,7 @@ export default function AssessmentRunner({
             <button
               type="button"
               onClick={() => setCurrent((c) => Math.min(questions.length - 1, c + 1))}
-              className="inline-flex items-center gap-1.5 rounded-full bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.03] active:scale-95"
+              className="inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white transition-transform hover:scale-[1.03] active:scale-95"
             >
               Next <ChevronRight size={16} />
             </button>
@@ -184,7 +184,7 @@ export default function AssessmentRunner({
               type="button"
               onClick={() => submit(answers)}
               disabled={submitting}
-              className="inline-flex items-center gap-2 rounded-full bg-brand px-6 py-2.5 text-sm font-semibold text-white shadow-[0_10px_22px_rgba(84,41,208,0.3)] transition-transform hover:scale-[1.03] active:scale-95 disabled:opacity-60"
+              className="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white shadow-[0_10px_22px_rgba(84,41,208,0.3)] transition-transform hover:scale-[1.03] active:scale-95 disabled:opacity-60"
             >
               {submitting ? <Loader2 size={16} className="animate-spin" /> : null}
               {submitting ? "Submitting…" : `Submit (${totalPoints} pts)`}
