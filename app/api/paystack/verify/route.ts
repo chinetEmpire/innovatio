@@ -28,6 +28,13 @@ export async function GET(req: Request) {
     return NextResponse.json({ ok: false, error: "Enrollment not found." }, { status: 404 });
   }
 
+  if (enrollment.payment_reference !== reference) {
+    return NextResponse.json(
+      { ok: false, error: "This payment reference does not belong to this enrollment." },
+      { status: 403 }
+    );
+  }
+
   if (enrollment.payment_status === "paid") {
     return NextResponse.json({ ok: true, status: "success", enrollmentId });
   }

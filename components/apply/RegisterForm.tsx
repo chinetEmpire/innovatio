@@ -10,7 +10,7 @@ type RegisterResponse =
       ok: boolean;
       enrollmentId: string;
       paymentStatus: string;
-      applicant: { full_name: string; email: string; whatsapp: string; age_bracket: string };
+      applicant: { full_name: string; email: string };
       courseTitle: string;
     };
 
@@ -57,8 +57,6 @@ export default function RegisterForm({ courseSlug, courseTitle }: { courseSlug: 
         <div className="mt-6 rounded-xl bg-white p-5 text-sm text-[#4d4752]">
           <p><b className="text-ink">Name:</b> {result.applicant.full_name}</p>
           <p className="mt-1"><b className="text-ink">Email:</b> {result.applicant.email}</p>
-          <p className="mt-1"><b className="text-ink">WhatsApp:</b> {result.applicant.whatsapp || "—"}</p>
-          <p className="mt-1"><b className="text-ink">Age bracket:</b> {result.applicant.age_bracket}</p>
           <p className="mt-1"><b className="text-ink">Status:</b> {result.paymentStatus === "paid" ? "Payment received" : "Awaiting payment"}</p>
         </div>
 

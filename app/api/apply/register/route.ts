@@ -41,7 +41,7 @@ export async function POST(req: Request) {
 
   const { data: applicant } = await sb
     .from("applicants")
-    .select("id, full_name, email, whatsapp, age_bracket")
+    .select("id, full_name, email")
     .eq("email", email)
     .eq("course_id", course.id)
     .maybeSingle();
@@ -100,8 +100,6 @@ export async function POST(req: Request) {
     applicant: {
       full_name: applicant.full_name,
       email: applicant.email,
-      whatsapp: applicant.whatsapp,
-      age_bracket: applicant.age_bracket,
     },
     courseTitle: courseRow?.title ?? courseSlug,
   });

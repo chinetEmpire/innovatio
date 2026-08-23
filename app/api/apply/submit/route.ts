@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 
 import { computeScore, type QuestionWithChoices } from "@/lib/assessment";
+import { grantedAttempts, revokeAttemptOwnership } from "@/lib/attempts";
 import { serviceClient } from "@/lib/supabase/admin";
 
 export const runtime = "nodejs";
+
+const SUBMIT_GRACE_MS = 30_000;
 
 export async function POST(req: Request) {
   let body: { attemptId?: string; answers?: { questionId: string; choiceId: string }[] };
@@ -30,6 +33,11 @@ export async function POST(req: Request) {
   if (attemptError || !attempt) {
     return NextResponse.json({ error: "Attempt not found." }, { status: 404 });
   }
+
+  const owned = await grantedAttempts();
+  if (!owned.includes(attempt.id)) {
+    return NextResponse.json({ error: "You do not have access to this attempt." }, { status: 403 });
+  }
   if (attempt.status !== "in_progress") {
     return NextResponse.json({ error: "This attempt has already been submitted." }, { status: 400 });
   }
@@ -44,6 +52,14 @@ export async function POST(req: Request) {
   }
 
   const { data: course } = await sb.from("courses").select("slug").eq("id", assessment.course_id).maybeSingle();
+
+  const deadlineMs = new Date(attempt.started_at).getTime() + assessment.duration_minutes * 60 * 1000;
+  if (Number.isNaN(deadlineMs) || Date.now() > deadlineMs + SUBMIT_GRACE_MS) {
+    return NextResponse.json(
+      { error: "This attempt's time has expired. Please contact support if you believe this is a mistake." },
+      { status: 400 }
+    );
+  }
 
   const { data: questions, error: questionsError } = await sb
     .from("questions")
@@ -69,6 +85,8 @@ export async function POST(req: Request) {
   if (updateError) {
     return NextResponse.json({ error: "Could not save your result. Please try again." }, { status: 500 });
   }
+
+  await revokeAttemptOwnership(attempt.id);
 
   const redirect = `/apply/${course?.slug ?? "course"}/result?attempt=${attempt.id}`;
   return NextResponse.json({

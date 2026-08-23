@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 
 import AssessmentRunner from "@/components/apply/AssessmentRunner";
+import { grantedAttempts } from "@/lib/attempts";
 import { shuffle, toSafeQuestions, type QuestionWithChoices } from "@/lib/assessment";
 import { serviceClient } from "@/lib/supabase/admin";
 
@@ -25,6 +26,7 @@ export default async function AssessmentPage({
 
   const { data: attempt } = await sb.from("attempts").select("*").eq("id", attemptId).maybeSingle();
   if (!attempt || attempt.status !== "in_progress") redirect(`/apply/${course}`);
+  if (!(await grantedAttempts()).includes(attempt.id)) redirect(`/apply/${course}`);
 
   const { data: assessment } = await sb
     .from("assessments")

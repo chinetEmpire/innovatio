@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { evaluateEligibility } from "@/lib/assessment";
+import { grantAttemptOwnership } from "@/lib/attempts";
 import { serviceClient } from "@/lib/supabase/admin";
 import { AGE_BRACKETS } from "@/lib/types";
 
@@ -78,7 +79,7 @@ export async function POST(req: Request) {
         course_id: course.id,
         agreed_to_terms: true,
       },
-      { onConflict: "email,course_id" }
+      { onConflict: "email,course_id", ignoreDuplicates: true }
     )
     .select("id, email")
     .single();
@@ -111,11 +112,16 @@ export async function POST(req: Request) {
     if (attemptError || !attempt) {
       return NextResponse.json({ error: "Could not start the assessment. Please try again." }, { status: 500 });
     }
+    await grantAttemptOwnership(attempt.id);
     return NextResponse.json({
       action: "start",
       attemptId: attempt.id,
       redirect: `/apply/${course.slug}/assessment?attempt=${attempt.id}`,
     });
+  }
+
+  if (eligibility.action === "resume") {
+    await grantAttemptOwnership(eligibility.attemptId);
   }
 
   return NextResponse.json(eligibility);
