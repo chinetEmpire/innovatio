@@ -45,7 +45,7 @@ export async function createAssessmentAction(formData: FormData) {
   const title = String(formData.get("title") ?? "").trim();
   if (!title || !courseId) throw new Error("Title and course are required.");
 
-  await serviceClient().from("assessments").insert({
+  const { error } = await serviceClient().from("assessments").insert({
     course_id: courseId,
     title,
     description: String(formData.get("description") ?? "").trim(),
@@ -56,6 +56,7 @@ export async function createAssessmentAction(formData: FormData) {
     shuffle_questions: parseBool(formData.get("shuffleQuestions")),
     active: true,
   });
+  if (error) throw new Error(error.message);
 
   revalidatePath("/admin/assessments");
 }
@@ -64,7 +65,7 @@ export async function updateAssessmentAction(formData: FormData) {
   await requireAdmin();
   const id = parseId(formData.get("id"));
 
-  await serviceClient()
+  const { error } = await serviceClient()
     .from("assessments")
     .update({
       title: String(formData.get("title") ?? "").trim(),
@@ -76,6 +77,7 @@ export async function updateAssessmentAction(formData: FormData) {
       shuffle_questions: parseBool(formData.get("shuffleQuestions")),
     })
     .eq("id", id);
+  if (error) throw new Error(error.message);
 
   revalidatePath("/admin/assessments");
   revalidatePath(`/admin/assessments/${id}`);
@@ -86,7 +88,8 @@ export async function toggleAssessmentActiveAction(formData: FormData) {
   const id = parseId(formData.get("id"));
   const active = parseBool(formData.get("active"));
 
-  await serviceClient().from("assessments").update({ active }).eq("id", id);
+  const { error } = await serviceClient().from("assessments").update({ active }).eq("id", id);
+  if (error) throw new Error(error.message);
 
   revalidatePath("/admin/assessments");
 }
@@ -95,7 +98,8 @@ export async function deleteAssessmentAction(formData: FormData) {
   await requireAdmin();
   const id = parseId(formData.get("id"));
 
-  await serviceClient().from("assessments").delete().eq("id", id);
+  const { error } = await serviceClient().from("assessments").delete().eq("id", id);
+  if (error) throw new Error(error.message);
 
   revalidatePath("/admin/assessments");
 }
@@ -161,8 +165,10 @@ export async function updateQuestionAction(formData: FormData) {
   if (Number.isNaN(correctIndex) || !choiceTexts[correctIndex]) throw new Error("Mark one choice as correct.");
 
   const sb = serviceClient();
-  await sb.from("questions").update({ text, points }).eq("id", id);
-  await sb.from("choices").delete().eq("question_id", id);
+  const { error: questionError } = await sb.from("questions").update({ text, points }).eq("id", id);
+  if (questionError) throw new Error(questionError.message);
+  const { error: deleteChoicesError } = await sb.from("choices").delete().eq("question_id", id);
+  if (deleteChoicesError) throw new Error(deleteChoicesError.message);
 
   const choices = choiceTexts.map((text, index) => ({
     question_id: id,
@@ -181,9 +187,44 @@ export async function deleteQuestionAction(formData: FormData) {
   const id = parseId(formData.get("id"));
   const assessmentId = parseId(formData.get("assessmentId"));
 
-  await serviceClient().from("questions").delete().eq("id", id);
+  const { error } = await serviceClient().from("questions").delete().eq("id", id);
+  if (error) throw new Error(error.message);
 
   revalidatePath(`/admin/assessments/${assessmentId}`);
+}
+
+export async function updateApplicantAction(formData: FormData) {
+  await requireAdmin();
+  const id = parseId(formData.get("id"));
+  const fullName = String(formData.get("fullName") ?? "").trim();
+  const email = String(formData.get("email") ?? "").trim();
+  const courseId = parseId(formData.get("courseId"));
+  if (!fullName || !email || !courseId) throw new Error("Name, email, and course are required.");
+
+  const { error } = await serviceClient()
+    .from("applicants")
+    .update({
+      full_name: fullName,
+      email,
+      whatsapp: String(formData.get("whatsapp") ?? "").trim(),
+      age_bracket: String(formData.get("ageBracket") ?? "").trim(),
+      course_id: courseId,
+    })
+    .eq("id", id);
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/admin/applicants");
+  revalidatePath(`/admin/applicants/${id}`);
+}
+
+export async function deleteApplicantAction(formData: FormData) {
+  await requireAdmin();
+  const id = parseId(formData.get("id"));
+
+  const { error } = await serviceClient().from("applicants").delete().eq("id", id);
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/admin/applicants");
 }
 
 export async function markEnrollmentPaidAction(formData: FormData) {
@@ -197,10 +238,11 @@ export async function markEnrollmentPaidAction(formData: FormData) {
     .maybeSingle();
 
   if (enrollment && enrollment.payment_status !== "paid") {
-    await serviceClient()
+    const { error } = await serviceClient()
       .from("enrollments")
       .update({ payment_status: "paid", paid_at: new Date().toISOString(), paid_by: admin.email })
       .eq("id", id);
+    if (error) throw new Error(error.message);
   }
 
   revalidatePath("/admin/applicants");

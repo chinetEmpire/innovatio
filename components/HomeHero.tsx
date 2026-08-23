@@ -69,8 +69,8 @@ export default function HomeHero() {
         </div>
       </div>
 
-      <div className="border-t border-[#f0ebf7] bg-[#faf7ff] py-16 sm:py-20">
-        <div className="flex flex-col gap-8 px-5 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:gap-x-6 lg:px-[8%]">
+      <div className="border-t border-[#f0ebf7] bg-[#faf7ff] py-8 sm:py-10">
+        <div className="flex flex-col gap-8 px-5 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:gap-x-6 lg:px-[4.2%]">
           <p className="text-2xl font-medium text-black lg:shrink-0 lg:whitespace-nowrap lg:text-[26px] xl:text-[32px]">
             Where our learners work:
           </p>

@@ -6,7 +6,7 @@ import logo from "@/app/images/logo.png";
 export default function EnrollNowPage() {
   return (
     <main className="min-h-screen bg-[#f5f5f5]">
-      <div className="mx-auto max-w-[1200px] px-5 pt-6 sm:px-8">
+      <div className="px-5 pt-6 sm:px-8 lg:px-[4.2%]">
         <header className="flex items-center justify-between gap-4">
           <Link href="/" aria-label="Innovatio Academy home" className="transition-opacity hover:opacity-80">
             <Image src={logo} alt="Innovatio Academy" className="h-auto w-[140px]" />

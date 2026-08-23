@@ -4,7 +4,7 @@ import Reveal from "./Reveal";
 export default function PaymentOptions() {
   return (
     <section className="bg-[#faf7ff] py-16 sm:py-20">
-      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+      <div className="px-5 sm:px-8 lg:px-[4.2%]">
         <Reveal className="max-w-2xl">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Flexible payment options for every budget</h2>
         </Reveal>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import ActionForm from "@/components/admin/ActionForm";
 import ConfirmSubmit from "@/components/admin/ConfirmSubmit";
 import {
   createAssessmentAction,
@@ -32,7 +33,7 @@ export default async function AssessmentsPage() {
 
       <div className="rounded-2xl border border-[#e9e2f5] bg-white p-6">
         <h2 className="text-lg font-bold">Create a new assessment</h2>
-        <form action={createAssessmentAction} className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <ActionForm action={createAssessmentAction} successMessage="Assessment created successfully." resetOnSuccess className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <label className="text-sm font-semibold text-ink" htmlFor="new-course">Course</label>
             <select id="new-course" name="courseId" required className="mt-2 w-full rounded-xl border border-[#e2d9f2] bg-white px-3 py-2.5 text-sm outline-none focus:border-brand">
@@ -73,7 +74,7 @@ export default async function AssessmentsPage() {
               Create
             </button>
           </div>
-        </form>
+        </ActionForm>
       </div>
 
       <div className="space-y-4">
@@ -95,15 +96,22 @@ export default async function AssessmentsPage() {
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <form action={toggleAssessmentActiveAction}>
-                    <input type="hidden" name="id" value={assessment.id} />
-                    <input type="hidden" name="active" value={assessment.active ? "false" : "true"} />
-                    <button type="submit" data-control="true" className="rounded-full border border-[#e2d9f2] px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand">
-                      {assessment.active ? "Deactivate" : "Activate"}
-                    </button>
-                  </form>
+                  <ConfirmSubmit
+                    action={toggleAssessmentActiveAction}
+                    successMessage={assessment.active ? "Assessment deactivated successfully." : "Assessment activated successfully."}
+                    confirmTitle="Deactivate assessment"
+                    confirmMessage={`Deactivate "${assessment.title}"? Applicants won't be able to take it until you reactivate it.`}
+                    confirmIf={assessment.active}
+                    tone="brand"
+                    fields={{ id: assessment.id, active: assessment.active ? "false" : "true" }}
+                    dataControl
+                    buttonClassName="rounded-full border border-[#e2d9f2] px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand"
+                  >
+                    {assessment.active ? "Deactivate" : "Activate"}
+                  </ConfirmSubmit>
                   <ConfirmSubmit
                     action={deleteAssessmentAction}
+                    successMessage="Assessment deleted successfully."
                     confirmMessage="Delete this assessment and all its questions and attempts?"
                     fields={{ id: assessment.id }}
                     dataControl
@@ -116,7 +124,7 @@ export default async function AssessmentsPage() {
 
               <details className="mt-5 rounded-xl border border-[#f0ecf6] bg-[#faf7ff]">
                 <summary className="cursor-pointer px-5 py-4 text-sm font-semibold text-brand">Edit settings</summary>
-                <form action={updateAssessmentAction} className="grid gap-4 border-t border-[#f0ecf6] p-5 sm:grid-cols-2 lg:grid-cols-4">
+                <ActionForm action={updateAssessmentAction} successMessage="Assessment settings saved successfully." className="grid gap-4 border-t border-[#f0ecf6] p-5 sm:grid-cols-2 lg:grid-cols-4">
                   <input type="hidden" name="id" value={assessment.id} />
                   <div>
                     <label className="text-sm font-semibold text-ink">Title</label>
@@ -153,7 +161,7 @@ export default async function AssessmentsPage() {
                       Save settings
                     </button>
                   </div>
-                </form>
+                </ActionForm>
               </details>
 
               <Link href={`/admin/assessments/${assessment.id}`} className="mt-4 inline-flex text-sm font-semibold text-brand hover:underline">

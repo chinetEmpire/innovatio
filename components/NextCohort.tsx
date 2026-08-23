@@ -22,8 +22,8 @@ export default function NextCohort() {
   const [activeStep, setActiveStep] = useState(0);
 
   return (
-    <section id="cohort" className="bg-[#faf8ff] px-5 py-16 sm:px-8 sm:py-20">
-      <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
+    <section id="cohort" className="bg-[#faf8ff] py-16 sm:py-20">
+      <div className="grid items-center gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:px-[4.2%]">
         <Reveal>
           <div>
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Join Our Next Cohort</h2>

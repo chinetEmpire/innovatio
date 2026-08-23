@@ -74,6 +74,16 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Could not prepare payment. Please try again." }, { status: 500 });
   }
 
+  const { error: ledgerError } = await sb.from("payments").insert({
+    enrollment_id: enrollmentId,
+    reference,
+    plan_key: plan.key,
+    amount_kobo: plan.amountKobo,
+  });
+  if (ledgerError) {
+    return NextResponse.json({ error: "Could not record the payment attempt. Please try again." }, { status: 500 });
+  }
+
   try {
     const data = await initializeTransaction({
       email: applicant.email,

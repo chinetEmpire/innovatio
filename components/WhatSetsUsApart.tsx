@@ -7,7 +7,7 @@ import Reveal from "./Reveal";
 
 export default function WhatSetsUsApart() {
   return (
-    <section className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
+    <section className="px-5 py-16 sm:px-8 sm:py-20 lg:px-[4.2%]">
       <div className="grid items-center gap-12 lg:grid-cols-2">
         <Reveal>
           <div>

@@ -16,7 +16,7 @@ export default function LearningPath({ tabs, content }: LearningPathProps) {
   const items = content[activeLabel] ?? [];
 
   return (
-    <section id="learn" className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
+    <section id="learn" className="px-5 py-16 sm:px-8 sm:py-20 lg:px-[4.2%]">
       <div className="text-center">
         <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Explore your learning path</h2>
         <div className="mt-8 inline-flex max-w-full flex-wrap justify-center gap-1 rounded-full bg-[#f6f3fa] p-1.5">

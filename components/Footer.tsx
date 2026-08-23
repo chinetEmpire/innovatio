@@ -1,13 +1,15 @@
 import { Fragment } from "react";
-import { Sparkles } from "lucide-react";
+import Image from "next/image";
+
+import vectorImage from "@/app/images/Vector.png";
 import { footerInfo } from "@/data/site";
 
 export default function Footer() {
   return (
     <>
       <footer className="overflow-hidden bg-brand text-white">
-        <div className="relative px-5 pb-0 pt-10 sm:px-8 lg:px-[8%]">
-          <Sparkles className="absolute right-8 top-8 text-yellow-300" size={48} strokeWidth={1.3} />
+        <div className="relative px-5 pb-0 pt-10 sm:px-8 lg:px-[4.2%]">
+          <Image src={vectorImage} alt="" aria-hidden className="absolute right-8 top-8 h-12 w-12 object-contain" />
           <p>Discover the potency of<br />Innovatio Academy at</p>
           <a className="mt-4 block break-words text-[20px] font-bold sm:text-[28px]" href={`mailto:${footerInfo.email}`}>
             {footerInfo.email}

@@ -55,7 +55,7 @@ export default function PaymentPage({
 
   return (
     <main className="min-h-screen bg-[#f2f2f2]">
-      <div className="mx-auto max-w-[960px] px-5 pt-8 sm:px-8">
+      <div className="px-5 pt-8 sm:px-8 lg:px-[4.2%]">
         <header className="flex items-center justify-between">
           <Link href="/" aria-label="Innovatio Academy home" className="transition-opacity hover:opacity-80">
             <Image src={logo} alt="Innovatio Academy" className="h-auto w-[140px]" />

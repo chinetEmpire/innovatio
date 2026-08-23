@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
+import ActionForm from "@/components/admin/ActionForm";
 import { markEnrollmentPaidAction } from "../../../actions";
 import { requireAdmin } from "@/lib/admin";
 import { serviceClient } from "@/lib/supabase/admin";
@@ -146,12 +147,12 @@ export default async function ApplicantDetailPage({
                 )}
               </div>
               {enrollment.payment_status !== "paid" && (
-                <form action={markEnrollmentPaidAction}>
+                <ActionForm action={markEnrollmentPaidAction} successMessage="Enrollment marked as paid successfully.">
                   <input type="hidden" name="id" value={enrollment.id} />
-                  <button type="submit" className="w-full rounded-full bg-green-600 px-5 py-2 text-sm font-semibold text-white transition-transform hover:scale-[1.02] active:scale-95 sm:w-auto">
+                  <button type="submit" data-control="true" className="w-full rounded-full bg-green-600 px-5 py-2 text-sm font-semibold text-white transition-transform hover:scale-[1.02] active:scale-95 sm:w-auto">
                     Mark as paid
                   </button>
-                </form>
+                </ActionForm>
               )}
             </div>
           ))}

@@ -3,7 +3,7 @@ import Reveal from "./Reveal";
 
 export default function ProgramOverview({ heading }: { heading: string }) {
   return (
-    <section className="mx-auto max-w-6xl px-5 pb-16 pt-20 text-center sm:px-8">
+    <section className="px-5 pb-16 pt-20 text-center sm:px-8 lg:px-[4.2%]">
       <Reveal>
         <h2 className="mx-auto max-w-2xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
           {heading}

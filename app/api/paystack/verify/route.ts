@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { verifyTransaction } from "@/lib/paystack";
+import { recordTransactionUpdate } from "@/lib/payments";
 import { serviceClient } from "@/lib/supabase/admin";
 
 export const runtime = "nodejs";
@@ -31,16 +32,16 @@ export async function GET(req: Request) {
     return NextResponse.json({ ok: true, status: "success", enrollmentId });
   }
 
-  let txnStatus: string;
+  let outcome: Awaited<ReturnType<typeof recordTransactionUpdate>>;
   try {
     const txn = await verifyTransaction(reference);
-    txnStatus = txn.status;
+    outcome = await recordTransactionUpdate(txn);
   } catch (err) {
     const message = err instanceof Error ? err.message : "Could not verify payment.";
     return NextResponse.json({ ok: false, error: message }, { status: 502 });
   }
 
-  if (txnStatus === "success") {
+  if (outcome === "success") {
     const { error } = await sb
       .from("enrollments")
       .update({ payment_status: "paid", paid_at: new Date().toISOString() })
@@ -51,10 +52,14 @@ export async function GET(req: Request) {
     return NextResponse.json({ ok: true, status: "success", enrollmentId });
   }
 
-  if (txnStatus === "failed" || txnStatus === "abandoned") {
+  if (outcome === "failed" || outcome === "abandoned") {
     await sb.from("enrollments").update({ payment_status: "failed" }).eq("id", enrollment.id);
     return NextResponse.json({ ok: true, status: "failed", enrollmentId });
   }
 
-  return NextResponse.json({ ok: true, status: txnStatus, enrollmentId });
+  return NextResponse.json({
+    ok: true,
+    status: outcome === "amount_mismatch" ? "review" : outcome,
+    enrollmentId,
+  });
 }

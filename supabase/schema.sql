@@ -121,6 +121,28 @@ alter table public.applicants enable row level security;
 alter table public.attempts enable row level security;
 alter table public.enrollments enable row level security;
 
+-- Payment transaction ledger: one row per Paystack charge attempt.
+create table if not exists public.payments (
+  id uuid primary key default gen_random_uuid(),
+  enrollment_id uuid not null references public.enrollments(id) on delete cascade,
+  reference text unique not null,
+  plan_key text not null,
+  amount_kobo bigint not null,
+  currency text not null default 'NGN',
+  status text not null default 'initialized'
+    check (status in ('initialized', 'success', 'failed', 'abandoned', 'amount_mismatch')),
+  channel text,
+  gateway_response text,
+  fees_kobo bigint,
+  paystack_paid_at timestamptz,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create index if not exists payments_enrollment_idx on public.payments (enrollment_id);
+
+alter table public.payments enable row level security;
+
 -- Admins can read their own row (matched by JWT email). Required so the
 -- /admin console can verify the signed-in user against the admins table.
 -- Applicant-facing data access goes through the service role, which bypasses RLS.

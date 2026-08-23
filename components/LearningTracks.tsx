@@ -7,7 +7,7 @@ import Reveal from "./Reveal";
 export default function LearningTracks() {
   return (
     <section id="tracks" className="bg-[#faf7ff] py-16 sm:py-20">
-      <div className="mx-auto max-w-6xl px-5 sm:px-8 ">
+      <div className="px-5 sm:px-8 lg:px-[4.2%] ">
         <Reveal className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl text-center">Our learning tracks</h2>
           <p className="mt-4 text-base text-[#5f5b65] text-center">

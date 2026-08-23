@@ -28,7 +28,7 @@ export default function Testimonials() {
 
   return (
     <section className="overflow-hidden bg-[#faf7ff] bg-[radial-gradient(#e9e3f5_1.5px,transparent_1.5px)] [background-size:24px_24px] py-16 sm:py-20">
-      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+      <div className="px-5 sm:px-8 lg:px-[4.2%]">
         <Reveal>
           <h2 className="text-center text-3xl font-bold tracking-tight sm:text-4xl">See Why Learners Trust Us</h2>
         </Reveal>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 import ConfirmSubmit from "@/components/admin/ConfirmSubmit";
+import ActionForm from "@/components/admin/ActionForm";
 import {
   addQuestionAction,
   deleteQuestionAction,
@@ -62,7 +63,7 @@ export default async function AssessmentDetailPage({
 
       <div className="rounded-2xl border border-[#e9e2f5] bg-white p-6">
         <h2 className="text-lg font-bold">Add a question</h2>
-        <form action={addQuestionAction} className="mt-5 space-y-4">
+        <ActionForm action={addQuestionAction} successMessage="Question added successfully." resetOnSuccess className="mt-5 space-y-4">
           <input type="hidden" name="assessmentId" value={assessment.id} />
           <div>
             <label className="text-sm font-semibold text-ink" htmlFor="q-text">Question</label>
@@ -86,7 +87,7 @@ export default async function AssessmentDetailPage({
           <button type="submit" className="rounded-full bg-brand px-6 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.02] active:scale-95">
             Add question
           </button>
-        </form>
+        </ActionForm>
       </div>
 
       <div className="space-y-4">
@@ -94,13 +95,15 @@ export default async function AssessmentDetailPage({
         {questionsList.map((question, index) => {
           const choices = question.choices.slice().sort((a, b) => a.position - b.position);
           return (
-            <form key={question.id} action={updateQuestionAction} className="rounded-2xl border border-[#e9e2f5] bg-white p-6">
+            <div key={question.id}>
+              <ActionForm action={updateQuestionAction} successMessage="Question updated successfully." className="rounded-2xl border border-[#e9e2f5] bg-white p-6">
               <input type="hidden" name="id" value={question.id} />
               <input type="hidden" name="assessmentId" value={assessment.id} />
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <p className="text-sm font-semibold text-[#8a8493]">Question {index + 1}</p>
                 <ConfirmSubmit
                   action={deleteQuestionAction}
+                  successMessage="Question deleted successfully."
                   confirmMessage="Delete this question and its choices?"
                   fields={{ id: question.id, assessmentId: assessment.id }}
                   buttonClassName="text-sm font-semibold text-red-600 transition-colors hover:text-red-700"
@@ -126,7 +129,8 @@ export default async function AssessmentDetailPage({
                   Save changes
                 </button>
               </div>
-            </form>
+              </ActionForm>
+            </div>
           );
         })}
         {questionsList.length === 0 && (

@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { CheckCircle2, Clock, XCircle } from "lucide-react";
 
 import { verifyTransaction } from "@/lib/paystack";
+import { recordTransactionUpdate } from "@/lib/payments";
 import { serviceClient } from "@/lib/supabase/admin";
 
 export const dynamic = "force-dynamic";
@@ -38,13 +39,14 @@ export default async function PaymentVerifyPage({
   if (status === "pending") {
     try {
       const txn = await verifyTransaction(reference);
-      if (txn.status === "success") {
+      const outcome = await recordTransactionUpdate(txn);
+      if (outcome === "success") {
         await sb
           .from("enrollments")
           .update({ payment_status: "paid", paid_at: new Date().toISOString() })
           .eq("id", enrollment.id);
         status = "success";
-      } else if (txn.status === "failed" || txn.status === "abandoned") {
+      } else if (outcome === "failed" || outcome === "abandoned") {
         await sb.from("enrollments").update({ payment_status: "failed" }).eq("id", enrollment.id);
         status = "failed";
       }

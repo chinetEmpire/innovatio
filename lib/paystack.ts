@@ -25,6 +25,8 @@ type VerifyResponse = {
     currency: string;
     paid_at: string | null;
     channel?: string;
+    gateway_response?: string;
+    fees?: number;
   };
 };
 

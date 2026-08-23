@@ -14,7 +14,6 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [coursesOpen, setCoursesOpen] = useState(false);
   const pathname = usePathname();
-  const isHome = pathname === "/";
   const coursesActive = pathname.startsWith("/courses");
 
   useEffect(() => {
@@ -33,11 +32,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#ece6f6] bg-white/90 backdrop-blur">
-      <nav
-        className={`flex h-16 items-center justify-between px-5 sm:px-8 ${
-          isHome ? "lg:px-[8%]" : "mx-auto max-w-6xl"
-        }`}
-      >
+      <nav className="flex h-16 items-center justify-between px-5 sm:px-8 lg:px-[4.2%]">
         <Link href="/" aria-label="Innovatio Academy home" className="shrink-0 transition-opacity hover:opacity-80">
           <Image src={logo} alt="Innovatio Academy" className="h-auto w-[160px]" priority />
         </Link>

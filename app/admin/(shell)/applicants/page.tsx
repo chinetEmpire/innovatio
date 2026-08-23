@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CheckCircle2, Clock, XCircle } from "lucide-react";
 
+import ApplicantRowActions from "@/components/admin/ApplicantRowActions";
 import { requireAdmin } from "@/lib/admin";
 import { serviceClient } from "@/lib/supabase/admin";
 import { formatDate } from "@/lib/format";
@@ -11,10 +12,11 @@ export default async function ApplicantsPage() {
   await requireAdmin();
   const sb = serviceClient();
 
-  const [{ data: applicants }, { data: attempts }, { data: enrollments }] = await Promise.all([
+  const [{ data: applicants }, { data: attempts }, { data: enrollments }, { data: courses }] = await Promise.all([
     sb.from("applicants").select("id, full_name, email, whatsapp, age_bracket, course_id, created_at, courses(slug, title)").order("created_at", { ascending: false }),
     sb.from("attempts").select("applicant_id, score, passed, status, submitted_at").eq("status", "submitted"),
     sb.from("enrollments").select("applicant_id, course_id, payment_status"),
+    sb.from("courses").select("id, title").order("title"),
   ]);
 
   const attemptsByApplicant = new Map<string, { passed: boolean; score: number; submittedAt: string | null }>();
@@ -53,7 +55,7 @@ export default async function ApplicantsPage() {
       </div>
 
       <div className="overflow-x-auto rounded-2xl border border-[#e9e2f5] bg-white">
-        <table className="w-full min-w-[760px] text-left text-sm">
+        <table className="w-full min-w-[900px] text-left text-sm">
           <thead className="border-b border-[#f0ecf6] bg-[#faf7ff] text-xs uppercase tracking-wide text-[#8a8493]">
             <tr>
               <th className="px-5 py-3 font-semibold">Applicant</th>
@@ -62,6 +64,7 @@ export default async function ApplicantsPage() {
               <th className="px-5 py-3 font-semibold">Latest score</th>
               <th className="px-5 py-3 font-semibold">Status</th>
               <th className="px-5 py-3 font-semibold">Applied</th>
+              <th className="px-5 py-3 font-semibold">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-[#f0ecf6]">
@@ -88,12 +91,25 @@ export default async function ApplicantsPage() {
                     </span>
                   </td>
                   <td className="px-5 py-3 text-[#8a8493]">{formatDate(applicant.created_at)}</td>
+                  <td className="px-5 py-3">
+                    <ApplicantRowActions
+                      applicant={{
+                        id: applicant.id,
+                        full_name: applicant.full_name,
+                        email: applicant.email,
+                        whatsapp: applicant.whatsapp,
+                        age_bracket: applicant.age_bracket,
+                        course_id: applicant.course_id,
+                      }}
+                      courses={courses ?? []}
+                    />
+                  </td>
                 </tr>
               );
             })}
             {(applicants ?? []).length === 0 && (
               <tr>
-                <td colSpan={6} className="px-5 py-10 text-center text-[#8a8493]">
+                <td colSpan={7} className="px-5 py-10 text-center text-[#8a8493]">
                   No applicants yet.
                 </td>
               </tr>
