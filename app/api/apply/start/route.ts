@@ -68,23 +68,35 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "No active assessment is available for this course yet." }, { status: 400 });
   }
 
-  const { data: applicant, error: applicantError } = await sb
+  const { data: existingApplicant } = await sb
     .from("applicants")
-    .upsert(
-      {
-        email,
-        full_name: name,
-        whatsapp,
-        age_bracket: ageBracket,
-        course_id: course.id,
-        agreed_to_terms: true,
-      },
-      { onConflict: "email,course_id", ignoreDuplicates: true }
-    )
     .select("id, email")
-    .single();
-  if (applicantError || !applicant) {
-    return NextResponse.json({ error: "Could not save your details. Please try again." }, { status: 500 });
+    .eq("email", email)
+    .eq("course_id", course.id)
+    .maybeSingle();
+
+  let applicant = existingApplicant;
+
+  if (!applicant) {
+    const { data: inserted, error: applicantError } = await sb
+      .from("applicants")
+      .upsert(
+        {
+          email,
+          full_name: name,
+          whatsapp,
+          age_bracket: ageBracket,
+          course_id: course.id,
+          agreed_to_terms: true,
+        },
+        { onConflict: "email,course_id" }
+      )
+      .select("id, email")
+      .single();
+    if (applicantError || !inserted) {
+      return NextResponse.json({ error: "Could not save your details. Please try again." }, { status: 500 });
+    }
+    applicant = inserted;
   }
 
   const { data: attempts, error: attemptsError } = await sb
