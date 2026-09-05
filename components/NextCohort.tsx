@@ -29,7 +29,7 @@ export default function NextCohort() {
         }
         return prev;
       });
-    }, 3000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
