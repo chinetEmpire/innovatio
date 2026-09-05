@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import flowerImage from "@/app/images/flower.png";
 import nextImage from "@/app/images/next.jpg";
@@ -20,8 +20,24 @@ const stepImageAlts = [
 
 export default function NextCohort() {
   const [activeStep, setActiveStep] = useState(0);
+  const [inView, setInView] = useState(false);
+  const sectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
+    const node = sectionRef.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setInView(true);
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!inView) return;
     const interval = setInterval(() => {
       setActiveStep((prev) => {
         if (prev < cohortSteps.length - 1) {
@@ -29,13 +45,13 @@ export default function NextCohort() {
         }
         return prev;
       });
-    }, 5000);
+    }, 3500);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [inView]);
 
   return (
-    <section id="cohort" className="bg-[#faf8ff] py-16 sm:py-20">
+    <section id="cohort" ref={sectionRef} className="bg-[#faf8ff] py-16 sm:py-20">
       <div className="grid items-center gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:px-[4.2%]">
         <Reveal>
           <div>
