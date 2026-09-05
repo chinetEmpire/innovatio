@@ -37,7 +37,7 @@ export default function Header() {
           <Image src={logo} alt="Innovatio Academy" className="h-auto w-[160px]" priority />
         </Link>
 
-        <div className="hidden items-center gap-8 text-[15px] font-medium md:flex">
+        <div className="hidden items-center gap-8 text-[15px] font-bold md:flex">
           {navLinks.map((link) => {
             if (link.label !== "Courses") {
               const active = link.href === pathname;
@@ -45,9 +45,10 @@ export default function Header() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className={`transition-colors hover:text-brand ${active ? "text-brand" : "text-ink/70"}`}
+                  className={`relative transition-colors hover:text-brand ${active ? "text-brand" : "text-ink/70"}`}
                 >
                   {link.label}
+                  {active && <span className="absolute -bottom-1.5 left-0 right-0 h-0.5 rounded-full bg-brand" />}
                 </Link>
               );
             }
@@ -65,12 +66,13 @@ export default function Header() {
                   aria-haspopup="menu"
                   aria-expanded={coursesOpen}
                   onClick={() => setCoursesOpen((value) => !value)}
-                  className={`flex h-auto min-w-0 items-center gap-1 bg-transparent p-0 text-[15px] font-medium transition-colors hover:text-brand ${
+                  className={`relative flex h-auto min-w-0 items-center gap-1 bg-transparent p-0 text-[15px] font-bold transition-colors hover:text-brand ${
                     coursesActive ? "text-brand" : "text-ink/70"
                   }`}
                 >
                   Courses
                   <ChevronDown size={16} className={`transition-transform ${coursesOpen ? "rotate-180" : ""}`} />
+                  {coursesActive && <span className="absolute -bottom-1.5 left-0 right-0 h-0.5 rounded-full bg-brand" />}
                 </button>
                 {coursesOpen && (
                   <div className="absolute left-1/2 top-full z-50 w-56 -translate-x-1/2 pt-3">
@@ -115,7 +117,7 @@ export default function Header() {
                   <Link
                     key={link.label}
                     href={link.href}
-                    className={`rounded-lg px-3 py-3 text-base font-medium transition-colors ${active ? "bg-brand/10 text-brand" : "text-ink/80 hover:bg-brand/5"}`}
+                    className={`rounded-lg px-3 py-3 text-base font-bold transition-colors ${active ? "bg-brand/10 text-brand" : "text-ink/80 hover:bg-brand/5"}`}
                   >
                     {link.label}
                   </Link>
@@ -129,7 +131,7 @@ export default function Header() {
                     type="button"
                     aria-expanded={coursesOpen}
                     onClick={() => setCoursesOpen((value) => !value)}
-                    className={`flex min-h-0 w-full items-center justify-between rounded-lg px-3 py-3 text-base font-medium transition-colors ${
+                    className={`flex min-h-0 w-full items-center justify-between rounded-lg px-3 py-3 text-base font-bold transition-colors ${
                       coursesActive ? "bg-brand/10 text-brand" : "text-ink/80 hover:bg-brand/5"
                     }`}
                   >
