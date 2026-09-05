@@ -194,7 +194,7 @@ export default function ApplyForm({ courses }: { courses: CourseOption[] }) {
       <button
         type="submit"
         disabled={submitting || !courseSlug}
-        className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand px-6 py-3.5 text-base font-semibold text-white shadow-[0_10px_22px_rgba(84,41,208,0.3)] transition-transform hover:scale-[1.02] active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
+        className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#e2d9f2] px-6 py-3.5 text-base font-semibold text-ink transition-colors hover:border-brand hover:text-brand disabled:cursor-not-allowed disabled:opacity-60"
       >
         {submitting ? <Loader2 size={18} className="animate-spin" /> : null}
         {submitting ? "Starting…" : "Start assessment"}

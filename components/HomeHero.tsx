@@ -30,7 +30,8 @@ export default function HomeHero() {
           >
             <Link
               href="/enroll"
-              className="flex h-[58px] w-[165px] items-center justify-center rounded-full bg-brand text-[20px] font-semibold text-white shadow-[0_10px_22px_rgba(84,41,208,0.3)] transition-transform hover:scale-[1.03] active:scale-95 lg:h-[68px] lg:w-[184px] lg:text-[24px]"
+              data-control
+              className="flex h-12 min-w-32 items-center justify-center rounded-full bg-brand px-6 text-base font-semibold text-white transition-colors hover:bg-[#4520b4] lg:h-14 lg:min-w-40 lg:text-lg"
             >
               Enroll now
             </Link>

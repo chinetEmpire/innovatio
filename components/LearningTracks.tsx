@@ -33,7 +33,7 @@ export default function LearningTracks() {
                 </div>
                 <Link
                   href="/courses"
-                  className="-mx-2 -mb-2 mt-3 py-8 flex h-9 items-center gap-1.5 bg-brand px-5 text-[20px] font-semibold text-white transition-colors duration-300 hover:bg-[#4520b4]"
+                  className="-mx-2 -mb-2 mt-3 py-8 flex h-9 items-center gap-1.5 rounded-full border border-[#e2d9f2] px-5 text-base font-semibold text-ink transition-colors duration-300 hover:border-brand hover:text-brand"
                 >
                   View curriculum <ArrowRight size={14} />
                 </Link>

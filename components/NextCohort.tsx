@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import flowerImage from "@/app/images/flower.png";
 import nextImage from "@/app/images/next.jpg";
@@ -20,6 +20,19 @@ const stepImageAlts = [
 
 export default function NextCohort() {
   const [activeStep, setActiveStep] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveStep((prev) => {
+        if (prev < cohortSteps.length - 1) {
+          return prev + 1;
+        }
+        return prev;
+      });
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section id="cohort" className="bg-[#faf8ff] py-16 sm:py-20">
@@ -68,7 +81,8 @@ export default function NextCohort() {
           <Reveal delay={360}>
             <Link
               href="/enroll"
-              className="mt-8 flex h-[58px] w-[165px] items-center justify-center rounded-full bg-brand text-[20px] font-semibold text-white shadow-[0_10px_22px_rgba(84,41,208,0.3)] transition-transform hover:scale-[1.03] active:scale-95 lg:h-[68px] lg:w-[184px] lg:text-[24px]"
+              data-control
+              className="mt-8 flex h-12 w-fit min-w-32 items-center justify-center rounded-full bg-brand px-6 text-base font-semibold text-white transition-colors hover:bg-[#4520b4] lg:h-14 lg:min-w-40 lg:text-lg"
             >
               Enroll now
             </Link>

@@ -32,7 +32,7 @@ export default function CoursePickerModal() {
         data-control
         type="button"
         onClick={() => setOpen(true)}
-        className="flex h-[58px] min-w-[165px] items-center justify-center rounded-full border border-[#e2d9f2] px-6 text-[20px] font-semibold text-ink transition-colors hover:border-brand hover:text-brand lg:h-[68px] lg:min-w-[184px] lg:text-[24px]"
+        className="flex h-12 min-w-32 items-center justify-center rounded-full border border-[#e2d9f2] px-6 text-base font-semibold text-ink transition-colors hover:border-brand hover:text-brand lg:h-14 lg:min-w-40 lg:text-lg"
       >
         View courses
       </button>

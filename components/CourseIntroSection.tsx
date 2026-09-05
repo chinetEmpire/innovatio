@@ -16,7 +16,7 @@ export default function CourseIntroSection({ heading, paragraphs }: CourseIntroS
           <Image
             src={flowerImage}
             alt="Innovatio Academy student"
-            className="mx-auto h-auto w-full max-w-sm rounded-2xl object-cover shadow-[0_24px_48px_rgba(47,31,101,0.12)]"
+            className="mx-auto h-auto w-full max-w-sm rounded-2xl object-cover"
           />
         </Reveal>
         <Reveal delay={150}>

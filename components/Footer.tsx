@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import Image from "next/image";
 
+import footImage from "@/app/images/foot.png";
 import vectorImage from "@/app/images/Vector.png";
 import { footerInfo } from "@/data/site";
 
@@ -9,9 +10,14 @@ export default function Footer() {
     <>
       <footer className="overflow-hidden bg-brand text-white">
         <div className="relative px-5 pb-0 pt-10 sm:px-8 lg:px-[4.2%]">
-          <Image src={vectorImage} alt="" aria-hidden className="absolute right-8 top-8 h-12 w-12 object-contain" />
-          <p>Discover the potency of<br />Innovatio Academy at</p>
-          <a className="mt-4 block break-words text-[20px] font-bold sm:text-[28px]" href={`mailto:${footerInfo.email}`}>
+          <Image src={footImage} alt="" aria-hidden className="absolute top-8 h-4 w-10 object-contain" />
+          <Image src={vectorImage} alt="" aria-hidden className="absolute right-8 top-8 h-32 w-32 object-contain" />
+          <p className="pt-16">Discover the potency of<br />Innovatio Academy at</p>
+          <a
+            className="mt-4 block w-fit break-words border-b border-white pb-1 font-black"
+            href={`mailto:${footerInfo.email}`}
+            style={{ fontSize: "clamp(28px, 8vw, 60px)" }}
+          >
             {footerInfo.email}
           </a>
           <div className="mt-8 flex flex-col gap-7 text-[8px] sm:flex-row sm:justify-between">
@@ -42,7 +48,7 @@ export default function Footer() {
           >
             <text
               x="0"
-              y="125"
+              y="151"
               fill="currentColor"
               fontSize="152"
               fontWeight="900"
@@ -50,7 +56,7 @@ export default function Footer() {
               textLength="660"
               lengthAdjust="spacingAndGlyphs"
             >
-              Innovatio
+              InnovatiO
             </text>
           </svg>
         </div>

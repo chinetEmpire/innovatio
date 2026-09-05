@@ -30,7 +30,7 @@ export type CourseContent = {
 
 const standardFacts: CourseFact[] = [
   { label: "Program Fee", value: "₦350,000" },
-  { label: "Duration", value: "6 Months" },
+  { label: "Program duration", value: "6 Months" },
   { label: "Start Date", value: "August 31, 2026" },
   { label: "Location", value: "Online" },
 ];
@@ -39,7 +39,7 @@ const softwareEngineering: CourseContent = {
   slug: "software-engineering",
   navLabel: "Software Engineering",
   hero: {
-    badge: "Full-stack Software Engineering",
+    badge: "",
     title: "Become a Software Engineer in 6 months",
     subtitle:
       "A practical, project-based program that takes you from fundamentals to job-ready in six months.",
@@ -78,7 +78,7 @@ const cybersecurity: CourseContent = {
   slug: "cybersecurity",
   navLabel: "Cyber Security",
   hero: {
-    badge: "Cybersecurity & Digital Defense",
+    badge: "",
     title: "Become a Cybersecurity Specialist in 6 months",
     subtitle:
       "A hands-on, project-based program that takes you from networking fundamentals to defending real systems in six months.",
