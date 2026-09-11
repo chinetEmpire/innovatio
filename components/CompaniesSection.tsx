@@ -5,9 +5,9 @@ import Reveal from "./Reveal";
 
 export default function CompaniesSection() {
   return (
-    <section className="py-16 text-center sm:py-20">
+    <section className="pb-16 pt-2 text-center sm:pb-20 sm:pt-4">
       <Reveal>
-        <p className="mx-auto max-w-xl font-medium leading-relaxed text-ink" style={{ fontSize: "35px" }}>
+        <p className="mx-auto max-w-xl font-medium leading-relaxed text-ink" style={{ fontSize: "clamp(22px, 5vw, 35px)" }}>
           Our grads get great jobs with both startups and industry giants
         </p>
       </Reveal>

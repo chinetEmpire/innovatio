@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { paymentPlans } from "@/data/paymentOptions";
 import paystackLogo from "@/app/images/brands/paystack.png";
+import swImage from "@/app/images/sw.png";
 import Reveal from "./Reveal";
 
 export default function PaymentOptions() {
@@ -8,7 +9,7 @@ export default function PaymentOptions() {
     <section
       className="bg-[#faf7ff] py-16 sm:py-20"
       style={{
-        backgroundImage: "url('/sw.png')",
+        backgroundImage: `url("${swImage.src}")`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",
@@ -20,9 +21,9 @@ export default function PaymentOptions() {
             Flexible payment options for<br />every budget
           </h2>
         </Reveal>
-        <div className="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-[60px]">
+        <div className="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-[65fr_35fr] sm:gap-[90px]">
           {paymentPlans.map((plan, index) => {
-            const frameColors = ["#FFF3ED", "#F0F9E8"]; // peach for first, lime for second
+            const frameColors = ["#EEEBEB", "#EEEBEB"];
             const priceColors = ["#FFE7D2", "#F4FFAF"]; // peach for first, yellow-green for second
             return (
               <Reveal key={plan.title} delay={index * 120}>
@@ -32,11 +33,11 @@ export default function PaymentOptions() {
                     boxShadow: `0 0 0 16px ${frameColors[index]}, 0 0 0 17px #EEEBEB, 0 0 0 21px white`,
                   }}
                 >
-                  <span className="inline-block rounded-full bg-brand/10 px-3 py-1 text-xs font-bold uppercase tracking-wide text-brand">
+                  <span className="inline-block rounded-full bg-[#F5F5F5] px-4 py-2 text-xs font-bold uppercase tracking-wide text-black">
                     {plan.badge}
                   </span>
-                  <h3 className="mt-5 text-2xl font-bold">{plan.title}</h3>
-                  <p className="mt-3 text-base leading-relaxed text-[#4d4752]">{plan.description}</p>
+                  <h3 className="mt-5 text-[34px] font-bold">{plan.title}</h3>
+                  <p className="mt-3 text-[25px] leading-relaxed text-[#4d4752]">{plan.description}</p>
                   <p className="mt-8 text-sm text-[#8a8493]">{plan.label}</p>
                   <div className="mt-2 flex items-center gap-3">
                     <span className="inline-block rounded-full px-3 py-2 text-4xl font-bold tracking-tight text-ink" style={{ backgroundColor: priceColors[index] }}>

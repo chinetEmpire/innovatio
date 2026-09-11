@@ -5,8 +5,10 @@ export default function ProgramOverview({ heading }: { heading: string }) {
   return (
     <section className="px-5 pb-16 pt-20 text-center sm:px-8 lg:px-[4.2%]">
       <Reveal>
-        <h2 className="mx-auto max-w-2xl text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
-          {heading}
+        <h2 className="mx-auto mb-16 max-w-3xl text-[2.75rem] font-black leading-tight tracking-tight sm:text-[3.25rem]">
+          {heading.split("Engineer")[0]}Engineer
+          <br />
+          {heading.split("Engineer")[1]}
         </h2>
       </Reveal>
       <div className="mt-12 grid gap-10 sm:grid-cols-3">

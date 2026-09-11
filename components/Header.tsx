@@ -32,12 +32,12 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-[#ece6f6] bg-white/90 backdrop-blur">
-      <nav className="flex h-16 items-center justify-between px-5 sm:px-8 lg:px-[4.2%]">
+      <nav className="flex items-center justify-between px-5 py-3 sm:px-8 lg:px-[4.2%]">
         <Link href="/" aria-label="Innovatio Academy home" className="shrink-0 transition-opacity hover:opacity-80">
-          <Image src={logo} alt="Innovatio Academy" className="h-auto w-[160px]" priority />
+          <Image src={logo} alt="Innovatio Academy" className="h-auto w-[240px]" priority />
         </Link>
 
-        <div className="hidden items-center gap-8 text-[15px] font-bold md:flex">
+        <div className="hidden items-center gap-8 text-[18px] font-bold md:flex">
           {navLinks.map((link) => {
             if (link.label !== "Courses") {
               const active = link.href === pathname;
@@ -94,6 +94,15 @@ export default function Header() {
               </div>
             );
           })}
+          {pathname !== "/" && (
+            <Link
+              href="/enroll"
+              data-control
+              className="rounded-full bg-brand px-5 py-2 text-[14px] font-bold text-white transition-colors hover:bg-[#4520b4]"
+            >
+              Enroll now
+            </Link>
+          )}
         </div>
 
         <button
@@ -156,6 +165,15 @@ export default function Header() {
                 </div>
               );
             })}
+            {pathname !== "/" && (
+              <Link
+                href="/enroll"
+                data-control
+                className="mt-2 flex items-center justify-center rounded-full bg-brand px-5 py-3 text-base font-bold text-white transition-colors hover:bg-[#4520b4]"
+              >
+                Enroll now
+              </Link>
+            )}
           </div>
         </div>
       )}

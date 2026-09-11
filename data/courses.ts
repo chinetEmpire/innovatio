@@ -29,8 +29,8 @@ export type CourseContent = {
 };
 
 const standardFacts: CourseFact[] = [
-  { label: "Program Fee", value: "₦350,000" },
-  { label: "Program duration", value: "6 Months" },
+  { label: "Program Fee:", value: "₦350,000" },
+  { label: "Program duration:", value: "6 Months" },
   { label: "Start Date", value: "August 31, 2026" },
   { label: "Location", value: "Online" },
 ];
@@ -40,9 +40,9 @@ const softwareEngineering: CourseContent = {
   navLabel: "Software Engineering",
   hero: {
     badge: "",
-    title: "Become a Software Engineer in 6 months",
+    title: "Full-stack Software Engineering",
     subtitle:
-      "A practical, project-based program that takes you from fundamentals to job-ready in six months.",
+      "",
     facts: standardFacts,
   },
   overviewHeading: "Become a Software Engineer with Innovatio Academy",
@@ -79,9 +79,9 @@ const cybersecurity: CourseContent = {
   navLabel: "Cyber Security",
   hero: {
     badge: "",
-    title: "Become a Cybersecurity Specialist in 6 months",
+    title: "Cybersecurity Specialist",
     subtitle:
-      "A hands-on, project-based program that takes you from networking fundamentals to defending real systems in six months.",
+      " ",
     facts: standardFacts,
   },
   overviewHeading: "Become a Cybersecurity Specialist with Innovatio Academy",

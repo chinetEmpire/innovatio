@@ -10,7 +10,7 @@ type CourseIntroSectionProps = {
 
 export default function CourseIntroSection({ heading, paragraphs }: CourseIntroSectionProps) {
   return (
-    <section className="px-5 pb-16 sm:px-8 lg:px-[4.2%]">
+    <section className="px-5 pb-16 pt-14 sm:px-8 lg:px-[4.2%]">
       <div className="grid items-center gap-10 md:grid-cols-2">
         <Reveal>
           <Image
@@ -21,7 +21,7 @@ export default function CourseIntroSection({ heading, paragraphs }: CourseIntroS
         </Reveal>
         <Reveal delay={150}>
           <div>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{heading}</h2>
+            <h1 className="text-5xl font-extrabold leading-relaxed  sm:text-5xl">{heading}</h1>
             {paragraphs.map((paragraph, index) => (
               <p
                 key={paragraph.slice(0, 24)}

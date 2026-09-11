@@ -13,8 +13,8 @@ export type BrandLogo = { src: StaticImageData | string; alt: string; className?
 export const navLinks: NavLink[] = [
   { label: "Home", href: "/" },
   { label: "Courses", href: "/courses" },
-  { label: "FAQs", href: "/#faq" },
   { label: "Contact", href: "/#cohort" },
+  { label: "FAQs", href: "/#faq" },
 ];
 
 export const homeEmployerLogos: BrandLogo[] = [

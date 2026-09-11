@@ -27,7 +27,7 @@ export default function Hero({ badge, title, subtitle, facts }: HeroProps) {
             </span>
           )}
           <h1
-            className="animate-fade-up mt-5 max-w-3xl text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl"
+            className="animate-fade-up mt-5 max-w-none text-4xl font-black leading-tight tracking-tight whitespace-normal sm:whitespace-nowrap sm:text-5xl lg:text-6xl"
             style={{ "--reveal-delay": "100ms" } as React.CSSProperties}
           >
             {title}
@@ -41,15 +41,15 @@ export default function Hero({ badge, title, subtitle, facts }: HeroProps) {
         </div>
       </section>
 
-      <div className="relative z-10 -mt-[94px] px-5 pb-12 sm:px-8 lg:px-[4.2%]">
+      <div className="relative z-10 -mt-[94px] px-6 pb-12">
         <div
-          className="animate-fade-up mx-auto grid max-w-4xl grid-cols-2 gap-px overflow-hidden rounded-[7px] bg-[#e9e2f7] shadow-[0_24px_48px_rgba(24,10,64,0.25)] ring-1 ring-white/70 md:grid-cols-2"
+          className="animate-fade-up mx-auto grid max-w-[64rem] grid-cols-2 gap-x-4 overflow-hidden rounded-[7px] bg-white shadow-[0_8px_24px_rgba(24,10,64,0.08)] sm:gap-x-8"
           style={{ "--reveal-delay": "300ms" } as React.CSSProperties}
         >
           {facts.map((fact) => (
-            <div key={fact.label} className={`flex flex-col gap-1.5 bg-white px-6 py-8 sm:flex-row sm:items-center sm:gap-6 ${fact.label === "Program duration" || fact.label === "Location" ? "text-right sm:justify-end" : "text-left sm:justify-start"}`}>
-              <p className="text-xs font-medium uppercase tracking-wide text-ink">{fact.label}</p>
-              <p className="text-lg font-bold text-ink">{fact.value}</p>
+            <div key={fact.label} className="flex flex-col bg-white px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:py-8">
+              <p className="text-[19px] font-bold text-ink sm:text-[23px]">{fact.label}</p>
+              <p className="text-[19px] font-bold text-ink sm:text-[23px]">{fact.value}</p>
             </div>
           ))}
         </div>

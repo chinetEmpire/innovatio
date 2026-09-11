@@ -51,22 +51,22 @@ export default function NextCohort() {
   }, [inView]);
 
   return (
-    <section id="cohort" ref={sectionRef} className="bg-[#faf8ff] py-16 sm:py-20">
+    <section id="cohort" ref={sectionRef} className="bg-white py-16 sm:py-20">
       <div className="grid items-center gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:px-[4.2%]">
         <Reveal>
           <div>
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Join Our Next Cohort</h2>
-            <p className="mt-5 max-w-md text-base leading-relaxed text-[#5f5b65]">
+            <p className="mt-5 max-w-md text-[22px] leading-relaxed text-black">
               Next Cohort Starts 21st of September, 2026. Registration starts on 7th of August, 2026 and closes on 7th of September, 2026. Apply now!
             </p>
-            <Image src={flowerImage} alt="Innovatio Academy student" className="mt-8 hidden h-auto w-80 lg:block" />
+            <Image src={flowerImage} alt="Innovatio Academy student" className="mt-8 hidden h-auto w-[28rem] lg:block" />
           </div>
         </Reveal>
 
         <div className="lg:pt-2">
           {cohortSteps.map(({ title, description }, index) => (
             <Reveal key={title} delay={index * 120}>
-              <div className="flex gap-4 border-b border-[#ded9e8] pb-6 pt-1 last:border-b-0 last:pb-0">
+              <div className="flex gap-4 pb-4 pt-1">
                 <div className="flex w-6 shrink-0 flex-col items-center">
                   <button
                     type="button"
@@ -81,17 +81,18 @@ export default function NextCohort() {
                   {index < cohortSteps.length - 1 && <span className="mt-1 w-px flex-1 bg-[#ded9e8]" />}
                 </div>
                 <div className="min-w-0 flex-1 pb-1">
-                  <h3 className={`text-base font-semibold ${activeStep === index ? "text-ink" : "text-[#68656b]"}`}>{title}</h3>
-                  <p className="mt-2 max-w-md text-sm leading-relaxed text-[#68656b]">{description}</p>
+                  <h3 className={`text-[23px] font-bold ${activeStep === index ? "text-ink" : "text-[#68656b]"}`}>{title}</h3>
+                  <p className="mt-2 w-full text-[19px] leading-[1.8] text-[#68656b]">{description}</p>
                   {activeStep === index && (
                     <Image
                       src={stepImages[index]}
                       alt={stepImageAlts[index]}
-                      className="mt-4 h-40 w-full rounded-lg object-cover object-center sm:h-48"
+                      className="mt-4 h-52 w-full rounded-lg object-cover object-center sm:h-60"
                     />
                   )}
                 </div>
               </div>
+              {index < cohortSteps.length - 1 && <div className="my-6 ml-10 h-px w-full bg-black/40" />}
             </Reveal>
           ))}
           <Reveal delay={360}>
