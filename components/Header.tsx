@@ -50,7 +50,7 @@ export default function Header() {
   const darkNav = isHome && !pastStrip;
 
   return (
-    <header className={`sticky top-0 z-50 bg-white/90 backdrop-blur ${
+    <header className={`sticky top-0 z-50 bg-white lg:bg-white/90 lg:backdrop-blur ${
         darkNav ? "isolate" : ""
       }`}>
       {darkNav && (
@@ -64,7 +64,7 @@ export default function Header() {
           <Image
             src={logo}
             alt="Innovatio Academy"
-            className="lg:-ml-[45px] h-auto w-[240px]"
+            className="lg:-ml-[45px] h-auto w-[150px] sm:w-[240px]"
             priority
           />
         </Link>
