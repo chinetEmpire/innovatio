@@ -102,7 +102,7 @@ export default function AssessmentRunner({
   const ss = String(remaining % 60).padStart(2, "0");
 
   return (
-    <main className="mx-auto max-w-3xl px-5 py-10 sm:px-8">
+    <main className="mx-auto max-w-3xl px-4 py-6 sm:px-8 sm:py-10">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-xl font-bold tracking-tight sm:text-2xl">{assessmentTitle}</h1>
@@ -127,9 +127,9 @@ export default function AssessmentRunner({
         />
       </div>
 
-      <div className="mt-8 rounded-2xl border border-[#e9e2f5] bg-white p-6 shadow-[0_16px_32px_rgba(47,31,101,0.08)] sm:p-8">
-        <p className="text-lg font-semibold leading-relaxed text-ink">{question.text}</p>
-        <div className="mt-6 space-y-3">
+      <div className="mt-5 rounded-2xl border border-[#e9e2f5] bg-white p-4 shadow-[0_16px_32px_rgba(47,31,101,0.08)] sm:mt-8 sm:p-8">
+        <p className="text-base font-semibold leading-relaxed text-ink sm:text-lg">{question.text}</p>
+        <div className="mt-4 space-y-2.5 sm:mt-6 sm:space-y-3">
           {question.choices.map((choice) => {
             const selected = answers[question.id] === choice.id;
             return (
@@ -161,12 +161,12 @@ export default function AssessmentRunner({
           <p className="mt-5 rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{error}</p>
         )}
 
-        <div className="mt-8 flex items-center justify-between">
+        <div className="mt-5 flex items-center justify-between sm:mt-8">
           <button
             type="button"
             onClick={() => setCurrent((c) => Math.max(0, c - 1))}
             disabled={current === 0}
-            className="inline-flex items-center gap-1.5 rounded-full border border-[#e2d9f2] px-4 py-2 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand disabled:opacity-40 disabled:hover:border-[#e2d9f2] disabled:hover:text-ink"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#e2d9f2] px-3.5 py-1.5 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand disabled:opacity-40 disabled:hover:border-[#e2d9f2] disabled:hover:text-ink"
           >
             <ChevronLeft size={16} /> Previous
           </button>
@@ -175,7 +175,7 @@ export default function AssessmentRunner({
             <button
               type="button"
               onClick={() => setCurrent((c) => Math.min(questions.length - 1, c + 1))}
-              className="inline-flex items-center gap-1.5 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white transition-transform hover:scale-[1.03] active:scale-95"
+              className="inline-flex items-center gap-1.5 rounded-full bg-brand px-3.5 py-1.5 text-sm font-semibold text-white transition-transform hover:scale-[1.03] active:scale-95"
             >
               Next <ChevronRight size={16} />
             </button>
@@ -184,7 +184,7 @@ export default function AssessmentRunner({
               type="button"
               onClick={() => submit(answers)}
               disabled={submitting}
-              className="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white shadow-[0_10px_22px_rgba(84,41,208,0.3)] transition-transform hover:scale-[1.03] active:scale-95 disabled:opacity-60"
+              className="inline-flex items-center gap-2 rounded-full bg-brand px-4 py-1.5 text-sm font-semibold text-white shadow-[0_10px_22px_rgba(84,41,208,0.3)] transition-transform hover:scale-[1.03] active:scale-95 disabled:opacity-60"
             >
               {submitting ? <Loader2 size={16} className="animate-spin" /> : null}
               {submitting ? "Submitting…" : `Submit (${totalPoints} pts)`}
