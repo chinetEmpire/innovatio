@@ -50,11 +50,11 @@ export default function Header() {
   const darkNav = isHome && !pastStrip;
 
   return (
-    <header className={`sticky top-0 z-50 ${
-        darkNav ? "isolate" : "bg-white/90 backdrop-blur"
+    <header className={`sticky top-0 z-50 bg-white/90 backdrop-blur ${
+        darkNav ? "isolate" : ""
       }`}>
       {darkNav && (
-        <div aria-hidden className="absolute inset-0 -z-10">
+        <div aria-hidden className="absolute inset-0 -z-10 hidden lg:block">
           <div className="absolute inset-y-0 left-0 right-[52.5%] bg-white" />
           <div className="absolute inset-y-0 left-[52.5%] right-0 bg-brand" />
         </div>
@@ -64,7 +64,7 @@ export default function Header() {
           <Image
             src={logo}
             alt="Innovatio Academy"
-            className="-ml-[45px] h-auto w-[240px]"
+            className="lg:-ml-[45px] h-auto w-[240px]"
             priority
           />
         </Link>
@@ -79,13 +79,13 @@ export default function Header() {
                   href={link.href}
                   className={`relative transition-colors ${
                     darkNav
-                      ? `${active ? "text-white" : "text-white/70"} hover:text-white`
+                      ? `${active ? "text-brand lg:text-white" : "text-ink/70 lg:text-white/70"} hover:text-brand lg:hover:text-white`
                       : `${active ? "text-brand" : "text-ink/70"} hover:text-brand`
                   }`}
                 >
                   {link.label}
                   {active && (
-                    <span className={`absolute -bottom-1.5 left-0 right-0 h-0.5 rounded-full ${darkNav ? "bg-white" : "bg-brand"}`} />
+                    <span className={`absolute -bottom-1.5 left-0 right-0 h-0.5 rounded-full ${darkNav ? "bg-brand lg:bg-white" : "bg-brand"}`} />
                   )}
                 </Link>
               );
@@ -106,14 +106,14 @@ export default function Header() {
                   onClick={() => setCoursesOpen((value) => !value)}
                   className={`relative flex h-auto min-w-0 items-center gap-1 bg-transparent p-0 text-[18px] font-bold transition-colors ${
                     darkNav
-                      ? `${coursesActive ? "text-white" : "text-white/70"} hover:text-white`
+                      ? `${coursesActive ? "text-brand lg:text-white" : "text-ink/70 lg:text-white/70"} hover:text-brand lg:hover:text-white`
                       : `${coursesActive ? "text-brand" : "text-ink/70"} hover:text-brand`
                   }`}
                 >
                   Courses
                   <ChevronDown size={16} className={`transition-transform ${coursesOpen ? "rotate-180" : ""}`} />
                   {coursesActive && (
-                    <span className={`absolute -bottom-1.5 left-0 right-0 h-0.5 rounded-full ${darkNav ? "bg-white" : "bg-brand"}`} />
+                    <span className={`absolute -bottom-1.5 left-0 right-0 h-0.5 rounded-full ${darkNav ? "bg-brand lg:bg-white" : "bg-brand"}`} />
                   )}
                 </button>
                 {coursesOpen && (
@@ -152,9 +152,7 @@ export default function Header() {
           onClick={() => setOpen(!open)}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
-          className={`flex h-9 w-9 items-center justify-center rounded-full transition-colors md:hidden ${
-            darkNav ? "text-white hover:bg-white/10" : "text-brand hover:bg-brand/10"
-          }`}
+          className="flex h-9 w-9 items-center justify-center rounded-full text-brand transition-colors hover:bg-brand/10 md:hidden"
         >
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>

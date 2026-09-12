@@ -48,7 +48,7 @@ export default function Testimonials() {
               aria-label="Previous testimonial"
               onClick={goToPrevious}
               className={`absolute left-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-black shadow-[0_8px_20px_rgba(0,0,0,0.14)] transition-all hover:scale-105 ${
-                isHovered ? "opacity-100" : "pointer-events-none opacity-0"
+                isHovered ? "lg:opacity-100" : "lg:pointer-events-none lg:opacity-0"
               }`}
             >
               <ChevronLeft size={26} />
@@ -59,7 +59,7 @@ export default function Testimonials() {
               aria-label="Next testimonial"
               onClick={goToNext}
               className={`absolute right-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-black shadow-[0_8px_20px_rgba(0,0,0,0.14)] transition-all hover:scale-105 ${
-                isHovered ? "opacity-100" : "pointer-events-none opacity-0"
+                isHovered ? "lg:opacity-100" : "lg:pointer-events-none lg:opacity-0"
               }`}
             >
               <ChevronRight size={26} />
@@ -94,7 +94,7 @@ export default function Testimonials() {
                         : "h-[164px] justify-between text-left sm:h-[174px] opacity-80"
                     }`}>
                     <blockquote className={`mx-auto max-w-xl leading-[1.35] text-ink ${
-                      isActive ? "text-[19px]" : "text-[12px] sm:text-[13px]"
+                      isActive ? "text-[16px] sm:text-[19px]" : "text-[12px] sm:text-[13px]"
                     }`}>
                       {testimonial.quote}
                     </blockquote>
@@ -108,10 +108,10 @@ export default function Testimonials() {
                       />
                       <div>
                         <p className={`font-semibold leading-tight text-ink ${
-                          isActive ? "text-[19px]" : "text-[12px] sm:text-[13px]"
+                          isActive ? "text-base sm:text-[19px]" : "text-[12px] sm:text-[13px]"
                         }`}>{testimonial.name}</p>
                         <p className={`mt-1 leading-tight text-[#8a8493] ${
-                          isActive ? "text-[19px]" : "text-[10px] sm:text-[11px]"
+                          isActive ? "text-sm sm:text-[19px]" : "text-[10px] sm:text-[11px]"
                         }`}>{testimonial.role}</p>
                       </div>
                     </div>
