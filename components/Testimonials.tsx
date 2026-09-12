@@ -13,6 +13,7 @@ const AUTOPLAY_INTERVAL_MS = 5000;
 export default function Testimonials() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const slideIndexes = [-1, 0, 1];
   const testimonialCount = testimonials.length;
 
@@ -46,7 +47,9 @@ export default function Testimonials() {
               data-control
               aria-label="Previous testimonial"
               onClick={goToPrevious}
-              className="absolute left-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-black shadow-[0_8px_20px_rgba(0,0,0,0.14)] transition-transform hover:scale-105"
+              className={`absolute left-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-black shadow-[0_8px_20px_rgba(0,0,0,0.14)] transition-all hover:scale-105 ${
+                isHovered ? "opacity-100" : "pointer-events-none opacity-0"
+              }`}
             >
               <ChevronLeft size={26} />
             </button>
@@ -55,13 +58,21 @@ export default function Testimonials() {
               data-control
               aria-label="Next testimonial"
               onClick={goToNext}
-              className="absolute right-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-black shadow-[0_8px_20px_rgba(0,0,0,0.14)] transition-transform hover:scale-105"
+              className={`absolute right-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-black shadow-[0_8px_20px_rgba(0,0,0,0.14)] transition-all hover:scale-105 ${
+                isHovered ? "opacity-100" : "pointer-events-none opacity-0"
+              }`}
             >
               <ChevronRight size={26} />
             </button>
           <div
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
+            onMouseEnter={() => {
+              setIsPaused(true);
+              setIsHovered(true);
+            }}
+            onMouseLeave={() => {
+              setIsPaused(false);
+              setIsHovered(false);
+            }}
             className="relative mt-10 flex w-full items-center justify-center gap-4 sm:gap-6"
           >
             {slideIndexes.map((offset) => {

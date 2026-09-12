@@ -13,8 +13,25 @@ import { navLinks } from "@/data/site";
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [coursesOpen, setCoursesOpen] = useState(false);
+  const [pastStrip, setPastStrip] = useState(false);
   const pathname = usePathname();
   const coursesActive = pathname.startsWith("/courses");
+  const isHome = pathname === "/";
+
+  useEffect(() => {
+    if (!isHome) return;
+    const check = () => {
+      const el = document.getElementById("learners");
+      if (el) setPastStrip(el.getBoundingClientRect().top <= 58);
+    };
+    check();
+    window.addEventListener("scroll", check, { passive: true });
+    window.addEventListener("resize", check);
+    return () => {
+      window.removeEventListener("scroll", check);
+      window.removeEventListener("resize", check);
+    };
+  }, [isHome]);
 
   useEffect(() => {
     setOpen(false);
@@ -30,11 +47,26 @@ export default function Header() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [coursesOpen]);
 
+  const darkNav = isHome && !pastStrip;
+
   return (
-    <header className="sticky top-0 z-50 border-b border-[#ece6f6] bg-white/90 backdrop-blur">
-      <nav className="flex items-center justify-between px-5 py-3 sm:px-8 lg:px-[4.2%]">
+    <header className={`sticky top-0 z-50 ${
+        darkNav ? "isolate" : "bg-white/90 backdrop-blur"
+      }`}>
+      {darkNav && (
+        <div aria-hidden className="absolute inset-0 -z-10">
+          <div className="absolute inset-y-0 left-0 right-[52.5%] bg-white" />
+          <div className="absolute inset-y-0 left-[52.5%] right-0 bg-brand" />
+        </div>
+      )}
+      <nav className="flex items-center justify-between px-5 py-1.5 sm:px-8 lg:px-[8%]">
         <Link href="/" aria-label="Innovatio Academy home" className="shrink-0 transition-opacity hover:opacity-80">
-          <Image src={logo} alt="Innovatio Academy" className="h-auto w-[240px]" priority />
+          <Image
+            src={logo}
+            alt="Innovatio Academy"
+            className="-ml-[45px] h-auto w-[240px]"
+            priority
+          />
         </Link>
 
         <div className="hidden items-center gap-8 text-[18px] font-bold md:flex">
@@ -45,10 +77,16 @@ export default function Header() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className={`relative transition-colors hover:text-brand ${active ? "text-brand" : "text-ink/70"}`}
+                  className={`relative transition-colors ${
+                    darkNav
+                      ? `${active ? "text-white" : "text-white/70"} hover:text-white`
+                      : `${active ? "text-brand" : "text-ink/70"} hover:text-brand`
+                  }`}
                 >
                   {link.label}
-                  {active && <span className="absolute -bottom-1.5 left-0 right-0 h-0.5 rounded-full bg-brand" />}
+                  {active && (
+                    <span className={`absolute -bottom-1.5 left-0 right-0 h-0.5 rounded-full ${darkNav ? "bg-white" : "bg-brand"}`} />
+                  )}
                 </Link>
               );
             }
@@ -66,13 +104,17 @@ export default function Header() {
                   aria-haspopup="menu"
                   aria-expanded={coursesOpen}
                   onClick={() => setCoursesOpen((value) => !value)}
-                  className={`relative flex h-auto min-w-0 items-center gap-1 bg-transparent p-0 text-[15px] font-bold transition-colors hover:text-brand ${
-                    coursesActive ? "text-brand" : "text-ink/70"
+                  className={`relative flex h-auto min-w-0 items-center gap-1 bg-transparent p-0 text-[18px] font-bold transition-colors ${
+                    darkNav
+                      ? `${coursesActive ? "text-white" : "text-white/70"} hover:text-white`
+                      : `${coursesActive ? "text-brand" : "text-ink/70"} hover:text-brand`
                   }`}
                 >
                   Courses
                   <ChevronDown size={16} className={`transition-transform ${coursesOpen ? "rotate-180" : ""}`} />
-                  {coursesActive && <span className="absolute -bottom-1.5 left-0 right-0 h-0.5 rounded-full bg-brand" />}
+                  {coursesActive && (
+                    <span className={`absolute -bottom-1.5 left-0 right-0 h-0.5 rounded-full ${darkNav ? "bg-white" : "bg-brand"}`} />
+                  )}
                 </button>
                 {coursesOpen && (
                   <div className="absolute left-1/2 top-full z-50 w-56 -translate-x-1/2 pt-3">
@@ -110,7 +152,9 @@ export default function Header() {
           onClick={() => setOpen(!open)}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
-          className="flex h-9 w-9 items-center justify-center rounded-full text-brand transition-colors hover:bg-brand/10 md:hidden"
+          className={`flex h-9 w-9 items-center justify-center rounded-full transition-colors md:hidden ${
+            darkNav ? "text-white hover:bg-white/10" : "text-brand hover:bg-brand/10"
+          }`}
         >
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
