@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 import AssessmentRunner from "@/components/apply/AssessmentRunner";
-import { grantedAttempts } from "@/lib/attempts";
+import { grantedAttempts, grantAttemptOwnership } from "@/lib/attempts";
 import { shuffle, toSafeQuestions, type QuestionWithChoices } from "@/lib/assessment";
 import { serviceClient } from "@/lib/supabase/admin";
 
@@ -34,6 +34,18 @@ export default async function AssessmentPage({
     .eq("id", attempt.assessment_id)
     .maybeSingle();
   if (!assessment) redirect(`/apply/${course}`);
+
+  const deadlineMs = new Date(attempt.started_at).getTime() + assessment.duration_minutes * 60 * 1000;
+  if (Date.now() > deadlineMs + 30_000) {
+    const { data: fresh, error: freshError } = await sb
+      .from("attempts")
+      .insert({ applicant_id: attempt.applicant_id, assessment_id: attempt.assessment_id })
+      .select("id")
+      .single();
+    if (freshError || !fresh) redirect(`/apply/${course}`);
+    await grantAttemptOwnership(fresh.id);
+    redirect(`/apply/${course}/assessment?attempt=${fresh.id}`);
+  }
 
   let questions: QuestionWithChoices[] = [];
   const { data } = await sb

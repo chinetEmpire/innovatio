@@ -41,7 +41,7 @@ export type EligibilityResult =
 
 export function evaluateEligibility(opts: {
   attempts: Attempt[];
-  assessment: Pick<Assessment, "max_attempts" | "retake_cooldown_hours">;
+  assessment: Pick<Assessment, "max_attempts" | "retake_cooldown_hours" | "duration_minutes">;
   courseSlug: string;
   now?: number;
 }): EligibilityResult {
@@ -55,7 +55,10 @@ export function evaluateEligibility(opts: {
     return { action: "proceed", redirect: `/apply/${courseSlug}/register` };
   }
 
-  const inProgress = attempts.find((a) => a.status === "in_progress");
+  const durationMs = assessment.duration_minutes * 60 * 1000;
+  const inProgress = attempts.find(
+    (a) => a.status === "in_progress" && now - new Date(a.started_at).getTime() < durationMs
+  );
   if (inProgress) {
     return { action: "resume", attemptId: inProgress.id, redirect: `/apply/${courseSlug}/assessment?attempt=${inProgress.id}` };
   }

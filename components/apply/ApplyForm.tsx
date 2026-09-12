@@ -52,7 +52,7 @@ export default function ApplyForm({ courses }: { courses: CourseOption[] }) {
       }
 
       if (data.action === "proceed") {
-        setStatus({ type: "success", text: "You already passed this assessment. Redirecting to registration…" });
+        setStatus({ type: "success", text: "You already passed this assessment. Redirecting to payment…" });
         router.push(data.redirect ?? "/apply");
         return;
       }

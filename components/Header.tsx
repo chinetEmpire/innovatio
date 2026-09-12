@@ -10,7 +10,7 @@ import logo from "@/app/images/logo.png";
 import { courseLinks } from "@/data/courses";
 import { navLinks } from "@/data/site";
 
-export default function Header() {
+export default function Header({ showEnroll = true }: { showEnroll?: boolean }) {
   const [open, setOpen] = useState(false);
   const [coursesOpen, setCoursesOpen] = useState(false);
   const [pastStrip, setPastStrip] = useState(false);
@@ -136,7 +136,7 @@ export default function Header() {
               </div>
             );
           })}
-          {pathname !== "/" && (
+          {showEnroll && pathname !== "/" && (
             <Link
               href="/enroll"
               data-control
@@ -207,7 +207,7 @@ export default function Header() {
                 </div>
               );
             })}
-            {pathname !== "/" && (
+            {showEnroll && pathname !== "/" && (
               <Link
                 href="/enroll"
                 data-control

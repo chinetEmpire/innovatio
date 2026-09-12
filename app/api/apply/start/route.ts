@@ -115,6 +115,35 @@ export async function POST(req: Request) {
     courseSlug: course.slug,
   });
 
+  if (eligibility.action === "proceed") {
+    const passedAttempt = (attempts ?? []).find((a) => a.status === "submitted" && a.passed === true);
+    const { data: existing } = await sb
+      .from("enrollments")
+      .select("id")
+      .eq("applicant_id", applicant.id)
+      .eq("course_id", course.id)
+      .maybeSingle();
+
+    let enrollmentId = existing?.id ?? null;
+    if (!enrollmentId) {
+      const { data: created, error: insertError } = await sb
+        .from("enrollments")
+        .insert({
+          applicant_id: applicant.id,
+          course_id: course.id,
+          attempt_id: passedAttempt?.id ?? null,
+          payment_status: "pending",
+        })
+        .select("id")
+        .single();
+      if (!insertError && created) enrollmentId = created.id;
+    }
+
+    if (enrollmentId) {
+      return NextResponse.json({ action: "proceed", redirect: `/payment?enrollment=${enrollmentId}` });
+    }
+  }
+
   if (eligibility.action === "start") {
     const { data: attempt, error: attemptError } = await sb
       .from("attempts")

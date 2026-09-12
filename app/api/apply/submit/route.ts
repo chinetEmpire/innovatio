@@ -88,7 +88,42 @@ export async function POST(req: Request) {
 
   await revokeAttemptOwnership(attempt.id);
 
-  const redirect = `/apply/${course?.slug ?? "course"}/result?attempt=${attempt.id}`;
+  let redirect = `/apply/${course?.slug ?? "course"}/result?attempt=${attempt.id}`;
+
+  if (result.passed) {
+    const { data: applicant } = await sb
+      .from("applicants")
+      .select("id")
+      .eq("id", attempt.applicant_id)
+      .maybeSingle();
+
+    if (applicant) {
+      const { data: existing } = await sb
+        .from("enrollments")
+        .select("id")
+        .eq("applicant_id", applicant.id)
+        .eq("course_id", assessment.course_id)
+        .maybeSingle();
+
+      let enrollmentId = existing?.id ?? null;
+      if (!enrollmentId) {
+        const { data: created, error: enrollError } = await sb
+          .from("enrollments")
+          .insert({
+            applicant_id: applicant.id,
+            course_id: assessment.course_id,
+            attempt_id: attempt.id,
+            payment_status: "pending",
+          })
+          .select("id")
+          .single();
+        if (!enrollError && created) enrollmentId = created.id;
+      }
+
+      if (enrollmentId) redirect = `/payment?enrollment=${enrollmentId}`;
+    }
+  }
+
   return NextResponse.json({
     score: result.score,
     total: result.total,

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Clock, Loader2 } from "lucide-react";
 
 type SafeQuestion = {
@@ -30,12 +30,21 @@ export default function AssessmentRunner({
   startedAt,
 }: Props) {
   const router = useRouter();
-  const deadline = useMemo(() => new Date(startedAt).getTime() + durationMinutes * 60 * 1000, [startedAt, durationMinutes]);
-  const [remaining, setRemaining] = useState(() => Math.max(0, Math.floor((deadline - Date.now()) / 1000)));
+  const deadline = useMemo(() => {
+    const start = new Date(startedAt).getTime();
+    const duration = Number(durationMinutes);
+    return Number.isFinite(start) && Number.isFinite(duration) && duration > 0
+      ? start + duration * 60 * 1000
+      : null;
+  }, [startedAt, durationMinutes]);
+  const [remaining, setRemaining] = useState(() =>
+    deadline ? Math.max(0, Math.round((deadline - Date.now()) / 1000)) : 0
+  );
   const [current, setCurrent] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const autoSubmitted = useRef(false);
 
   const submit = useCallback(
     async (finalAnswers: Record<string, string>) => {
@@ -65,22 +74,21 @@ export default function AssessmentRunner({
   );
 
   useEffect(() => {
-    if (remaining <= 0) {
-      submit(answers);
-      return;
-    }
+    if (!deadline) return;
     const timer = setInterval(() => {
       setRemaining((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          submit(answers);
-          return 0;
-        }
-        return prev - 1;
+        const next = Math.max(0, Math.round((deadline - Date.now()) / 1000));
+        return prev === next ? prev : next;
       });
     }, 1000);
     return () => clearInterval(timer);
-  }, [remaining, answers, submit]);
+  }, [deadline]);
+
+  useEffect(() => {
+    if (remaining > 0 || autoSubmitted.current) return;
+    autoSubmitted.current = true;
+    submit(answers);
+  }, [remaining, submit, answers]);
 
   const totalPoints = questions.reduce((sum, q) => sum + q.points, 0);
   const answeredCount = Object.keys(answers).length;
@@ -166,7 +174,7 @@ export default function AssessmentRunner({
             type="button"
             onClick={() => setCurrent((c) => Math.max(0, c - 1))}
             disabled={current === 0}
-            className="inline-flex items-center gap-1.5 rounded-full border border-[#e2d9f2] px-3.5 py-1.5 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand disabled:opacity-40 disabled:hover:border-[#e2d9f2] disabled:hover:text-ink"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#e2d9f2] px-3 py-1 text-xs font-semibold text-ink transition-colors hover:border-brand hover:text-brand disabled:opacity-40 disabled:hover:border-[#e2d9f2] disabled:hover:text-ink sm:px-3.5 sm:py-1.5 sm:text-sm"
           >
             <ChevronLeft size={16} /> Previous
           </button>
@@ -175,7 +183,7 @@ export default function AssessmentRunner({
             <button
               type="button"
               onClick={() => setCurrent((c) => Math.min(questions.length - 1, c + 1))}
-              className="inline-flex items-center gap-1.5 rounded-full bg-brand px-3.5 py-1.5 text-sm font-semibold text-white transition-transform hover:scale-[1.03] active:scale-95"
+              className="inline-flex items-center gap-1.5 rounded-full bg-brand px-3 py-1 text-xs font-semibold text-white transition-transform hover:scale-[1.03] active:scale-95 sm:px-3.5 sm:py-1.5 sm:text-sm"
             >
               Next <ChevronRight size={16} />
             </button>

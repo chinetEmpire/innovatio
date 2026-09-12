@@ -1,11 +1,8 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
 import { useState } from "react";
 import { ArrowRight, Loader2, Lock, Sparkles } from "lucide-react";
 
-import logo from "@/app/images/logo.png";
 import { formatNaira, formatNairaKobo, paymentPlans, type PaymentPlanKey } from "@/data/paymentOptions";
 
 export type PaymentCourse = {
@@ -56,17 +53,6 @@ export default function PaymentPage({
   return (
     <main className="min-h-screen bg-[#f2f2f2]">
       <div className="px-5 pt-8 sm:px-8 lg:px-[4.2%]">
-        <header className="flex items-center justify-between">
-          <Link href="/" aria-label="Innovatio Academy home" className="transition-opacity hover:opacity-80">
-            <Image src={logo} alt="Innovatio Academy" className="h-auto w-[140px]" />
-          </Link>
-
-          <nav className="hidden items-center gap-8 text-[12px] font-medium text-[#202020] md:flex">
-            <a href="/" className="transition-opacity hover:opacity-80">Home</a>
-            <a href="/courses" className="transition-opacity hover:opacity-80">Courses</a>
-          </nav>
-        </header>
-
         <section className="mx-auto mt-8 max-w-[760px] rounded-[18px] border border-[#e9e9e9] bg-[#f3f3f3] px-4 py-8 sm:px-8 md:px-10">
           <div className="flex justify-center">
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#f2ebff] text-[#5b2ed6]">

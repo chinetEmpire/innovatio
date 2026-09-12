@@ -1,7 +1,7 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
-import { CheckCircle2, XCircle } from "lucide-react";
 
+import Header from "@/components/Header";
+import RetakeAssessmentAction from "@/components/apply/RetakeAssessmentAction";
 import { evaluateEligibility } from "@/lib/assessment";
 import { serviceClient } from "@/lib/supabase/admin";
 
@@ -19,29 +19,44 @@ export default async function ResultPage({
   if (!attemptId) redirect(`/apply/${course}`);
 
   const sb = serviceClient();
-
   const [{ data: courseRow }, { data: attempt }] = await Promise.all([
-    sb.from("courses").select("id, slug, title").eq("slug", course).maybeSingle(),
+    sb.from("courses").select("id, slug").eq("slug", course).maybeSingle(),
     sb.from("attempts").select("*").eq("id", attemptId).maybeSingle(),
   ]);
-  if (!courseRow || !attempt) redirect(`/apply/${course}`);
-  if (attempt.status !== "submitted") redirect(`/apply/${course}`);
+  if (!courseRow || !attempt || attempt.status !== "submitted") redirect(`/apply/${course}`);
 
-  const { data: applicant } = await sb
-    .from("applicants")
-    .select("id, email, full_name, whatsapp, age_bracket")
-    .eq("id", attempt.applicant_id)
+  const { data: assessment } = await sb
+    .from("assessments")
+    .select("*")
+    .eq("id", attempt.assessment_id)
     .maybeSingle();
-
-  const [{ data: assessment }, { data: questions }] = await Promise.all([
-    sb.from("assessments").select("*").eq("id", attempt.assessment_id).maybeSingle(),
-    sb.from("questions").select("points").eq("assessment_id", attempt.assessment_id),
-  ]);
-
   if (!assessment) redirect(`/apply/${course}`);
 
-  const totalPoints = (questions ?? []).reduce((sum, q) => sum + q.points, 0);
-  const percent = attempt.score !== null && totalPoints > 0 ? Math.round((attempt.score / totalPoints) * 100) : 0;
+  if (attempt.passed) {
+    const { data: existing } = await sb
+      .from("enrollments")
+      .select("id")
+      .eq("applicant_id", attempt.applicant_id)
+      .eq("course_id", courseRow.id)
+      .maybeSingle();
+
+    let enrollmentId = existing?.id ?? null;
+    if (!enrollmentId) {
+      const { data: created, error: insertError } = await sb
+        .from("enrollments")
+        .insert({
+          applicant_id: attempt.applicant_id,
+          course_id: courseRow.id,
+          attempt_id: attempt.id,
+          payment_status: "pending",
+        })
+        .select("id")
+        .single();
+      if (!insertError && created) enrollmentId = created.id;
+    }
+
+    if (enrollmentId) redirect(`/payment?enrollment=${enrollmentId}`);
+  }
 
   const { data: allAttempts } = await sb
     .from("attempts")
@@ -50,67 +65,36 @@ export default async function ResultPage({
     .eq("assessment_id", assessment.id)
     .order("created_at", { ascending: true });
 
+  const submittedAttempts = (allAttempts ?? []).filter((item) => item.status === "submitted");
   const eligibility = evaluateEligibility({
-    attempts: (allAttempts ?? []).filter((a) => a.status === "submitted"),
+    attempts: submittedAttempts,
     assessment,
     courseSlug: courseRow.slug,
   });
+  const attemptsUsed = submittedAttempts.length;
+  const maxAttemptsReached = assessment.max_attempts !== null && attemptsUsed >= assessment.max_attempts;
+  const remainingAttempts = assessment.max_attempts === null ? null : Math.max(0, assessment.max_attempts - attemptsUsed);
+  const cooldownMs = eligibility.action === "cooldown" ? eligibility.retryAfterMs : 0;
 
   return (
-    <main>
-      <section className="mx-auto max-w-3xl px-5 py-14 sm:px-8 sm:py-20">
-        <div
-          className={`rounded-2xl border p-6 text-center shadow-[0_16px_40px_rgba(47,31,101,0.1)] sm:p-10 ${
-            attempt.passed ? "border-green-200 bg-green-50" : "border-red-200 bg-red-50"
-          }`}
-        >
-          {attempt.passed ? (
-            <CheckCircle2 className="mx-auto text-green-600" size={48} />
-          ) : (
-            <XCircle className="mx-auto text-red-500" size={48} />
-          )}
-          <h1 className="mt-4 text-3xl font-bold tracking-tight">
-            {attempt.passed ? "Congratulations — you passed!" : "Not this time"}
-          </h1>
-          {applicant && <p className="mt-2 text-base text-[#5f5b65]">Well done, {applicant.full_name.split(" ")[0]}.</p>}
-          <p className="mx-auto mt-6 max-w-md text-base text-[#5f5b65]">
-            Your score: <b className="text-ink">{attempt.score} / {totalPoints} points</b>{" "}
-            ({percent}%) · Pass mark: {assessment.pass_mark}%
-          </p>
-
-          <div className="mt-8">
-            {attempt.passed ? (
-              <>
-                <p className="text-sm text-[#5f5b65]">You are now eligible to register and secure your spot.</p>
-                <Link
-                  href={`/apply/${courseRow.slug}/register`}
-                  className="mt-5 inline-flex items-center rounded-full bg-brand px-7 py-3 text-sm font-semibold text-white shadow-[0_10px_22px_rgba(84,41,208,0.3)] transition-transform hover:scale-[1.03] active:scale-95"
-                >
-                  Proceed to registration
-                </Link>
-              </>
-            ) : (
-              <>
-                <p className="text-sm text-[#5f5b65]">
-                  {eligibility.action === "blocked"
-                    ? "You have used all your allowed attempts for this assessment."
-                    : eligibility.action === "cooldown"
-                      ? eligibility.message
-                      : "You can retake the assessment to try again."}
-                </p>
-                {eligibility.action === "start" && (
-                  <Link
-                    href="/apply"
-                    className="mt-5 inline-flex items-center rounded-full bg-brand px-7 py-3 text-sm font-semibold text-white shadow-[0_10px_22px_rgba(84,41,208,0.3)] transition-transform hover:scale-[1.03] active:scale-95"
-                  >
-                    Retake assessment
-                  </Link>
-                )}
-              </>
-            )}
+    <>
+      <Header showEnroll={false} />
+      <main className="min-h-[calc(100vh-76px)] bg-[#fdfcff]">
+        <section className="mx-auto max-w-[1000px] px-5 py-16 sm:px-8 sm:py-24 lg:py-28">
+          <div className="bg-white px-6 py-12 shadow-[0_14px_38px_rgba(47,31,101,0.035)] sm:px-12 sm:py-16 lg:px-[68px] lg:py-[72px]">
+            <h1 className="text-3xl font-bold tracking-tight text-ink sm:text-[34px]">You&apos;re Almost There!</h1>
+            <p className="mt-11 text-[20px] leading-relaxed text-ink sm:text-[24px]">
+              Thank you for completing the assessment.
+            </p>
+            <p className="mt-6 max-w-[790px] text-[20px] leading-[1.4] text-ink sm:text-[24px]">
+              You didn&apos;t meet the passing score this time, but you still have{" "}
+              {remainingAttempts === null ? "additional" : <strong>{remainingAttempts}</strong>}{" "}
+              attempt{remainingAttempts === 1 ? "" : "s"} remaining. Review the questions carefully and try again when you&apos;re ready.
+            </p>
+            <RetakeAssessmentAction href="/apply" cooldownMs={cooldownMs} maxAttemptsReached={maxAttemptsReached} />
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </>
   );
 }
