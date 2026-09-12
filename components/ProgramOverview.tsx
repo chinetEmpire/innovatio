@@ -5,10 +5,16 @@ export default function ProgramOverview({ heading }: { heading: string }) {
   return (
     <section className="px-5 pb-16 pt-20 text-center sm:px-8 lg:px-[4.2%]">
       <Reveal>
-        <h2 className="mx-auto mb-16 max-w-3xl text-[2.75rem] font-black leading-tight tracking-tight sm:text-[3.25rem]">
-          {heading.split("Engineer")[0]}Engineer
-          <br />
-          {heading.split("Engineer")[1]}
+        <h2 className="mx-auto mb-16 max-w-3xl text-[2rem] font-black leading-tight tracking-tight sm:text-[2.75rem] lg:text-[3.25rem]">
+          {heading.includes("Engineer") ? (
+            <>
+              {heading.split("Engineer")[0]}Engineer
+              <br />
+              {heading.split("Engineer")[1]}
+            </>
+          ) : (
+            heading
+          )}
         </h2>
       </Reveal>
       <div className="mt-12 grid gap-10 sm:grid-cols-3">

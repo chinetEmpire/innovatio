@@ -9,10 +9,10 @@ export default function EnrollNowPage() {
       <div className="px-5 pt-6 sm:px-8 lg:px-[4.2%]">
         <header className="flex items-center justify-between gap-4">
           <Link href="/" aria-label="Innovatio Academy home" className="transition-opacity hover:opacity-80">
-            <Image src={logo} alt="Innovatio Academy" className="h-auto w-[140px]" />
+            <Image src={logo} alt="Innovatio Academy" className="h-auto w-[200px]" />
           </Link>
 
-          <nav className="hidden items-center gap-8 text-[13px] font-medium text-[#171717] md:flex">
+          <nav className="hidden items-center gap-8 text-[16px] font-bold text-[#171717] md:flex">
             <Link href="/" className="transition-opacity hover:opacity-80">Home</Link>
             <Link href="/courses" className="transition-opacity hover:opacity-80">Courses</Link>
             <Link href="#cohort" className="transition-opacity hover:opacity-80">Contact us</Link>
@@ -21,17 +21,13 @@ export default function EnrollNowPage() {
         </header>
 
         <section className="mx-auto mt-10 max-w-[760px] rounded-[18px] border border-[#eaeaea] bg-[#f3f3f3] px-5 py-8 sm:px-8 md:px-10 md:py-10">
-          <div className="flex items-center justify-center">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#f2ebff] text-[#5a2bd6]">
-              <Image src={logo} alt="Innovatio Academy" className="h-5 w-5 object-contain" />
-            </div>
-          </div>
+          
 
-          <h1 className="mt-7 text-center text-[clamp(2rem,3vw,2.8rem)] font-black tracking-[-0.05em] text-[#171717]">
-            Ready to Get Started?
+          <h1 className="mt-7  text-[clamp(2rem,3vw,2.8rem)] font-black tracking-[-0.05em] text-[#171717]">
+              &nbsp; Ready to Get Started?
           </h1>
 
-          <div className="mx-auto mt-6 max-w-[640px] text-center text-[15px] leading-relaxed text-[#4a4a4a]">
+          <div className="mx-auto mt-6 max-w-[640px]  text-[15px] leading-relaxed text-[#4a4a4a]">
             <p>Before securing your spot, you&apos;ll complete a short assessment to help us understand your current skill level.</p>
             <p className="mt-5">If you don&apos;t pass on your first attempt, don&apos;t worry. You can retake the assessment up to three times, giving you multiple opportunities to qualify for enrollment.</p>
           </div>
@@ -46,10 +42,10 @@ export default function EnrollNowPage() {
               <li className="flex items-center gap-3"><span className="inline-block h-2 w-2 rounded-full bg-[#3d3d3d]" />Unlimited attempts, within 1hr interval</li>
             </ul>
 
-            <div className="mt-8 flex justify-center">
+            <div className="mt-8 flex">
               <Link
                 href="/apply"
-                className="inline-flex items-center justify-center rounded-[14px] bg-[#4e2cda] px-10 py-3 text-[15px] font-bold text-white shadow-[0_12px_20px_rgba(78,44,218,0.28)] transition-transform hover:translate-y-[-1px]"
+                className="inline-flex  rounded-[50px] bg-[#4e2cda] px-10 py-3 text-[15px] font-bold text-white shadow-[0_12px_20px_rgba(78,44,218,0.28)] transition-transform hover:translate-y-[-1px]"
               >
                 Start assessment
               </Link>

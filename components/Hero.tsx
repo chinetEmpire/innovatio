@@ -49,7 +49,7 @@ export default function Hero({ badge, title, subtitle, facts }: HeroProps) {
           {facts.map((fact) => (
             <div key={fact.label} className="flex flex-col bg-white px-5 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-10 sm:py-8">
               <p className="text-[19px] font-bold text-ink sm:text-[23px]">{fact.label}</p>
-              <p className="text-[19px] font-bold text-ink sm:text-[23px]">{fact.value}</p>
+              <p className="text-[19px] font-medium text-ink sm:text-[23px]">{fact.value}</p>
             </div>
           ))}
         </div>

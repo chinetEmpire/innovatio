@@ -12,13 +12,13 @@ export default function HomeHero() {
         <div className="flex flex-col justify-center px-5 py-14 sm:px-8 lg:px-[8%] lg:py-20">
           
           <h1
-            className="animate-fade-up mt-6 max-w-xl text-[38px] font-black leading-[1.05] tracking-tight lg:text-[62px]"
+            className="animate-fade-up mt-6 max-w-xl text-[32px] font-black leading-[1.05] tracking-tight sm:text-[38px] lg:text-[62px]"
             style={{ "--reveal-delay": "100ms" } as React.CSSProperties}
           >
             Train here. Get hired anywhere.
           </h1>
           <p
-            className="animate-fade-up mt-5 max-w-md text-[20px] text-[#5f5b65]"
+            className="animate-fade-up mt-5 max-w-md text-[19px] text-[#5f5b65]"
             style={{ "--reveal-delay": "200ms" } as React.CSSProperties}
           >
             Whether you&apos;re starting from scratch or switching careers, we&apos;ll help you build the confidence and
@@ -31,7 +31,7 @@ export default function HomeHero() {
             <Link
               href="/enroll"
               data-control
-              className="flex h-12 min-w-32 items-center justify-center rounded-full bg-brand px-6 text-base font-semibold text-white transition-colors hover:bg-[#4520b4] lg:h-14 lg:min-w-40 lg:text-lg"
+              className="flex h-11 min-w-28 items-center justify-center rounded-full bg-brand px-5 text-sm font-semibold text-white transition-colors hover:bg-[#4520b4] lg:h-14 lg:min-w-40 lg:px-6 lg:text-lg"
             >
               Enroll now
             </Link>
@@ -72,16 +72,16 @@ export default function HomeHero() {
 
       <div className="border-t border-[#f0ebf7] bg-[#faf7ff] py-8 sm:py-10">
         <div className="flex flex-col gap-8 px-5 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:gap-x-6 lg:px-[4.2%]">
-          <p className="text-2xl font-medium text-black lg:shrink-0 lg:whitespace-nowrap lg:text-[26px] xl:text-[32px]">
+          <p className="text-2xl font-bold text-black lg:shrink-0 lg:whitespace-nowrap lg:text-[26px] xl:text-[32px]">
             Where our learners work:
           </p>
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-5 lg:min-w-0 lg:flex-nowrap lg:justify-end">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-5 lg:min-w-0 lg:flex-nowrap lg:justify-end">
             {homeEmployerLogos.map((brand) => (
               <Image
                 key={brand.alt}
                 src={brand.src}
                 alt={brand.alt}
-                className={brand.className ?? "max-h-10 w-auto shrink-0 lg:max-h-9 xl:max-h-10"}
+                className={brand.className ?? "max-h-14 w-auto shrink-0 lg:max-h-[3.25rem] xl:max-h-14"}
               />
             ))}
           </div>

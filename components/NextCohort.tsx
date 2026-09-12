@@ -56,7 +56,7 @@ export default function NextCohort() {
         <Reveal>
           <div>
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Join Our Next Cohort</h2>
-            <p className="mt-5 max-w-md text-[22px] leading-relaxed text-black">
+            <p className="mt-5 max-w-md text-[19px] leading-relaxed text-black">
               Next Cohort Starts 21st of September, 2026. Registration starts on 7th of August, 2026 and closes on 7th of September, 2026. Apply now!
             </p>
             <Image src={flowerImage} alt="Innovatio Academy student" className="mt-8 hidden h-auto w-[28rem] lg:block" />

@@ -21,11 +21,11 @@ export default function CourseIntroSection({ heading, paragraphs }: CourseIntroS
         </Reveal>
         <Reveal delay={150}>
           <div>
-            <h1 className="text-5xl font-extrabold leading-relaxed  sm:text-5xl">{heading}</h1>
+            <h1 className="text-3xl font-extrabold leading-relaxed sm:text-4xl lg:text-5xl">{heading}</h1>
             {paragraphs.map((paragraph, index) => (
               <p
                 key={paragraph.slice(0, 24)}
-                className={`${index === 0 ? "mt-5" : "mt-4"} text-base leading-relaxed text-[#4d4752]`}
+                className={`${index === 0 ? "mt-5" : "mt-4"} text-[19px] leading-relaxed text-[#4d4752]`}
               >
                 {paragraph}
               </p>

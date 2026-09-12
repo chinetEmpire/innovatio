@@ -20,12 +20,12 @@ export default function About() {
 
         <Reveal delay={150}>
           <div>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">About Innovatio</h2>
-            <p className="mt-5 text-base leading-relaxed text-[#5f5b65]">
+            <h2 className="text-3xl font-black tracking-tight text-black sm:text-4xl">About Innovatio</h2>
+            <p className="mt-5 text-[19px] leading-relaxed text-[#5f5b65]">
               Great careers aren&apos;t built on certificates alone — they&apos;re built on knowledge, experience, and the
               ability to solve real-world challenges. That&apos;s the philosophy behind Innovatio Academy.
             </p>
-            <p className="mt-4 text-base leading-relaxed text-[#5f5b65]">
+            <p className="mt-4 text-[19px] leading-relaxed text-[#5f5b65]">
               Our mission is to train, mentor, and empower the next generation of software engineers and cybersecurity
               professionals through practical, project-based learning that reflects the realities of the modern tech
               industry.

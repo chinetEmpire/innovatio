@@ -23,14 +23,14 @@ export default function CareerPaths({ careers }: CareerPathsProps) {
       />
       <div className="relative px-5 sm:px-8 lg:px-[4.2%]">
         <Reveal className="max-w-4xl">
-          <h2 className="text-4xl font-black leading-[1.5] tracking-tight sm:text-[2.75rem]">Where can your Full-stack Software Engineer training take you?</h2>
+          <h2 className="text-[2rem] font-black leading-[1.5] tracking-tight sm:text-[2.75rem]">Where can your Full-stack Software Engineer training take you?</h2>
         </Reveal>
         <div className="mt-10 grid gap-16 md:grid-cols-3">
           {careers.map(({ title, blurb, salary }, index) => (
             <Reveal key={title} delay={index * 120}>
               <article className="h-full rounded-lg bg-white p-8 transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.1)]" style={{ boxShadow: "0 0 0 16px rgba(200, 200, 200, 0.04), 0 0 0 17px #EEEBEB, 0 0 0 21px white" }}>
                 <h3 className="text-3xl font-bold">{title}</h3>
-                <p className="mt-8 text-1xl leading-relaxed text-[#000000]">{blurb}</p>
+                <p className="mt-8 text-lg leading-relaxed text-[#000000] sm:text-xl">{blurb}</p>
                 <div style={{ transform: `rotate(${rotations[index]}deg)` }}>
                   <p className="mt-15 inline-block rounded-full bg-[#f0eded] px-4 py-2.5 text-lg font-bold text-black">
                     {salary}
