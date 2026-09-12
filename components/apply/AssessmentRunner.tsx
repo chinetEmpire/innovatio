@@ -174,7 +174,7 @@ export default function AssessmentRunner({
             type="button"
             onClick={() => setCurrent((c) => Math.max(0, c - 1))}
             disabled={current === 0}
-            className="inline-flex h-11 min-w-28 items-center justify-center gap-1.5 rounded-full border border-[#e2d9f2] px-5 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand disabled:opacity-40 disabled:hover:border-[#e2d9f2] disabled:hover:text-ink sm:h-auto sm:min-w-0 sm:px-4 sm:py-2"
+            className="inline-flex h-10 min-w-24 items-center justify-center gap-1.5 rounded-full border border-[#e2d9f2] px-3.5 text-xs font-semibold text-ink transition-colors hover:border-brand hover:text-brand disabled:opacity-40 disabled:hover:border-[#e2d9f2] disabled:hover:text-ink sm:h-auto sm:min-w-0 sm:px-4 sm:py-2 sm:text-sm"
           >
             <ChevronLeft size={16} /> Previous
           </button>
@@ -183,7 +183,7 @@ export default function AssessmentRunner({
             <button
               type="button"
               onClick={() => setCurrent((c) => Math.min(questions.length - 1, c + 1))}
-              className="inline-flex h-11 min-w-28 items-center justify-center gap-1.5 rounded-full bg-brand px-5 text-sm font-semibold text-white transition-transform hover:scale-[1.03] active:scale-95 sm:h-auto sm:min-w-0 sm:px-4 sm:py-2"
+              className="inline-flex h-10 min-w-24 items-center justify-center gap-1.5 rounded-full bg-brand px-3.5 text-xs font-semibold text-white transition-transform hover:scale-[1.03] active:scale-95 sm:h-auto sm:min-w-0 sm:px-4 sm:py-2 sm:text-sm"
             >
               Next <ChevronRight size={16} />
             </button>
