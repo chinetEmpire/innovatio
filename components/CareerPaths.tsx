@@ -10,7 +10,7 @@ export default function CareerPaths({ careers }: CareerPathsProps) {
   const rotations = [2.43, -4.48, 2.16];
 
   return (
-    <section id="courses" className="relative overflow-hidden bg-[#faf7ff] py-16 sm:py-20">
+    <section id="courses" className="relative mt-12 overflow-hidden bg-[#faf7ff] py-16 sm:py-20">
       <div
         aria-hidden
         className="absolute inset-0 opacity-60"

@@ -10,7 +10,7 @@ type CourseIntroSectionProps = {
 
 export default function CourseIntroSection({ heading, paragraphs }: CourseIntroSectionProps) {
   return (
-    <section className="px-5 pb-16 pt-14 sm:px-8 lg:px-[4.2%]">
+    <section className="mt-12 px-5 pb-16 pt-14 sm:px-8 lg:px-[4.2%]">
       <div className="grid items-center gap-10 md:grid-cols-2">
         <Reveal>
           <Image

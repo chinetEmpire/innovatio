@@ -5,7 +5,7 @@ export default function ProgramOverview({ heading }: { heading: string }) {
   return (
     <section className="px-5 pb-16 pt-20 text-center sm:px-8 lg:px-[4.2%]">
       <Reveal>
-        <h2 className="mx-auto mb-16 max-w-3xl text-[2rem] font-black leading-tight tracking-tight sm:text-[2.75rem] lg:text-[3.25rem]">
+        <h2 className="mx-auto mb-16 max-w-3xl pb-5 text-[2rem] font-black leading-tight tracking-tight sm:text-[2.75rem] lg:text-[3.25rem]">
           {heading.includes("Engineer") ? (
             <>
               {heading.split("Engineer")[0]}Engineer

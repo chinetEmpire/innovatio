@@ -19,7 +19,7 @@ export default function PaymentOptions() {
       />
       <div className="relative px-5 sm:px-8 lg:px-[4.2%]">
         <Reveal className="max-w-2xl">
-          <h2 className="text-4xl font-black tracking-tight sm:text-5xl">
+          <h2 className="pb-16 text-4xl font-black tracking-tight sm:text-5xl">
             Flexible payment options for<br />every budget
           </h2>
         </Reveal>
@@ -39,15 +39,15 @@ export default function PaymentOptions() {
                     {plan.badge}
                   </span>
                   <h3 className="mt-5 text-[34px] font-bold">{plan.title}</h3>
-                  <p className="mt-3 text-[25px] leading-relaxed text-[#4d4752]">{plan.description}</p>
-                  <p className="mt-8 text-sm text-[#8a8493]">{plan.label}</p>
+                  <p className="mt-3 pb-20 text-[25px] leading-relaxed text-[#4d4752]">{plan.description}</p>
+                  <p className="mt-8 text-lg text-[#8a8493]">{plan.label}</p>
                   <div className="mt-2 flex items-center gap-3">
                     <span className="inline-block rounded-full px-3 py-2 text-4xl font-bold tracking-tight text-ink" style={{ backgroundColor: priceColors[index] }}>
                       {plan.price}
                     </span>
                     <del className="text-base" style={{ color: "#626262" }}>{plan.wasPrice}</del>
                   </div>
-                  <p className="mt-8 text-sm font-medium text-[#5c5661]">{plan.total}</p>
+                  <p className="mt-8 text-lg font-medium text-[#5c5661]">{plan.total}</p>
                 </article>
               </Reveal>
             );

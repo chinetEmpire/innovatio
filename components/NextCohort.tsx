@@ -51,7 +51,7 @@ export default function NextCohort() {
   }, [inView]);
 
   return (
-    <section id="cohort" ref={sectionRef} className="bg-white py-16 sm:py-20">
+    <section id="cohort" ref={sectionRef} className="mt-12 bg-white py-16 sm:py-20">
       <div className="grid items-center gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:items-start lg:px-[4.2%]">
         <Reveal>
           <div>
