@@ -52,10 +52,10 @@ export default function NextCohort() {
 
   return (
     <section id="cohort" ref={sectionRef} className="bg-white py-16 sm:py-20">
-      <div className="grid items-center gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:px-[4.2%]">
+      <div className="grid items-center gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:items-start lg:px-[4.2%]">
         <Reveal>
           <div>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Join Our Next Cohort</h2>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:pb-8 lg:font-black lg:text-black">Join Our Next Cohort</h2>
             <p className="mt-5 max-w-md text-[19px] leading-relaxed text-black">
               Next Cohort Starts 21st of September, 2026. Registration starts on 7th of August, 2026 and closes on 7th of September, 2026. Apply now!
             </p>
@@ -63,7 +63,7 @@ export default function NextCohort() {
           </div>
         </Reveal>
 
-        <div className="lg:pt-2">
+        <div>
           {cohortSteps.map(({ title, description }, index) => (
             <Reveal key={title} delay={index * 120}>
               <div className="flex gap-4 pb-4 pt-1">

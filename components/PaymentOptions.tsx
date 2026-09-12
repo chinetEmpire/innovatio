@@ -6,16 +6,18 @@ import Reveal from "./Reveal";
 
 export default function PaymentOptions() {
   return (
-    <section
-      className="bg-[#faf7ff] py-16 sm:py-20"
-      style={{
-        backgroundImage: `url("${swImage.src}")`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundAttachment: "fixed",
-      }}
-    >
-      <div className="px-5 sm:px-8 lg:px-[4.2%]">
+    <section className="relative overflow-hidden bg-[#faf7ff] py-16 sm:py-20">
+      <div
+        aria-hidden
+        className="absolute inset-0 opacity-60"
+        style={{
+          backgroundImage: `url("${swImage.src}")`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+        }}
+      />
+      <div className="relative px-5 sm:px-8 lg:px-[4.2%]">
         <Reveal className="max-w-2xl">
           <h2 className="text-4xl font-black tracking-tight sm:text-5xl">
             Flexible payment options for<br />every budget

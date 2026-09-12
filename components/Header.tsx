@@ -50,13 +50,13 @@ export default function Header() {
   const darkNav = isHome && !pastStrip;
 
   return (
-    <header className={`sticky top-0 z-50 bg-white lg:bg-white/90 lg:backdrop-blur ${
+    <header className={`sticky top-0 z-50 border-b border-[#ece6f6] bg-white lg:border-0 ${
         darkNav ? "isolate" : ""
       }`}>
       {darkNav && (
         <div aria-hidden className="absolute inset-0 -z-10 hidden lg:block">
           <div className="absolute inset-y-0 left-0 right-[52.5%] bg-white" />
-          <div className="absolute inset-y-0 left-[52.5%] right-0 bg-brand" />
+          <div className="absolute inset-y-0 left-[52.5%] right-0 bg-[#592FD1]" />
         </div>
       )}
       <nav className="flex items-center justify-between px-5 py-1.5 sm:px-8 lg:px-[8%]">
@@ -117,7 +117,7 @@ export default function Header() {
                   )}
                 </button>
                 {coursesOpen && (
-                  <div className="absolute left-1/2 top-full z-50 w-56 -translate-x-1/2 pt-3">
+                  <div className="absolute left-1/2 top-full z-50 w-44 -translate-x-1/2 pt-3">
                     <div className="animate-fade-in overflow-hidden rounded-xl border border-[#ece6f6] bg-white py-2 shadow-[0_24px_48px_rgba(47,31,101,0.16)]">
                       {courseLinks.map((course) => (
                         <Link
@@ -140,7 +140,7 @@ export default function Header() {
             <Link
               href="/enroll"
               data-control
-              className="rounded-full bg-brand px-6 py-2.5 text-[14px] font-bold text-white transition-colors hover:bg-[#4520b4]"
+              className="rounded-full bg-brand px-6 py-2.5 text-[18px] font-bold text-white transition-colors hover:bg-[#4520b4]"
             >
               Enroll now
             </Link>

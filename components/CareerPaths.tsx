@@ -13,7 +13,7 @@ export default function CareerPaths({ careers }: CareerPathsProps) {
     <section id="courses" className="relative overflow-hidden bg-[#faf7ff] py-16 sm:py-20">
       <div
         aria-hidden
-        className="absolute inset-0"
+        className="absolute inset-0 opacity-60"
         style={{
           backgroundImage: `url("${swImage.src}")`,
           backgroundSize: "cover",
@@ -32,7 +32,7 @@ export default function CareerPaths({ careers }: CareerPathsProps) {
                 <h3 className="text-3xl font-bold">{title}</h3>
                 <p className="mt-8 text-lg leading-relaxed text-[#000000] sm:text-xl">{blurb}</p>
                 <div style={{ transform: `rotate(${rotations[index]}deg)` }}>
-                  <p className="mt-15 inline-block rounded-full bg-[#f0eded] px-4 py-2.5 text-lg font-bold text-black">
+                  <p className="mt-10 inline-block rounded-full bg-[#f0eded] px-4 py-2.5 text-lg font-bold text-black">
                     {salary}
                   </p>
                 </div>
