@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="relative px-5 pb-0 pt-20 sm:px-8 lg:px-[4.2%]">
           <Image src={footImage} alt="" aria-hidden className="absolute top-20 h-4 w-10 object-contain" />
           <Image src={vectorImage} alt="" aria-hidden className="absolute right-8 top-20 h-32 w-32 object-contain" />
-          <p className="pt-16">Discover the potency of<br />Innovatio Academy at</p>
+          <p className="pt-16">Uncover the potency of<br />Innovatio Academy at</p>
           <a
             className="mt-2 block w-fit break-words border-b border-white pb-0 font-black"
             href={`mailto:${footerInfo.email}`}
