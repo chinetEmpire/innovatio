@@ -92,7 +92,7 @@ export default function NextCohort() {
                   )}
                 </div>
               </div>
-              {index < cohortSteps.length - 1 && <div className="my-6 ml-10 h-px w-full bg-black/40" />}
+              {index < cohortSteps.length - 1 && <div className="my-6 ml-10 h-px w-full bg-[#c7c5c8]" />}
             </Reveal>
           ))}
           <Reveal delay={360}>
