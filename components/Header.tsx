@@ -98,7 +98,7 @@ export default function Header() {
             <Link
               href="/enroll"
               data-control
-              className="rounded-full bg-brand px-5 py-2 text-[14px] font-bold text-white transition-colors hover:bg-[#4520b4]"
+              className="rounded-full bg-brand px-6 py-2.5 text-[14px] font-bold text-white transition-colors hover:bg-[#4520b4]"
             >
               Enroll now
             </Link>

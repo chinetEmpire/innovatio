@@ -32,7 +32,7 @@ export default function LearningTracks() {
                   <p className="mt-2 text-[18px] leading-[1.35] text-[#5f5b65]">{track.description}</p>
                 </div>
                 <Link
-                  href="/courses"
+                  href={track.href}
                   className="-mx-2 -mb-2 mt-3 py-8 flex h-9 items-center gap-1.5 bg-brand px-5 text-[20px] font-semibold text-white transition-colors duration-300 hover:bg-[#4520b4]"
                 >
                   View curriculum <ArrowRight size={14} />
