@@ -55,16 +55,16 @@ export default function Header({ showEnroll = true }: { showEnroll?: boolean }) 
       }`}>
       {darkNav && (
         <div aria-hidden className="absolute inset-0 -z-10 hidden lg:block">
-          <div className="absolute inset-y-0 left-0 right-[52.5%] bg-white" />
-          <div className="absolute inset-y-0 left-[52.5%] right-0 bg-[#592FD1]" />
+          <div className="absolute inset-y-0 left-0 right-[45.5%] bg-white" />
+          <div className="absolute inset-y-0 left-[54.5%] right-0 bg-[#592FD1]" />
         </div>
       )}
-      <nav className="flex items-center justify-between px-5 py-1.5 sm:px-8 lg:px-[8%]">
+      <nav className="flex items-center justify-between px-5 py-1.5 sm:px-8 lg:px-[4.2%]">
         <Link href="/" aria-label="Innovatio Academy home" className="shrink-0 transition-opacity hover:opacity-80">
           <Image
             src={logo}
             alt="Innovatio Academy"
-            className="lg:-ml-[45px] h-auto w-[150px] sm:w-[240px]"
+            className="h-auto w-[150px] sm:w-[240px]"
             priority
           />
         </Link>

@@ -13,7 +13,6 @@ export default function EnrollNowPage() {
           </Link>
 
           <nav className="hidden items-center gap-8 text-[16px] font-bold text-[#171717] md:flex">
-            <Link href="/" className="transition-opacity hover:opacity-80">Home</Link>
             <Link href="/courses" className="transition-opacity hover:opacity-80">Courses</Link>
             <Link href="#cohort" className="transition-opacity hover:opacity-80">Contact us</Link>
             <Link href="#faq" className="transition-opacity hover:opacity-80">FAQs</Link>

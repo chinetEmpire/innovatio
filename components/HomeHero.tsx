@@ -8,8 +8,8 @@ import CoursePickerModal from "./CoursePickerModal";
 export default function HomeHero() {
   return (
     <section className="overflow-hidden bg-white">
-      <div className="grid lg:grid-cols-[1.05fr_0.95fr]">
-        <div className="flex flex-col justify-center px-5 py-14 sm:px-8 lg:px-[8%] lg:py-20">
+      <div className="grid lg:grid-cols-[1.05fr_0.95fr] lg:pl-[4.2%]">
+        <div className="flex flex-col justify-center px-5 py-14 sm:px-8 lg:py-20 lg:pl-0 lg:pr-[4.2%]">
           
           <h1
             className="animate-fade-up mt-6 max-w-xl text-[32px] font-black leading-[1.05] tracking-tight sm:text-[38px] lg:text-[62px]"
@@ -36,23 +36,6 @@ export default function HomeHero() {
               Enroll now
             </Link>
             <CoursePickerModal />
-          </div>
-          <div
-            className="animate-fade-up mt-10 flex flex-wrap gap-x-10 gap-y-5"
-            style={{ "--reveal-delay": "400ms" } as React.CSSProperties}
-          >
-            <div>
-              <p className="text-2xl font-bold tracking-tight">4.8/5</p>
-              <p className="mt-1 text-sm text-[#8a8493]">2.5k+ learner reviews</p>
-            </div>
-            <div>
-              <p className="text-2xl font-bold tracking-tight">6 months</p>
-              <p className="mt-1 text-sm text-[#8a8493]">to job-ready skills</p>
-            </div>
-            <div>
-              <p className="text-2xl font-bold tracking-tight">No IT</p>
-              <p className="mt-1 text-sm text-[#8a8493]">background needed</p>
-            </div>
           </div>
         </div>
 

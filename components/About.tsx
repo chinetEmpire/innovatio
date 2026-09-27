@@ -8,7 +8,7 @@ export default function About() {
     <section id="about" className="px-5 py-16 sm:px-8 sm:py-20 lg:px-[4.2%]">
       <div className="grid items-center gap-12 lg:grid-cols-2">
         <Reveal>
-          <div className="relative mx-auto w-full max-w-[430px]">
+          <div className="relative w-full max-w-[430px]">
             <Image
                 src={useImage}
                 alt="Innovatio learners"

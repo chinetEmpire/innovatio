@@ -11,7 +11,6 @@ export type NavLink = { label: string; href: string; active?: boolean };
 export type BrandLogo = { src: StaticImageData | string; alt: string; className?: string };
 
 export const navLinks: NavLink[] = [
-  { label: "Home", href: "/" },
   { label: "Courses", href: "/courses" },
   { label: "Contact", href: "/#cohort" },
   { label: "FAQs", href: "/#faq" },
@@ -19,7 +18,7 @@ export const navLinks: NavLink[] = [
 
 export const homeEmployerLogos: BrandLogo[] = [
   { src: microsoft, alt: "Microsoft" },
-  { src: amazon, alt: "Amazon" },
+  { src: amazon, alt: "Amazon", className: "max-h-14 w-auto shrink-0 lg:max-h-[3.25rem] xl:max-h-14 translate-y-[9.16%]" },
   { src: dropbox, alt: "Dropbox" },
   { src: seplat, alt: "Seplat" },
   { src: ibm, alt: "IBM" },
