@@ -18,7 +18,7 @@ export default function Page() {
       <WhatSetsUsApart />
       <Testimonials />
       <Faq />
-      <NextCohort />
+      <NextCohort altBg />
       <Footer />
     </main>
   );

@@ -18,7 +18,7 @@ const stepImageAlts = [
   "Students starting their learning journey",
 ];
 
-export default function NextCohort() {
+export default function NextCohort({ altBg = false }: { altBg?: boolean }) {
   const [activeStep, setActiveStep] = useState(0);
   const [inView, setInView] = useState(false);
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -51,7 +51,7 @@ export default function NextCohort() {
   }, [inView]);
 
   return (
-    <section id="cohort" ref={sectionRef} className="mt-12 bg-white py-16 sm:py-20">
+    <section id="cohort" ref={sectionRef} className={`mt-12 py-16 sm:py-20 ${altBg ? "bg-[#F7F5FF]" : "bg-white"}`}>
       <div className="grid items-center gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:items-start lg:px-[4.2%]">
         <Reveal>
           <div>
