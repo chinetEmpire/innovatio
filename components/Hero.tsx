@@ -17,17 +17,10 @@ export default function Hero({ badge, title, subtitle, facts }: HeroProps) {
       <section id="home" className="relative overflow-hidden text-white">
         <Image src={heroImage} alt="Software engineering students" priority fill className="object-cover" />
         <div className="absolute inset-0 bg-gradient-to-br from-[#2d0f7a]/95 via-[#4a21b8]/85 to-[#6b3fe0]/75" aria-hidden />
-        <div className="relative z-10 flex h-[416px] flex-col items-center justify-center px-5 pb-20 pt-16 text-center sm:px-8 lg:px-[4.2%]">
-          {badge && (
-            <span
-              className="animate-fade-up rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 text-xs font-semibold backdrop-blur"
-              style={{ "--reveal-delay": "0ms" } as React.CSSProperties}
-            >
-              {badge}
-            </span>
-          )}
+        <div className="relative z-10 flex h-[416px] flex-col items-center  px-5 pb-0 pt-12 text-center sm:px-8 lg:px-[4.2%]">
+         
           <h1
-            className="animate-fade-up mt-5 max-w-none text-4xl font-black leading-tight tracking-tight whitespace-normal sm:whitespace-nowrap sm:text-5xl lg:text-6xl"
+            className="animate-fade-up mt-20 max-w-none text-4xl font-black leading-tight tracking-tight whitespace-normal sm:whitespace-nowrap sm:text-5xl lg:text-6xl"
             style={{ "--reveal-delay": "100ms" } as React.CSSProperties}
           >
             {title}

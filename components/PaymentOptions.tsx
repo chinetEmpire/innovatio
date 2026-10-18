@@ -39,7 +39,7 @@ export default function PaymentOptions() {
                     {plan.badge}
                   </span>
                   <h3 className="mt-5 text-[34px] font-bold">{plan.title}</h3>
-                  <p className="mt-3 pb-20 text-[25px] leading-relaxed text-[#4d4752]">{plan.description}</p>
+                  <p className={`mt-6 text-[25px] leading-relaxed text-[#4d4752] ${index === 0 ? "pb-[170px]" : "pb-20"}`}>{plan.description}</p>
                   <p className="mt-8 text-lg text-[#8a8493]">{plan.label}</p>
                   <div className="mt-2 flex items-center gap-3">
                     <span className="inline-block rounded-full px-3 py-2 text-4xl font-bold tracking-tight text-ink" style={{ backgroundColor: priceColors[index] }}>
@@ -47,7 +47,8 @@ export default function PaymentOptions() {
                     </span>
                     <del className="text-base" style={{ color: "#626262" }}>{plan.wasPrice}</del>
                   </div>
-                  <p className="mt-8 text-lg font-medium text-[#5c5661]">{plan.total}</p>
+                  <div className="mt-8 h-px bg-gray-300" aria-hidden />
+                  <p className="mt-4 text-lg font-medium text-[#5c5661]">{plan.total}</p>
                 </article>
               </Reveal>
             );

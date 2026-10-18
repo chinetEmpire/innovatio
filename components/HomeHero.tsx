@@ -39,7 +39,7 @@ export default function HomeHero() {
           </div>
         </div>
 
-        <div className="relative min-h-[320px] overflow-hidden bg-gradient-to-br from-brand to-[#6b3fe0] sm:min-h-[400px] lg:min-h-[560px]">
+        <div className="relative min-h-[420px] overflow-hidden bg-gradient-to-br from-brand to-[#6b3fe0] sm:min-h-[440px] lg:min-h-[560px]">
           <div className="animate-float-slow absolute -left-14 top-12 h-44 w-44 rounded-full bg-[#8a63ec]/50 blur-2xl" />
           <div className="animate-float-ring absolute -right-16 -bottom-16 h-64 w-64 rounded-full border-[32px] border-white/10" />
           <div className="absolute inset-0 flex items-center justify-center p-5">
@@ -55,7 +55,7 @@ export default function HomeHero() {
 
       <div id="learners" className="border-t border-[#f0ebf7] bg-[#faf7ff] py-8 sm:py-10">
         <div className="flex flex-col gap-8 px-5 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:gap-x-6 lg:px-[4.2%]">
-          <p className="text-2xl font-bold text-black lg:shrink-0 lg:whitespace-nowrap lg:text-[26px] xl:text-[32px]">
+          <p className="text-center text-2xl font-bold text-black lg:shrink-0 lg:whitespace-nowrap lg:text-left lg:text-[26px] xl:text-[32px]">
             Where our learners work:
           </p>
           <div className="min-w-0 overflow-hidden lg:flex-1">

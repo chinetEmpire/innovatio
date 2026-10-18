@@ -5,14 +5,14 @@ import logo from "@/app/images/logo.png";
 
 export default function EnrollNowPage() {
   return (
-    <main className="min-h-screen bg-[#f5f5f5]">
+    <main className="min-h-screen bg-white">
       <header className="border-b border-[#ece6f6] bg-white">
         <div className="flex items-center justify-between gap-4 px-5 py-2.5 sm:px-8 lg:px-[4.2%]">
           <Link href="/" aria-label="Innovatio Academy home" className="transition-opacity hover:opacity-80">
             <Image src={logo} alt="Innovatio Academy" className="h-auto w-[150px] sm:w-[200px]" />
           </Link>
 
-          <nav className="hidden items-center gap-8 text-[16px] font-bold text-[#171717] md:flex">
+          <nav className="hidden items-center gap-8 text-[18px] font-bold text-[#171717] md:flex">
             <Link href="/courses" className="transition-opacity hover:opacity-80">Courses</Link>
             <Link href="#cohort" className="transition-opacity hover:opacity-80">Contact us</Link>
             <Link href="#faq" className="transition-opacity hover:opacity-80">FAQs</Link>
@@ -21,7 +21,7 @@ export default function EnrollNowPage() {
       </header>
 
       <div className="px-5 pt-6 sm:px-8 lg:px-[4.2%]">
-        <section className="mx-auto mt-10 max-w-[760px] rounded-[18px] border border-[#eaeaea] bg-[#f3f3f3] px-5 py-8 sm:px-8 md:px-10 md:py-10">
+        <section className="mx-auto mt-10 max-w-[760px] rounded-[18px] bg-white shadow-[0_8px_30px_rgba(0,0,0,0.12)] px-5 py-8 sm:px-8 md:px-10 md:py-10">
           
 
           <h1 className="mt-7  text-[clamp(2rem,3vw,2.8rem)] font-black tracking-[-0.05em] text-[#171717]">
