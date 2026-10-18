@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import logo from "@/app/images/logo.png";
+import StartAssessmentButton from "./StartAssessmentButton";
 
 export default function EnrollNowPage() {
   return (
@@ -24,8 +25,8 @@ export default function EnrollNowPage() {
         <section className="mx-auto mt-10 max-w-[760px] rounded-[18px] bg-white shadow-[0_8px_30px_rgba(0,0,0,0.12)] px-5 py-8 sm:px-8 md:px-10 md:py-10">
           
 
-          <h1 className="mt-7  text-[clamp(2rem,3vw,2.8rem)] font-black tracking-[-0.05em] text-[#171717]">
-              &nbsp; Ready to Get Started?
+          <h1 className="mt-7 lg:ml-5  text-[clamp(2rem,3vw,2.8rem)] font-black tracking-[-0.05em] text-[#171717]">
+              Ready to Get Started?
           </h1>
 
           <div className="mx-auto mt-6 max-w-[640px]  text-[15px] leading-relaxed text-[#4a4a4a]">
@@ -44,12 +45,7 @@ export default function EnrollNowPage() {
             </ul>
 
             <div className="mt-8 flex">
-              <Link
-                href="/apply"
-                className="inline-flex  rounded-[50px] bg-[#4e2cda] px-10 py-3 text-[15px] font-bold text-white shadow-[0_12px_20px_rgba(78,44,218,0.28)] transition-transform hover:translate-y-[-1px]"
-              >
-                Start assessment
-              </Link>
+              <StartAssessmentButton />
             </div>
           </div>
         </section>
