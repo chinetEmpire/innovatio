@@ -92,6 +92,10 @@ main .text-\[7px\], main .text-\[8px\], main .text-\[9px\], main .text-\[10px\],
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 .animate-marquee { animation: marquee 30s linear infinite; }
 
+@media (max-width: 1023px) {
+  .animate-marquee { animation-duration: 18s; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
   .animate-fade-up, .animate-fade-in, .animate-scale-in, .animate-modal-in,
